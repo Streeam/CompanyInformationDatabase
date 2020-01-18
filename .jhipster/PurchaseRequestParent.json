@@ -1,0 +1,36 @@
+{
+    "name": "PurchaseRequestParent",
+    "fields": [
+        {
+            "fieldName": "pdfURLPath",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "employee",
+            "otherEntityName": "employee",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "purchaseRequestChild",
+            "otherEntityRelationshipName": "purchaseRequestParent",
+            "relationshipName": "purchaseRequestChild"
+        }
+    ],
+    "changelogDate": "20191026131106",
+    "entityTableName": "purchase_request_parent",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

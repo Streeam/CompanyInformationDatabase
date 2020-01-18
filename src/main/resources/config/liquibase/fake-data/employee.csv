@@ -1,0 +1,11 @@
+id;image;image_content_type;job_title;hired_date;user_id;role_id
+1;../fake-data/blob/hipster.png;image/png;Regional Data Representative;2020-01-02;2;1
+2;../fake-data/blob/hipster.png;image/png;Forward Communications Planner;2020-01-02;1;2
+3;../fake-data/blob/hipster.png;image/png;Corporate Security Associate;2020-01-02;2;3
+4;../fake-data/blob/hipster.png;image/png;National Communications Liaison;2020-01-01;2;4
+5;../fake-data/blob/hipster.png;image/png;Lead Brand Strategist;2020-01-01;2;5
+6;../fake-data/blob/hipster.png;image/png;Chief Implementation Supervisor;2020-01-02;2;6
+7;../fake-data/blob/hipster.png;image/png;Dynamic Communications Specialist;2020-01-01;2;7
+8;../fake-data/blob/hipster.png;image/png;Lead Group Supervisor;2020-01-02;2;8
+9;../fake-data/blob/hipster.png;image/png;Investor Markets Liaison;2020-01-02;1;9
+10;../fake-data/blob/hipster.png;image/png;Principal Identity Manager;2020-01-02;1;10

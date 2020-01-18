@@ -1,0 +1,98 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Col, Row, Table } from 'reactstrap';
+import { byteSize, ICrudGetAllAction, TextFormat } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { IRootState } from 'app/shared/reducers';
+import { getEntities } from './progress-track.reducer';
+import { IProgressTrack } from 'app/shared/model/progress-track.model';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+
+export interface IProgressTrackProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
+
+export class ProgressTrack extends React.Component<IProgressTrackProps> {
+  componentDidMount() {
+    this.props.getEntities();
+  }
+
+  render() {
+    const { progressTrackList, match } = this.props;
+    return (
+      <div>
+        <h2 id="progress-track-heading">
+          Progress Tracks
+          <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
+            <FontAwesomeIcon icon="plus" />
+            &nbsp; Create a new Progress Track
+          </Link>
+        </h2>
+        <div className="table-responsive">
+          {progressTrackList && progressTrackList.length > 0 ? (
+            <Table responsive aria-describedby="progress-track-heading">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Progress Description</th>
+                  <th>Complete</th>
+                  <th>Date</th>
+                  <th>Task</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                {progressTrackList.map((progressTrack, i) => (
+                  <tr key={`entity-${i}`}>
+                    <td>
+                      <Button tag={Link} to={`${match.url}/${progressTrack.id}`} color="link" size="sm">
+                        {progressTrack.id}
+                      </Button>
+                    </td>
+                    <td>{progressTrack.progressDescription}</td>
+                    <td>{progressTrack.complete ? 'true' : 'false'}</td>
+                    <td>
+                      <TextFormat type="date" value={progressTrack.date} format={APP_DATE_FORMAT} />
+                    </td>
+                    <td>{progressTrack.taskId ? <Link to={`task/${progressTrack.taskId}`}>{progressTrack.taskId}</Link> : ''}</td>
+                    <td className="text-right">
+                      <div className="btn-group flex-btn-group-container">
+                        <Button tag={Link} to={`${match.url}/${progressTrack.id}`} color="info" size="sm">
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                        </Button>
+                        <Button tag={Link} to={`${match.url}/${progressTrack.id}/edit`} color="primary" size="sm">
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                        </Button>
+                        <Button tag={Link} to={`${match.url}/${progressTrack.id}/delete`} color="danger" size="sm">
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <div className="alert alert-warning">No Progress Tracks found</div>
+          )}
+        </div>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = ({ progressTrack }: IRootState) => ({
+  progressTrackList: progressTrack.entities
+});
+
+const mapDispatchToProps = {
+  getEntities
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProgressTrack);

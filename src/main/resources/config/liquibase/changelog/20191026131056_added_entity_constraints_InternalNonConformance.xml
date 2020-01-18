@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity InternalNonConformance.
+    -->
+    <changeSet id="20191026131056-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="internal_non_conformance_id"
+                                 baseTableName="internal_non_conformance_employee"
+                                 constraintName="internal_non_conformance_employ_internal_non_conformance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="internal_non_conformance"/>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="internal_non_conformance_employee"
+                                 constraintName="fk_internal_non_conformance_employee_employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+        
+        <addForeignKeyConstraint baseColumnNames="internal_non_conformance_id"
+                                 baseTableName="internal_non_conformance_site"
+                                 constraintName="fk_internal_non_conformance_site_internal_non_conformance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="internal_non_conformance"/>
+
+        <addForeignKeyConstraint baseColumnNames="site_id"
+                                 baseTableName="internal_non_conformance_site"
+                                 constraintName="fk_internal_non_conformance_site_site_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="site"/>
+        
+        <addForeignKeyConstraint baseColumnNames="internal_non_conformance_id"
+                                 baseTableName="internal_non_conformance_department"
+                                 constraintName="internal_non_conformance_depart_internal_non_conformance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="internal_non_conformance"/>
+
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="internal_non_conformance_department"
+                                 constraintName="fk_internal_non_conformance_department_department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+        
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,62 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "auditQuestion",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "compliant",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "ofi",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "minorNC",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "majorNC",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "auditAnswer",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "opportunitiesForImprovement",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nonConformanceId",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20200106091616",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "process_audit_checklist",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

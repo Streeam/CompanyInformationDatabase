@@ -1,0 +1,111 @@
+{
+    "name": "ClientNonConformance",
+    "fields": [
+        {
+            "fieldName": "nonConformanceType",
+            "fieldType": "CustomerNonconformaceType",
+            "fieldValues": "NON_CONFORMING_PRODUCT_SERVICE,LATE_DELIVERY,CUSTOMER_COMPLAINT",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "PENDING,COMPLETE,STUCK,NEED_HELP,INCOMPLETE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "nonconformanceDetailsId",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "rejectionReasonDetails",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "actionToBeTakenDetails",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "shortTermDetails",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "longTermDetails",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "currentDate",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "rejectionDate",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "underWarranty",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "quantity",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": "1"
+        },
+        {
+            "fieldName": "labourRate",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "customer",
+            "otherEntityRelationshipName": "clientNonConformance",
+            "relationshipName": "customer",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipName": "culpableEmployees",
+            "otherEntityName": "employee",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "clientNonConformances"
+        }
+    ],
+    "changelogDate": "20191026131059",
+    "entityTableName": "client_non_conformance",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "searchEngine": false,
+    "databaseType": "sql"
+}

@@ -1,0 +1,65 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "overhead",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "resourceName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "runtime",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "internalNonConformanceId",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "nonconformanceType",
+            "fieldType": "Nonconformance",
+            "fieldValues": "INTERNAL,SUPPLIER,AUDIT,CUSTOMER",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "nonconformanceAction",
+            "fieldType": "NonconformanceAction",
+            "fieldValues": "SCRAP,REWORK,REJECT,CONCESSION,OTHER"
+        },
+        {
+            "fieldName": "customerNonConformaceId",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20191127094039",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "extra_routings",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

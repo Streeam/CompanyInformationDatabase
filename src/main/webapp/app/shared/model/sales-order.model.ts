@@ -1,0 +1,76 @@
+import { Moment } from 'moment';
+import { IPurchaseRequestChild } from 'app/shared/model/purchase-request-child.model';
+import { IProduct } from 'app/shared/model/product.model';
+
+export interface ISalesOrder {
+  id?: number;
+  salesOrderNumber?: string;
+  dateRaised?: Moment;
+  soSalesStatus?: string;
+  secondSalesReference?: string;
+  currencyCode?: string;
+  exchangeRate?: string;
+  discountPercent?: number;
+  contactName?: string;
+  ourContact?: string;
+  invoiceAddress?: string;
+  invoiceCountryCode?: string;
+  salesOrderTitle?: string;
+  salesAnalysis1?: string;
+  salesAnalysis2?: string;
+  salesAnalysis3?: string;
+  salesAnalysis4?: string;
+  salesAnalysis5?: string;
+  salesAnalysis6?: string;
+  memo1?: string;
+  memo2?: string;
+  memo3?: string;
+  memo4?: string;
+  memo5?: string;
+  memo6?: string;
+  stockAnalysis01?: string;
+  stockAnalysis02?: string;
+  stockAnalysis03?: string;
+  stockAnalysis04?: string;
+  stockAnalysis05?: string;
+  stockAnalysis06?: string;
+  stockAnalysis07?: string;
+  stockAnalysis08?: string;
+  stockAnalysis09?: string;
+  stockAnalysis10?: string;
+  deliveryCode?: string;
+  transactionCode?: string;
+  code?: string;
+  salesOrderStatusCode?: string;
+  despatchStatusID?: string;
+  division?: string;
+  lineNumber?: string;
+  despatchStatusCode?: string;
+  quantityOrdered?: number;
+  quantityOutstanding?: number;
+  quantityDespatched?: number;
+  despatchDate?: Moment;
+  custRequiredDate?: Moment;
+  unitPrice?: number;
+  unitPriceinBase?: number;
+  lineDiscountPercent?: number;
+  marginPercent?: number;
+  lineTotal?: number;
+  lineTotalinBase?: number;
+  taxCode?: string;
+  nominalCode?: string;
+  onHold?: boolean;
+  rCode?: string;
+  standardMargin?: number;
+  deliveryAddress?: string;
+  deliveryAddressDescription?: string;
+  deliveryCountryCode?: string;
+  salesOrderStatus?: string;
+  customerId?: number;
+  purchaseRequestChildren?: IPurchaseRequestChild[];
+  products?: IProduct[];
+}
+
+export const defaultValue: Readonly<ISalesOrder> = {
+  onHold: false
+};

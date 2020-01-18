@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity PurchaseRequestChild.
+    -->
+    <changeSet id="20191026131105-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="purchase_request_child"
+                                 constraintName="fk_purchase_request_child_product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+
+        <addForeignKeyConstraint baseColumnNames="purchase_request_parent_id"
+                                 baseTableName="purchase_request_child"
+                                 constraintName="fk_purchase_request_child_purchase_request_parent_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="purchase_request_parent"/>
+
+        <addForeignKeyConstraint baseColumnNames="sales_order_id"
+                                 baseTableName="purchase_request_child"
+                                 constraintName="fk_purchase_request_child_sales_order_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sales_order"/>
+
+    </changeSet>
+</databaseChangeLog>

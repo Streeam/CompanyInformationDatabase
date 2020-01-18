@@ -1,0 +1,98 @@
+{
+    "name": "InternalNonConformance",
+    "fields": [
+        {
+            "fieldName": "action",
+            "fieldType": "NonconformanceAction",
+            "fieldValues": "SCRAP,REWORK,REJECT,CONCESSION,OTHER",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "curentDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "rejectionDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "rejectionReasonDetails",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "labourRate",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "nonconformanceDetailsId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "PENDING,COMPLETE,STUCK,NEED_HELP,INCOMPLETE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "quantity",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": "1"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "employee",
+            "otherEntityName": "employee",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "internalNonConformance"
+        },
+        {
+            "relationshipName": "site",
+            "otherEntityName": "site",
+            "relationshipType": "many-to-many",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "site",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "internalNonConformance"
+        },
+        {
+            "relationshipName": "department",
+            "otherEntityName": "department",
+            "relationshipType": "many-to-many",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "internalNonConformance"
+        }
+    ],
+    "changelogDate": "20191026131056",
+    "entityTableName": "internal_non_conformance",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "searchEngine": false,
+    "databaseType": "sql"
+}

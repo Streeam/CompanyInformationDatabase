@@ -1,0 +1,27 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "internalNonConformance",
+            "otherEntityName": "internalNonConformance",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "site"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "site",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20191116142655",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "site",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}
