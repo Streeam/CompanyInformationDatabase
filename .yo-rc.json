@@ -27,7 +27,10 @@
     "clientFramework": "react",
     "clientTheme": "materia",
     "clientThemeVariant": "light",
-    "testFrameworks": ["gatling", "protractor"],
+    "testFrameworks": [
+      "gatling",
+      "protractor"
+    ],
     "jhiPrefix": "jhi",
     "entitySuffix": "",
     "dtoSuffix": "DTO",
