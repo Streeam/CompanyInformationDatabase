@@ -26,7 +26,7 @@ export const DateRange = props => {
   };
 
   const isSelectingFirstDay = (fromDate, toDate, selectedDay) => {
-    const isBeforeFirstDay = fromDate && DayPicker.DateUtils.isDayBefore(selectedDay, fromDate);
+    const isBeforeFirstDay = fromDate && (new Date(selectedDay) > new Date(fromDate));
     const isRangeSelected = fromDate && toDate;
     return !fromDate || isBeforeFirstDay || isRangeSelected;
   };
