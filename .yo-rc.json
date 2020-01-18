@@ -37,7 +37,7 @@
     "otherModules": [],
     "enableTranslation": false,
     "blueprints": [],
-    "herokuAppName": "cid",
+    "herokuAppName": "qms-manager",
     "herokuDeployType": "git"
   }
 }
