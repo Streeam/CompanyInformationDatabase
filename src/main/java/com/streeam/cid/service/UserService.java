@@ -53,7 +53,6 @@ public class UserService {
     @Autowired
     private  EmployeeService employeeService;
 
-
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
