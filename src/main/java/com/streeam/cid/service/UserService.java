@@ -50,11 +50,14 @@ public class UserService {
     @Autowired
     private  NotificationService notificationService;
 
-    @Autowired
-    private  EmployeeService employeeService;
+    private final  EmployeeService employeeService;
+    private final  CompanyService companyService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmployeeService employeeService,
+                       AuthorityRepository authorityRepository, CacheManager cacheManager, CompanyService companyService) {
         this.userRepository = userRepository;
+        this.employeeService = employeeService;
+        this.companyService = companyService;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;

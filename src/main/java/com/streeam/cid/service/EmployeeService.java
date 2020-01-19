@@ -57,11 +57,11 @@ public class EmployeeService {
     @Autowired
     private CompanyMapper companyMapper;
 
-    private final CompanyService companyService;
+    @Autowired
+    private CompanyService companyService;
 
-    public EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper, CompanyService companyService,
+    public EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper,
                            NotificationService notificationService, RolesService rolesService) {
-        this.companyService = companyService;
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
         this.notificationService = notificationService;
