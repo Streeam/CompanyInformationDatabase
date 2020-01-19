@@ -239,26 +239,6 @@ describe('Entities reducer tests', () => {
       await store.dispatch(createEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
-    it('dispatches ACTION_TYPES.UPDATE_EMPLOYEE actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.UPDATE_EMPLOYEE)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.UPDATE_EMPLOYEE),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_EMPLOYEE_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_EMPLOYEE_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
     it('dispatches ACTION_TYPES.DELETE_EMPLOYEE actions', async () => {
       const expectedActions = [
         {

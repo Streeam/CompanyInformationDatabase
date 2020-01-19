@@ -220,26 +220,6 @@ describe('Entities reducer tests', () => {
       await store.dispatch(getEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
-    it('dispatches ACTION_TYPES.CREATE_PROGRESSTRACK actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.CREATE_PROGRESSTRACK)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.CREATE_PROGRESSTRACK),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_PROGRESSTRACK_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_PROGRESSTRACK_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(createEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
     it('dispatches ACTION_TYPES.UPDATE_PROGRESSTRACK actions', async () => {
       const expectedActions = [
         {
@@ -258,26 +238,6 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.DELETE_PROGRESSTRACK actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.DELETE_PROGRESSTRACK)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.DELETE_PROGRESSTRACK),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_PROGRESSTRACK_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_PROGRESSTRACK_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(deleteEntity({ id: 42666 })).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.RESET actions', async () => {
