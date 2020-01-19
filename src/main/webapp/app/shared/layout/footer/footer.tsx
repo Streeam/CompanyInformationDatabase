@@ -15,7 +15,7 @@ const Footer = (props: ICompanyProps) => {
     <div className="footer page-content">
       <Grid container spacing={2}>
         {currentCompany && (
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={6}>
             <p style={{ fontSize: '0.8em' }}>
               <strong>{currentCompany.name}</strong>
               {'  '}|{' '}

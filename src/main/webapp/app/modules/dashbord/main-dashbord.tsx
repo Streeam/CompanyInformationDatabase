@@ -19,14 +19,11 @@ const DashBoard = (props: IDashBoardProps) => {
   return (
     <Card style={{ backgroundColor: 'white', margin: '5px 0 5px 0', padding: '1rem' }}>
       <div>
-        <h4>
-          <strong>
+        <h5>
             Welcome back, {currentUser && currentUser.firstName ? toTitleCase(currentUser.firstName) : toTitleCase(currentUser.login)}
-          </strong>
-        </h4>
+        </h5>
       </div>
-      <h5>Dashboard</h5>
-      <br/>
+      <h4><strong>Dashboard</strong></h4>
         <NonConformanceDashboard />
     </Card>
   );

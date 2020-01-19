@@ -1,10 +1,6 @@
-import React, { useEffect, CSSProperties, HTMLAttributes, Fragment } from 'react';
-import { Card, ButtonGroup, Button } from 'reactstrap';
-import { IRootState } from 'app/shared/reducers';
-import { connect } from 'react-redux';
-import clsx from 'clsx';
-import Select from 'react-select';
+import React, { useEffect, CSSProperties, HTMLAttributes, useState } from 'react';
 // tslint:disable
+import CreatableSelect from 'react-select/creatable';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import NoSsr from '@material-ui/core/NoSsr';
@@ -184,7 +180,7 @@ export const selectSingleRouting = (props: ISelectRoutingsProps) => {
 
   const classes = useStyles(props);
   const theme = useTheme();
-  const [single, setSingle] = React.useState<ValueType<IOptionType>>(null);
+  const [single, setSingle] = useState<ValueType<IOptionType>>(null);
 
   const handleChangeSingle = (value: ValueType<IOptionType>) => {
     setSingle(value);
@@ -211,11 +207,22 @@ export const selectSingleRouting = (props: ISelectRoutingsProps) => {
       }
     })
   };
-
+  let createSingle;
+  const handleInputChange = (inputValue: any, actionMeta: any) => {
+    if (inputValue !== '') {
+      createSingle = inputValue;
+    }
+    if (createSingle && actionMeta.action === 'set-value') {
+      setSingle({ value: createSingle, label: createSingle });
+      setNoRoutingSelected(false);
+      // setRouting({})
+    }
+  };
   return (
     <div className={classes.root}>
       <NoSsr>
-        <Select
+        <CreatableSelect
+          isClearable
           classes={classes}
           styles={selectStyles}
           inputId="react-select-single"
@@ -230,6 +237,7 @@ export const selectSingleRouting = (props: ISelectRoutingsProps) => {
           components={components}
           value={mapRoutings(routing)}
           onChange={handleChangeSingle}
+          onInputChange={handleInputChange}
         />
       </NoSsr>
     </div>

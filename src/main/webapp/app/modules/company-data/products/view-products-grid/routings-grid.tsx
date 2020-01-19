@@ -127,16 +127,18 @@ export const routingsGrid = (props: IRoutingsProps) => {
                 </IconButton>
               </Fragment>
             )}
-            <IconButton
-              size="small"
-              title={'New Routing'}
-              disabled={!addProductPermission(currentEmployee)}
-              onClick={handleAddRouting}
-              aria-label="add"
-              className={classes.margin}
-            >
-              <AddIcon />
-            </IconButton>
+            {selectedProduct && (
+              <IconButton
+                size="small"
+                title={'New Routing'}
+                disabled={!addProductPermission(currentEmployee)}
+                onClick={handleAddRouting}
+                aria-label="add"
+                className={classes.margin}
+              >
+                <AddIcon />
+              </IconButton>
+            )}
           </div>
         </Grid>
       </Grid>

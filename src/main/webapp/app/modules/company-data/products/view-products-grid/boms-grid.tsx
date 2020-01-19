@@ -138,16 +138,19 @@ export const bomsGrid = (props: IBomsProps) => {
                 </IconButton>
               </Fragment>
             )}
-            <IconButton
+            {
+              selectedProduct &&
+              <IconButton
               size="small"
               title={'New Bom'}
               disabled={!addProductPermission(currentEmployee)}
               onClick={handleAddBom}
               aria-label="add"
               className={classes.margin}
-            >
+              >
               <AddIcon />
             </IconButton>
+            }
           </div>
         </Grid>
       </Grid>

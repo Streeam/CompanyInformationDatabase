@@ -62,9 +62,9 @@ export const bomUpdateForm = (props: IRoutingProps) => {
         unitRunTime: allocateRuntime()
       };
       if (currentRouting) {
-        props.updateRoutingAndRefreshParent(entityRouting, parentProduct.id);
+        // props.updateRoutingAndRefreshParent(entityRouting, parentProduct.id);
       } else {
-        props.createRoutingAndRefreshParent(entityRouting, parentProduct.id);
+        // props.createRoutingAndRefreshParent(entityRouting, parentProduct.id);
       }
       handleExit();
     }

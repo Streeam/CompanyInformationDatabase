@@ -60,7 +60,7 @@ export const productUpdateForm = (props: IProductProps) => {
   const assignStandardMaterialCost = (): number =>
     standardMaterialCost ? standardMaterialCost : currentProduct ? currentProduct.standardUnitMaterialCost : 0.0;
   const assignObsoleteToSave = (): string =>
-    obsoleteToSave ? obsoleteToSave : currentProduct ? (currentProduct.obsolete ? 'True' : 'False') : undefined;
+    obsoleteToSave !== null ? obsoleteToSave : currentProduct ? (currentProduct.obsolete ? 'True' : 'False') : undefined;
 
   const onHadleAddProduct = () => {
     if (assignPartNumber() === undefined) {
@@ -85,7 +85,7 @@ export const productUpdateForm = (props: IProductProps) => {
         unitOfMeasure: assignUnitOfMeasureToSave(),
         latestUnitMaterialCost: assignLatestUnitCost(),
         standardUnitMaterialCost: assignStandardMaterialCost(),
-        obsolete: Boolean(assignObsoleteToSave())
+        obsolete: assignObsoleteToSave() === 'True'
       };
       if (currentProduct) {
         props.updateProduct(entityProduct, selectProductAfterUpdate);

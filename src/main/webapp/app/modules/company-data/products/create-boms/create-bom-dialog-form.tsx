@@ -58,7 +58,7 @@ export const bomUpdateForm = (props: IBomProps) => {
   const onHadleUpdateBom = () => {
     if (assignPartDescription() === undefined || productValidation) {
       setProductValidation(true);
-    } else if (assignQuantity() === undefined || quantityValidation || quantity === 0) {
+    } else if (assignQuantity() === undefined || quantityValidation || quantity <= 0) {
       setQuantityValidation(true);
     } else {
       setProductValidation(false);
@@ -110,7 +110,11 @@ export const bomUpdateForm = (props: IBomProps) => {
       open={bomDialogOpen}
       onClose={handleExit}
     >
-      {currentBom ? <DialogTitle>Edit BOM {currentBom.partNumber}</DialogTitle> : <DialogTitle>Create a new BOM</DialogTitle>}
+      {currentBom ? (
+        <DialogTitle>Editing {currentBom.partNumber}</DialogTitle>
+      ) : (
+        !isEmpty(parentProduct) && <DialogTitle>{`Add a new subcomponent to ${parentProduct.partDescription}`}</DialogTitle>
+      )}
       <DialogContent>
         <div className={classes.root}>
           <Card style={{ backgroundColor: 'white', margin: '5px 0 5px 0', padding: '1rem', width: '100%' }}>
