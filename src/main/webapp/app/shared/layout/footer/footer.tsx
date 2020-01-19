@@ -41,7 +41,7 @@ const Footer = (props: ICompanyProps) => {
             </p>
           </Grid>
         )}
-        {/* <Grid item xs={12} sm={currentCompany ? 6 : 12}>
+        <Grid item xs={12} sm={currentCompany ? 6 : 12}>
           <p style={{ fontSize: '0.8em' }}>
             <strong>Company Information Database</strong>
             {'  '}|{' '}
@@ -53,7 +53,7 @@ const Footer = (props: ICompanyProps) => {
               Bogdan Mihoci
             </a>
           </p>
-        </Grid> */}
+        </Grid>
       </Grid>
     </div>
   );
