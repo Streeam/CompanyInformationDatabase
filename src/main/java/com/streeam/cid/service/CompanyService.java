@@ -35,7 +35,6 @@ public class CompanyService {
 
     @Autowired
     private  UserService userService;
-
     @Autowired
     private EmployeeService employeeService;
 
@@ -52,8 +51,7 @@ public class CompanyService {
     private final AuthorityRepository authorityRepository;
     private final NotificationService notificationService;
 
-    public CompanyService(CompanyRepository companyRepository, AuthorityRepository authorityRepository,NotificationService notificationService,
-                          CompanyMapper companyMapper) {
+    public CompanyService(CompanyRepository companyRepository, AuthorityRepository authorityRepository,NotificationService notificationService , CompanyMapper companyMapper) {
         this.companyRepository = companyRepository;
         this.authorityRepository = authorityRepository;
         this.companyMapper = companyMapper;

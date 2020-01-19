@@ -4,6 +4,8 @@ package com.streeam.cid.web.rest;
 import com.streeam.cid.domain.User;
 import com.streeam.cid.repository.UserRepository;
 import com.streeam.cid.security.SecurityUtils;
+import com.streeam.cid.service.CompanyService;
+import com.streeam.cid.service.EmployeeService;
 import com.streeam.cid.service.MailService;
 import com.streeam.cid.service.UserService;
 import com.streeam.cid.service.dto.PasswordChangeDTO;
@@ -40,11 +42,15 @@ public class AccountResource {
     private final UserRepository userRepository;
 
     private final UserService userService;
+    private final EmployeeService employeeService;
+    private final CompanyService companyService;
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
-
+    public AccountResource(UserRepository userRepository, CompanyService companyService, EmployeeService employeeService,
+                           UserService userService, MailService mailService) {
+        this.companyService = companyService;
+        this.employeeService = employeeService;
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
