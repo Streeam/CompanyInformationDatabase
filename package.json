@@ -173,8 +173,14 @@
     "webpack:build": "npm run cleanup && npm run webpack:build:main",
     "webpack:prod:main": "npm run webpack -- --config webpack/webpack.prod.js --profile",
     "webpack:prod": "npm run cleanup && npm run webpack:prod:main",
+    "webpack:test": "npm run test",
     "webpack-dev-server": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "src"
+    ]
   },
   "jestSonar": {
     "reportPath": "build/test-results/jest",
