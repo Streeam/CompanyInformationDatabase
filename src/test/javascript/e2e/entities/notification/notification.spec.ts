@@ -1,0 +1,98 @@
+import { browser, element, by, protractor } from 'protractor';
+
+import NavBarPage from './../../page-objects/navbar-page';
+import SignInPage from './../../page-objects/signin-page';
+import NotificationComponentsPage, { NotificationDeleteDialog } from './notification.page-object';
+import NotificationUpdatePage from './notification-update.page-object';
+import { waitUntilDisplayed, waitUntilHidden } from '../../util/utils';
+
+const expect = chai.expect;
+
+describe('Notification e2e test', () => {
+  let navBarPage: NavBarPage;
+  let signInPage: SignInPage;
+  let notificationComponentsPage: NotificationComponentsPage;
+  let notificationUpdatePage: NotificationUpdatePage;
+  let notificationDeleteDialog: NotificationDeleteDialog;
+
+  before(async () => {
+    await browser.get('/');
+    navBarPage = new NavBarPage();
+    signInPage = await navBarPage.getSignInPage();
+    await signInPage.waitUntilDisplayed();
+
+    await signInPage.username.sendKeys('admin');
+    await signInPage.password.sendKeys('admin');
+    await signInPage.loginButton.click();
+    await signInPage.waitUntilHidden();
+    await waitUntilDisplayed(navBarPage.entityMenu);
+  });
+
+  it('should load Notifications', async () => {
+    await navBarPage.getEntityPage('notification');
+    notificationComponentsPage = new NotificationComponentsPage();
+    expect(await notificationComponentsPage.getTitle().getText()).to.match(/Notifications/);
+  });
+
+  it('should load create Notification page', async () => {
+    await notificationComponentsPage.clickOnCreateButton();
+    notificationUpdatePage = new NotificationUpdatePage();
+    expect(await notificationUpdatePage.getPageTitle().getText()).to.match(/Create or edit a Notification/);
+    await notificationUpdatePage.cancel();
+  });
+
+  it('should create and save Notifications', async () => {
+    async function createNotification() {
+      await notificationComponentsPage.clickOnCreateButton();
+      await notificationUpdatePage.setCommentInput('comment');
+      expect(await notificationUpdatePage.getCommentInput()).to.match(/comment/);
+      const selectedRead = await notificationUpdatePage.getReadInput().isSelected();
+      if (selectedRead) {
+        await notificationUpdatePage.getReadInput().click();
+        expect(await notificationUpdatePage.getReadInput().isSelected()).to.be.false;
+      } else {
+        await notificationUpdatePage.getReadInput().click();
+        expect(await notificationUpdatePage.getReadInput().isSelected()).to.be.true;
+      }
+      await notificationUpdatePage.formatSelectLastOption();
+      await notificationUpdatePage.setReferencedEmployeeInput('referencedEmployee');
+      expect(await notificationUpdatePage.getReferencedEmployeeInput()).to.match(/referencedEmployee/);
+      await notificationUpdatePage.setSentDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM');
+      expect(await notificationUpdatePage.getSentDateInput()).to.contain('2001-01-01T02:30');
+      await notificationUpdatePage.setEmployeeIdInput('5');
+      expect(await notificationUpdatePage.getEmployeeIdInput()).to.eq('5');
+      await waitUntilDisplayed(notificationUpdatePage.getSaveButton());
+      await notificationUpdatePage.save();
+      await waitUntilHidden(notificationUpdatePage.getSaveButton());
+      expect(await notificationUpdatePage.getSaveButton().isPresent()).to.be.false;
+    }
+
+    await createNotification();
+    await notificationComponentsPage.waitUntilLoaded();
+    const nbButtonsBeforeCreate = await notificationComponentsPage.countDeleteButtons();
+    await createNotification();
+
+    await notificationComponentsPage.waitUntilDeleteButtonsLength(nbButtonsBeforeCreate + 1);
+    expect(await notificationComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1);
+  });
+
+  it('should delete last Notification', async () => {
+    await notificationComponentsPage.waitUntilLoaded();
+    const nbButtonsBeforeDelete = await notificationComponentsPage.countDeleteButtons();
+    await notificationComponentsPage.clickOnLastDeleteButton();
+
+    const deleteModal = element(by.className('modal'));
+    await waitUntilDisplayed(deleteModal);
+
+    notificationDeleteDialog = new NotificationDeleteDialog();
+    expect(await notificationDeleteDialog.getDialogTitle().getAttribute('id')).to.match(/cidApp.notification.delete.question/);
+    await notificationDeleteDialog.clickOnConfirmButton();
+
+    await notificationComponentsPage.waitUntilDeleteButtonsLength(nbButtonsBeforeDelete - 1);
+    expect(await notificationComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
+  });
+
+  after(async () => {
+    await navBarPage.autoSignOut();
+  });
+});

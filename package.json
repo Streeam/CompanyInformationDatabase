@@ -182,6 +182,11 @@
     "webpack-dev-server": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js"
   },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "src"
+    ]
+  },
   "jestSonar": {
     "reportPath": "build/test-results/jest",
     "reportFile": "TESTS-results-sonar.xml"
