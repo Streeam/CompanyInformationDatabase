@@ -4,16 +4,16 @@ package com.streeam.cid.web.rest;
 import com.streeam.cid.domain.User;
 import com.streeam.cid.repository.UserRepository;
 import com.streeam.cid.security.SecurityUtils;
-import com.streeam.cid.service.CompanyService;
-import com.streeam.cid.service.EmployeeService;
 import com.streeam.cid.service.MailService;
 import com.streeam.cid.service.UserService;
 import com.streeam.cid.service.dto.PasswordChangeDTO;
 import com.streeam.cid.service.dto.UserDTO;
-import com.streeam.cid.web.rest.errors.*;
+import com.streeam.cid.web.rest.errors.EmailAlreadyUsedException;
+import com.streeam.cid.web.rest.errors.EmailNotFoundException;
+import com.streeam.cid.web.rest.errors.InvalidPasswordException;
+import com.streeam.cid.web.rest.errors.LoginAlreadyUsedException;
 import com.streeam.cid.web.rest.vm.KeyAndPasswordVM;
 import com.streeam.cid.web.rest.vm.ManagedUserVM;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.
@@ -42,15 +42,11 @@ public class AccountResource {
     private final UserRepository userRepository;
 
     private final UserService userService;
-    private final EmployeeService employeeService;
-    private final CompanyService companyService;
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, CompanyService companyService, EmployeeService employeeService,
+    public AccountResource(UserRepository userRepository,
                            UserService userService, MailService mailService) {
-        this.companyService = companyService;
-        this.employeeService = employeeService;
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;

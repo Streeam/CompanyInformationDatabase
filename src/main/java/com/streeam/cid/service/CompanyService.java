@@ -34,11 +34,6 @@ public class CompanyService {
     private MailService mailService;
 
     @Autowired
-    private  UserService userService;
-    @Autowired
-    private EmployeeService employeeService;
-
-    @Autowired
     private EmployeeRepository employeeRepository;
 
     @Autowired
@@ -51,7 +46,8 @@ public class CompanyService {
     private final AuthorityRepository authorityRepository;
     private final NotificationService notificationService;
 
-    public CompanyService(CompanyRepository companyRepository, AuthorityRepository authorityRepository,NotificationService notificationService , CompanyMapper companyMapper) {
+    public CompanyService(CompanyRepository companyRepository, AuthorityRepository authorityRepository,NotificationService notificationService
+        , CompanyMapper companyMapper) {
         this.companyRepository = companyRepository;
         this.authorityRepository = authorityRepository;
         this.companyMapper = companyMapper;
@@ -155,27 +151,6 @@ public class CompanyService {
      */
     public boolean companyNameAlreadyExists(String name) {
         return companyRepository.findAll().stream().anyMatch(company -> company.getName().equals(name));
-    }
-
-    /**
-     *
-     * @return an optional of the current user
-     */
-    public Optional<User> findCurrentUser(String login) {
-        return userService.getUserWithAuthoritiesByLogin(login);
-    }
-
-    public Optional<Employee> findEmployeeFromUser(User user) {
-        return employeeService.findOneByUser(user);
-    }
-
-    /**
-     *  Checks if the current uses has the provided authorities
-     * @param roles
-     * @return true if the user has at least one of the authorities false otherwise
-     */
-    public boolean checkUserHasRoles(User user,String... roles) {
-        return userService.checkIfUserHasRoles(user, roles);
     }
 
     public CompanyDTO saveCompany(CompanyDTO companyDTO, Employee employee, User user) {

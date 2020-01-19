@@ -7,6 +7,7 @@ import com.streeam.cid.security.SecurityUtils;
 import com.streeam.cid.service.CompanyService;
 import com.streeam.cid.service.EmployeeService;
 import com.streeam.cid.service.MailService;
+import com.streeam.cid.service.UserService;
 import com.streeam.cid.service.dto.EmployeeDTO;
 import com.streeam.cid.service.mapper.EmployeeMapper;
 import com.streeam.cid.web.rest.errors.BadRequestAlertException;
@@ -47,7 +48,8 @@ public class EmployeeResource {
     private AuthorityRepository authorityRepository;
     @Autowired
     private CompanyService companyService;
-
+    @Autowired
+    private UserService userService;
     @Autowired
     private EmployeeMapper employeeMapper;
 
@@ -173,7 +175,7 @@ public class EmployeeResource {
     public ResponseEntity<EmployeeDTO> getCurrentEmployee() {
         log.debug("REST request to get the current employee");
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
-        User currentUser = companyService.findCurrentUser(currentUserLogin).orElseThrow(() ->
+        User currentUser = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
             new BadRequestAlertException("No user logged in", ENTITY_NAME, "No user logged in"));
         Employee employee = employeeService.findOneByUser(currentUser).orElseThrow(() ->
             new BadRequestAlertException("No employee linked to this user", ENTITY_NAME, "userwithnoemployee"));;

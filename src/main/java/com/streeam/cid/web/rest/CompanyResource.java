@@ -7,7 +7,9 @@ import com.streeam.cid.repository.AuthorityRepository;
 import com.streeam.cid.security.AuthoritiesConstants;
 import com.streeam.cid.security.SecurityUtils;
 import com.streeam.cid.service.CompanyService;
+import com.streeam.cid.service.EmployeeService;
 import com.streeam.cid.service.MailService;
+import com.streeam.cid.service.UserService;
 import com.streeam.cid.service.dto.CompanyDTO;
 import com.streeam.cid.service.mapper.CompanyMapper;
 import com.streeam.cid.web.rest.errors.BadRequestAlertException;
@@ -43,9 +45,13 @@ public class CompanyResource {
     private final CompanyService companyService;
 
     private final MailService mailService;
-
+    @Autowired
+    private EmployeeService employeeService;
     @Autowired
     private CompanyMapper companyMapper;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private AuthorityRepository authorityRepository;
@@ -76,17 +82,17 @@ public class CompanyResource {
         }
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
 
-        User user = companyService.findCurrentUser(currentUserLogin).orElseThrow(() ->
+        User user = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
             new BadRequestAlertException("No user logged in", ENTITY_NAME, "No user logged in"));
 
-        Employee employee = companyService.findEmployeeFromUser(user).orElseThrow(() ->
+        Employee employee = employeeService.findOneByUser(user).orElseThrow(() ->
             new BadRequestAlertException("No employee linked to this user", ENTITY_NAME, "No employee linked to this user"));
 
         List<CompanyDTO> companies = companyService.findAll();
         if (!companies.isEmpty()) {
             throw new BadRequestAlertException("A company already exist. You cannot create another company.", ENTITY_NAME, "wrongroleforcreatingcompany");
         }
-        if (companyService.checkUserHasRoles(user, AuthoritiesConstants.EMPLOYEE, AuthoritiesConstants.ADMIN, AuthoritiesConstants.ANONYMOUS)) {
+        if (userService.checkIfUserHasRoles(user, AuthoritiesConstants.EMPLOYEE, AuthoritiesConstants.ADMIN, AuthoritiesConstants.ANONYMOUS)) {
             throw new BadRequestAlertException("Only the manager can create a company.", ENTITY_NAME, "wrongroleforcreatingcompany");
         }
 
@@ -119,13 +125,13 @@ public class CompanyResource {
         }
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
 
-        User currentUser = companyService.findCurrentUser(currentUserLogin).orElseThrow(() ->
+        User currentUser = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
             new BadRequestAlertException("No user logged in", ENTITY_NAME, "No user logged in"));
 
-        Employee currentEmployee = companyService.findEmployeeFromUser(currentUser).orElseThrow(() ->
+        Employee currentEmployee = employeeService.findOneByUser(currentUser).orElseThrow(() ->
             new BadRequestAlertException("No employee linked to this user", ENTITY_NAME, "No employee linked to this user"));
 
-        if (!companyService.checkUserHasRoles(currentUser, AuthoritiesConstants.ADMIN, AuthoritiesConstants.MANAGER)) {
+        if (!userService.checkIfUserHasRoles(currentUser, AuthoritiesConstants.ADMIN, AuthoritiesConstants.MANAGER)) {
             throw new BadRequestAlertException("You don't have the authority to modify the details of the company", ENTITY_NAME, "noauthoritytochangecomp");
         }
 
@@ -145,7 +151,7 @@ public class CompanyResource {
         log.debug("REST request to get all Companies");
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
 
-        companyService.findCurrentUser(currentUserLogin).orElseThrow(() ->
+        userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
             new BadRequestAlertException("No user logged in", ENTITY_NAME, "No user logged in"));
 
         return companyService.findAll();
@@ -178,13 +184,13 @@ public class CompanyResource {
         Company companyToDelete = companyService.findCompanyById(id).orElseThrow(() ->
             new BadRequestAlertException("No company with this id found.", ENTITY_NAME, "nocompwithid"));
 
-        User currentUser = companyService.findCurrentUser(currentUserLogin).orElseThrow(() ->
+        User currentUser = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
             new BadRequestAlertException("No user logged in", ENTITY_NAME, "No user logged in"));
 
-        companyService.findEmployeeFromUser(currentUser).orElseThrow(() ->
+        employeeService.findOneByUser(currentUser).orElseThrow(() ->
             new BadRequestAlertException("No employee linked to this user", ENTITY_NAME, "userwithnoemployee"));
 
-        if (!companyService.checkUserHasRoles(currentUser, AuthoritiesConstants.MANAGER, AuthoritiesConstants.ADMIN)) {
+        if (!userService.checkIfUserHasRoles(currentUser, AuthoritiesConstants.MANAGER, AuthoritiesConstants.ADMIN)) {
             throw new BadRequestAlertException("You don't have the authority to delete this company", ENTITY_NAME, "companyremoveforbiden");
         }
          companyService.delete(companyToDelete);

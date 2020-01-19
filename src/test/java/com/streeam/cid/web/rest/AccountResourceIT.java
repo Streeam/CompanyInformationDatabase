@@ -79,10 +79,10 @@ public class AccountResourceIT {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
         AccountResource accountResource =
-            new AccountResource(userRepository,null ,null, userService, mockMailService);
+            new AccountResource(userRepository, userService, mockMailService);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, null ,null, mockUserService, mockMailService);
+            new AccountResource(userRepository, mockUserService, mockMailService);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
             .setControllerAdvice(exceptionTranslator)

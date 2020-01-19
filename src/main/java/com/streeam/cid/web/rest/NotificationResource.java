@@ -6,6 +6,7 @@ import com.streeam.cid.security.SecurityUtils;
 import com.streeam.cid.service.CompanyService;
 import com.streeam.cid.service.EmployeeService;
 import com.streeam.cid.service.NotificationService;
+import com.streeam.cid.service.UserService;
 import com.streeam.cid.service.dto.NotificationDTO;
 import com.streeam.cid.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
@@ -33,7 +34,8 @@ public class NotificationResource {
     private final Logger log = LoggerFactory.getLogger(NotificationResource.class);
 
     private static final String ENTITY_NAME = "notification";
-
+    @Autowired
+    private UserService userService;
     @Autowired
     private EmployeeService employeeService;
 
@@ -110,9 +112,9 @@ public class NotificationResource {
     public ResponseEntity<List<NotificationDTO>> getCurrentNotifications() {
         log.debug("REST request to get all employee notifications");
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
-        User user = companyService.findCurrentUser(currentUserLogin).orElseThrow(() ->
+        User user = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
             new BadRequestAlertException("No user logged in", ENTITY_NAME, "No user logged in"));
-        Employee currentEmployee = companyService.findEmployeeFromUser(user).orElseThrow(() ->
+        Employee currentEmployee = employeeService.findOneByUser(user).orElseThrow(() ->
             new BadRequestAlertException("No employee linked to this user", ENTITY_NAME, "No employee linked to this user"));
 
         List<NotificationDTO> notifications = notificationService.findAllByEmployee(currentEmployee);

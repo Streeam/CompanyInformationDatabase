@@ -43,6 +43,10 @@ public class NonConformanceDetailsResource {
     @Autowired
     private CompanyService companyService;
     @Autowired
+    private UserService userService;
+    @Autowired
+    private EmployeeService employeeService;
+    @Autowired
     private FishBoneRepository fishBoneRepository;
     @Autowired
     private ActionToBeTakenRepository actionToBeTakenRepository;
@@ -81,10 +85,10 @@ public class NonConformanceDetailsResource {
 
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
 
-        User user = companyService.findCurrentUser(currentUserLogin).orElseThrow(() ->
+        User user = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
             new BadRequestAlertException("No user logged in", ENTITY_NAME, "No user logged in"));
 
-        Employee employee = companyService.findEmployeeFromUser(user).orElseThrow(() ->
+        Employee employee = employeeService.findOneByUser(user).orElseThrow(() ->
             new BadRequestAlertException("No employee linked to this user", ENTITY_NAME, "No employee linked to this user"));
         Optional<NonConformanceDetailsDTO> incompleteNonConformanceDetails = nonConformanceDetailsService.findOneByEmployeeAndStatus(employee, Status.INCOMPLETE);
 
@@ -141,10 +145,10 @@ public class NonConformanceDetailsResource {
         log.debug("REST request to get all NonConformanceDetails");
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
 
-        User user = companyService.findCurrentUser(currentUserLogin).orElseThrow(() ->
+        User user = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
             new BadRequestAlertException("No user logged in", ENTITY_NAME, "No user logged in"));
 
-        Employee currentEmployee = companyService.findEmployeeFromUser(user).orElseThrow(() ->
+        Employee currentEmployee = employeeService.findOneByUser(user).orElseThrow(() ->
             new BadRequestAlertException("No employee linked to this user", ENTITY_NAME, "No employee linked to this user"));
         List<NonConformanceDetailsDTO> nonConformanceDetailsDTOList = nonConformanceDetailsService.findAll();
         if (nonConformanceDetailsDTOList.stream().filter(
@@ -180,10 +184,10 @@ public class NonConformanceDetailsResource {
 
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
 
-        User user = companyService.findCurrentUser(currentUserLogin).orElseThrow(() ->
+        User user = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
             new BadRequestAlertException("No user logged in", ENTITY_NAME, "No user logged in"));
 
-        Employee employee = companyService.findEmployeeFromUser(user).orElseThrow(() ->
+        Employee employee = employeeService.findOneByUser(user).orElseThrow(() ->
             new BadRequestAlertException("No employee linked to this user", ENTITY_NAME, "No employee linked to this user"));
         Optional<NonConformanceDetailsDTO> nonConformanceDetailsDTO = nonConformanceDetailsService.findOneByEmployeeAndStatus(employee, Status.INCOMPLETE);
         log.debug("REST request to get current incomplete employee : {}", employee.getUser().getFirstName() );
@@ -205,10 +209,10 @@ public class NonConformanceDetailsResource {
 
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
 
-        User user = companyService.findCurrentUser(currentUserLogin).orElseThrow(() ->
+        User user = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
             new BadRequestAlertException("No user logged in", ENTITY_NAME, "No user logged in"));
 
-        Employee currentEmployee = companyService.findEmployeeFromUser(user).orElseThrow(() ->
+        Employee currentEmployee = employeeService.findOneByUser(user).orElseThrow(() ->
             new BadRequestAlertException("No employee linked to this user", ENTITY_NAME, "No employee linked to this user"));
         List<NonConformanceDetailsDTO> nonConformanceDetailsDTOList = nonConformanceDetailsService.findAllByEmployee(currentEmployee);
         return nonConformanceDetailsDTOList;

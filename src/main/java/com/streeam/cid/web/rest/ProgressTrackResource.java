@@ -4,9 +4,7 @@ import com.streeam.cid.domain.Employee;
 import com.streeam.cid.domain.User;
 import com.streeam.cid.domain.enumeration.Status;
 import com.streeam.cid.security.SecurityUtils;
-import com.streeam.cid.service.CompanyService;
-import com.streeam.cid.service.ProgressTrackService;
-import com.streeam.cid.service.TaskService;
+import com.streeam.cid.service.*;
 import com.streeam.cid.service.dto.ProgressTrackDTO;
 import com.streeam.cid.service.dto.TaskDTO;
 import com.streeam.cid.web.rest.errors.BadRequestAlertException;
@@ -37,7 +35,10 @@ public class ProgressTrackResource {
     private static final String ENTITY_NAME = "progressTrack";
     @Autowired
     private TaskService taskService;
-
+    @Autowired
+    private EmployeeService employeeService;
+    @Autowired
+    private UserService userService;
     @Autowired
     private CompanyService companyService;
 
@@ -150,10 +151,10 @@ public class ProgressTrackResource {
         log.debug("REST request to get all Employees's progress tracks");
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
 
-        User user = companyService.findCurrentUser(currentUserLogin).orElseThrow(() ->
+        User user = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
             new BadRequestAlertException("No user logged in", ENTITY_NAME, "No user logged in"));
 
-        Employee currentEmployee = companyService.findEmployeeFromUser(user).orElseThrow(() ->
+        Employee currentEmployee = employeeService.findOneByUser(user).orElseThrow(() ->
             new BadRequestAlertException("No employee linked to this user", ENTITY_NAME, "No employee linked to this user"));
         return progressTrackService.findAllByEmployee(currentEmployee.getId());
     }
