@@ -25,20 +25,9 @@ const DashBoard = (props: IDashBoardProps) => {
           </strong>
         </h4>
       </div>
-      <AntTabs value={tab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab} aria-label="tabs">
-        <AntTab label="Non-Conformaces" />
-        <AntTab label="Tasks" />
-        <AntTab label="Operators" />
-      </AntTabs>
-      <TabPanel value={tab} index={0}>
+      <h5>Dashboard</h5>
+      <br/>
         <NonConformanceDashboard />
-      </TabPanel>
-      <TabPanel value={tab} index={1}>
-        In development...
-      </TabPanel>
-      <TabPanel value={tab} index={2}>
-        In development...
-      </TabPanel>
     </Card>
   );
 };
