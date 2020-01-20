@@ -30,6 +30,7 @@ describe('Entities reducer tests', () => {
     loading: false,
     errorMessage: null,
     entities: [] as ReadonlyArray<IRouting>,
+    parentsEntities: [] as ReadonlyArray<IRouting>,
     entity: defaultValue,
     updating: false,
     updateSuccess: false

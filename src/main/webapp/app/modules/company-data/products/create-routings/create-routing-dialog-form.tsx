@@ -14,11 +14,12 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 // tslint:enable
 import Transition from '../../../../shared/layout/custom-components/transition/transition';
-import { updateRoutingAndRefreshParent, createRoutingAndRefreshParent } from '../../../../entities/routing/routing.reducer';
+import { updateRoutingAndRefreshParent, createRoutingAndRefreshParent, getAllEntities as getAllRoutings } from '../../../../entities/routing/routing.reducer';
 import { IProduct } from 'app/shared/model/product.model';
 import { isEmpty, isArrayEmpty } from 'app/shared/util/general-utils';
 import { IRouting } from 'app/shared/model/routing.model';
 import SelectSingleRouting from 'app/shared/layout/custom-components/select/select-single-routing';
+import { getNextUniqueRoutingId } from 'app/shared/util/entity-utils';
 
 interface IRoutingProps extends StateProps, DispatchProps {
   handleClose;
@@ -28,11 +29,16 @@ interface IRoutingProps extends StateProps, DispatchProps {
   setCurrentRouting: Function;
 }
 export const bomUpdateForm = (props: IRoutingProps) => {
-  const { handleClose, routingDialogOpen, currentRouting, allProducts, parentProduct, setCurrentRouting } = props;
-  React.useEffect(() => {}, []);
+  const { handleClose, routingDialogOpen, currentRouting, allProducts, parentProduct, setCurrentRouting, allRoutings } = props;
+  React.useEffect(() => {
+    if (isArrayEmpty(allRoutings)) {
+      props.getAllRoutings();
+    }
+  }, []);
   const classes = useStyles(props);
 
-  const [routing, setRouting] = useState<string>(null);
+  const [routingName, setRoutingName] = useState<string>(null);
+  const [newRoutingName, setNewRoutingName] = useState<string>(null);
   const [resourceType, setResourceType] = useState<string>(null);
   const [unitRunTime, setUnitRunTime] = useState<number>(null);
 
@@ -40,7 +46,19 @@ export const bomUpdateForm = (props: IRoutingProps) => {
   const [noResourceTypeSelected, setNoResourceTypeSelected] = useState<boolean>(false);
   const [noRunTimeSelected, setNoRunTimeSelected] = useState<boolean>(false);
 
-  const allocateResourceName = (): string => (routing ? routing : currentRouting ? currentRouting.resourceName : undefined);
+  const allocateResourceName = (): string => {
+    if (routingName) {
+      return routingName;
+    } else if (newRoutingName) {
+      return newRoutingName;
+    } else {
+      if (currentRouting) {
+        return currentRouting.resourceName;
+      } else {
+        return undefined;
+      }
+    }
+  };
   const allocateResourceType = (): string => (resourceType ? resourceType : currentRouting ? currentRouting.resourceType : undefined);
   const allocateRuntime = (): number => (unitRunTime ? unitRunTime : currentRouting ? currentRouting.unitRunTime : undefined);
   const onHadleUpdateRouting = () => {
@@ -57,20 +75,24 @@ export const bomUpdateForm = (props: IRoutingProps) => {
       const entityRouting: IRouting = {
         ...currentRouting,
         partNumber: currentRouting ? currentRouting.partNumber : parentProduct.partNumber,
+        uniqueIdentifier: getNextUniqueRoutingId([...allRoutings]).toString(),
         resourceName: allocateResourceName(),
         resourceType: allocateResourceType(),
         unitRunTime: allocateRuntime()
       };
+      // console.log(entityRouting);
       if (currentRouting) {
         // props.updateRoutingAndRefreshParent(entityRouting, parentProduct.id);
       } else {
-        // props.createRoutingAndRefreshParent(entityRouting, parentProduct.id);
+        props.createRoutingAndRefreshParent(entityRouting, parentProduct.id);
       }
       handleExit();
     }
   };
+
   const handleExit = () => {
-    setRouting(null);
+    setRoutingName(null);
+    setNewRoutingName(null);
     setResourceType(null);
     setUnitRunTime(0);
     setNoRoutingSelected(false);
@@ -79,6 +101,7 @@ export const bomUpdateForm = (props: IRoutingProps) => {
     // setCurrentRouting(null);
     handleClose();
   };
+
   const handleUnitRunTime = event => {
     event.target.value && Number(event.target.value) !== 0 ? setNoRunTimeSelected(false) : setNoRunTimeSelected(true);
     setUnitRunTime(event.target.value);
@@ -87,11 +110,12 @@ export const bomUpdateForm = (props: IRoutingProps) => {
     event.target.value ? setNoResourceTypeSelected(false) : setNoResourceTypeSelected(true);
     setResourceType(event.target.value);
   };
-  const dropDownRoutingColumn = (products: IProduct[]) => {
+  const dropDownRoutingColumn = () => {
     const uniqueRoutings = new Set<string>();
-    products.forEach(product => product.routings.forEach(value => uniqueRoutings.add(value.resourceName)));
+    allRoutings.forEach(value => uniqueRoutings.add(value.resourceName));
     return [...uniqueRoutings];
   };
+
   return (
     <Dialog
       maxWidth="xl"
@@ -112,9 +136,12 @@ export const bomUpdateForm = (props: IRoutingProps) => {
             <Grid container spacing={1}>
               <Grid item xs={12} sm={4}>
                 <SelectSingleRouting
-                  routing={allocateResourceName()}
-                  setRouting={setRouting}
-                  routings={dropDownRoutingColumn([...allProducts])}
+                  createNewRouting
+                  newRoutingName={newRoutingName}
+                  setNewRoutingName={setNewRoutingName}
+                  routingName={allocateResourceName()}
+                  setRoutingName={setRoutingName}
+                  routings={dropDownRoutingColumn()}
                   noRoutingSelected={noRoutingSelected}
                   setNoRoutingSelected={setNoRoutingSelected}
                 />
@@ -168,11 +195,12 @@ export const bomUpdateForm = (props: IRoutingProps) => {
   );
 };
 
-const mapStateToProps = ({ product }: IRootState) => ({
-  allProducts: product.entities
+const mapStateToProps = ({ product, routing }: IRootState) => ({
+  allProducts: product.entities,
+  allRoutings: routing.entities
 });
 
-const mapDispatchToProps = { updateRoutingAndRefreshParent, createRoutingAndRefreshParent };
+const mapDispatchToProps = { updateRoutingAndRefreshParent, createRoutingAndRefreshParent, getAllRoutings };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

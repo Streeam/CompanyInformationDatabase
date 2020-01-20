@@ -8,6 +8,7 @@ import { IRouting, defaultValue } from 'app/shared/model/routing.model';
 
 export const ACTION_TYPES = {
   FETCH_ROUTING_LIST: 'routing/FETCH_ROUTING_LIST',
+  FETCH_PARENT_ROUTING_LIST: 'routing/FETCH_PARENT_ROUTING_LIST',
   FETCH_ROUTING: 'routing/FETCH_ROUTING',
   CREATE_ROUTING: 'routing/CREATE_ROUTING',
   UPDATE_ROUTING: 'routing/UPDATE_ROUTING',
@@ -20,6 +21,7 @@ const initialState = {
   loading: false,
   errorMessage: null,
   entities: [] as ReadonlyArray<IRouting>,
+  parentsEntities: [] as ReadonlyArray<IRouting>,
   entity: defaultValue,
   updating: false,
   updateSuccess: false
@@ -32,6 +34,7 @@ export type RoutingState = Readonly<typeof initialState>;
 export default (state: RoutingState = initialState, action): RoutingState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.FETCH_ROUTING_LIST):
+    case REQUEST(ACTION_TYPES.FETCH_PARENT_ROUTING_LIST):
     case REQUEST(ACTION_TYPES.FETCH_ROUTING):
       return {
         ...state,
@@ -50,6 +53,7 @@ export default (state: RoutingState = initialState, action): RoutingState => {
         updating: true
       };
     case FAILURE(ACTION_TYPES.FETCH_ROUTING_LIST):
+    case FAILURE(ACTION_TYPES.FETCH_PARENT_ROUTING_LIST):
     case FAILURE(ACTION_TYPES.FETCH_ROUTING):
     case FAILURE(ACTION_TYPES.CREATE_ROUTING):
     case FAILURE(ACTION_TYPES.UPDATE_ROUTING):
@@ -67,6 +71,12 @@ export default (state: RoutingState = initialState, action): RoutingState => {
         ...state,
         loading: false,
         entities: action.payload.data
+      };
+    case SUCCESS(ACTION_TYPES.FETCH_PARENT_ROUTING_LIST):
+      return {
+        ...state,
+        loading: false,
+        parentsEntities: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.FETCH_ROUTING):
       return {
@@ -126,7 +136,7 @@ export const getAllEntities: ICrudGetAllAction<IRouting> = () => {
 export const getParentsRoutings = (productId: number) => {
   const requestUrl = `${apiUrl}/product/${productId}`;
   return {
-    type: ACTION_TYPES.FETCH_ROUTING_LIST,
+    type: ACTION_TYPES.FETCH_PARENT_ROUTING_LIST,
     payload: axios.get<IRouting>(requestUrl)
   };
 };

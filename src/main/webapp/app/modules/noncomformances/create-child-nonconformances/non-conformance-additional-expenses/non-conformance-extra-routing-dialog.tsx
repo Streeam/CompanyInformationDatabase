@@ -104,8 +104,9 @@ export const internalNonConformanceExtraRoutingDialog = (props: INonconformanceI
             <Grid container spacing={1}>
               <Grid item xs={12} sm={8}>
                 <SelectSingleRouting
-                  routing={allocateRouting()}
-                  setRouting={setRouting}
+                  createNewRouting={false}
+                  routingName={allocateRouting()}
+                  setRoutingName={setRouting}
                   routings={dropDownRoutingColumn([...allProducts])}
                   noRoutingSelected={noRoutingSelected}
                   setNoRoutingSelected={setNoRoutingSelected}

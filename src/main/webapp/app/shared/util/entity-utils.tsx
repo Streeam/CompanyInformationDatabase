@@ -14,8 +14,9 @@ import { isNull } from 'lodash';
 import { Status } from '../model/enumerations/status.model';
 import { IImage } from '../model/image.model';
 import { INonConformanceDetails } from '../model/non-conformance-details.model';
-import { isEmpty, toTitleCase } from './general-utils';
+import { isEmpty, toTitleCase, isArrayEmpty } from './general-utils';
 import { CustomerNonconformaceType } from '../model/enumerations/customer-nonconformace-type.model';
+import { IRouting } from '../model/routing.model';
 
 /**
  * Removes fields with an 'id' field that equals ''.
@@ -121,6 +122,11 @@ export const parseCustomerNCType = (ncType: CustomerNonconformaceType): string =
     default:
       throw new Error('Non existing customer non-conformance type!!');
   }
+};
+export const getNextUniqueRoutingId = (routings: IRouting[]): number => {
+  const listOfRoutingsIds: number[] = !isArrayEmpty(routings) ? routings.map(item => Number(item.uniqueIdentifier)) : [];
+  const id = !isArrayEmpty(routings) ? Math.max(...listOfRoutingsIds) + 1 : 1;
+  return id;
 };
 export const downloadebleAttachment = (entity: ITask | IProgressTrack | INonConformanceDetails, images: IImage[]): IImage => {
   if (images && images.length > 0) {

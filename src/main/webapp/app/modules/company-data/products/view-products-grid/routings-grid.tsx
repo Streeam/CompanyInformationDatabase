@@ -170,7 +170,7 @@ export const routingsGrid = (props: IRoutingsProps) => {
 };
 
 const mapStateToProps = ({ routing, employee, product }: IRootState) => ({
-  parentsRoutings: routing.entities,
+  parentsRoutings: routing.parentsEntities,
   currentEmployee: employee.currentEmployeeEntity,
   allProducts: product.entities
 });

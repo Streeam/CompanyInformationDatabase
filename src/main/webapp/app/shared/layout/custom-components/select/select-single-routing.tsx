@@ -2,6 +2,7 @@ import React, { useEffect, CSSProperties, HTMLAttributes, useState } from 'react
 import { connect } from 'react-redux';
 // tslint:disable
 import CreatableSelect from 'react-select/creatable';
+import Select from 'react-select';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import NoSsr from '@material-ui/core/NoSsr';
@@ -23,10 +24,13 @@ import { IRootState } from 'app/shared/reducers';
 
 interface ISelectRoutingsProps extends StateProps, DispatchProps {
   routings: string[];
-  routing: string;
-  setRouting: Function;
+  routingName: string;
+  setRoutingName: Function;
+  newRoutingName?: string;
+  setNewRoutingName?: Function;
   setNoRoutingSelected: Function;
   noRoutingSelected: boolean;
+  createNewRouting: boolean;
 }
 interface IOptionType {
   value: number;
@@ -140,7 +144,7 @@ function Menu(props: MenuProps<IOptionType>) {
 }
 
 export const selectSingleRouting = (props: ISelectRoutingsProps) => {
-  const { routings, routing, setRouting, setNoRoutingSelected, noRoutingSelected, allRoutingsEntities } = props;
+  const { routings, routingName, setRoutingName, setNoRoutingSelected, noRoutingSelected, allRoutingsEntities, createNewRouting, setNewRoutingName, newRoutingName } = props;
   useEffect(() => {}, []);
   // tslint:disable
   const Control = (props: ControlProps<IOptionType>) => {
@@ -188,22 +192,35 @@ export const selectSingleRouting = (props: ISelectRoutingsProps) => {
   const handleChangeSingle = (value: ValueType<IOptionType>) => {
     setSingle(value);
     setNoRoutingSelected(false);
-    setRouting(routings.filter(routingElement => routingElement === value.value)[0]);
+    setRoutingName(routings.filter(routingElement => routingElement === value.value)[0]);
   };
-  const getNextUniqueRoutingId = (allRoutings: IRouting[]): number => {
-    const listOfRoutingsIds: number[] = !isArrayEmpty(allRoutings) ? allRoutings.map(item => Number(item.uniqueIdentifier)) : [];
-    const id = !isArrayEmpty(allRoutings) ? Math.max(...listOfRoutingsIds) + 1 : 1;
-    return id;
+
+  const mapRoutings = () => {
+    return routingName
+      ? {
+          value: routingName,
+          label: routingName
+        }
+      :
+      newRoutingName
+      ? {
+          value: newRoutingName,
+          label: newRoutingName
+        }
+      :
+      single;
   };
-  const mapRoutings = (routingString: string) => {
+  const mapSuggestingsRoutings = (routingString: string) => {
     return routingString
       ? {
           value: routingString,
           label: routingString
         }
-      : single;
+      :
+      single;
   };
-  const suggestions: IOptionType[] = routings && routings.length > 0 ? routings.map(routingValue => mapRoutings(routingValue)) : [];
+
+  const suggestions: IOptionType[] = routings && routings.length > 0 ? routings.map(routingValue => mapSuggestingsRoutings(routingValue)) : [];
 
   const selectStyles = {
     input: (base: CSSProperties) => ({
@@ -222,15 +239,34 @@ export const selectSingleRouting = (props: ISelectRoutingsProps) => {
     if (createSingle && actionMeta.action === 'set-value') {
       setSingle({ value: createSingle, label: createSingle });
       setNoRoutingSelected(false);
-      // setRouting({})
+      setNewRoutingName(createSingle);
     }
   };
-  // console.log(getNextUniqueRoutingId([...allRoutingsEntities]));
+
   return (
     <div className={classes.root}>
       <NoSsr>
-        <CreatableSelect
-          isClearable
+        {
+          createNewRouting ?
+          <CreatableSelect
+            isClearable
+            classes={classes}
+            styles={selectStyles}
+            inputId="react-select-single"
+            TextFieldProps={{
+              label: 'Routing',
+              InputLabelProps: {
+                htmlFor: 'react-select-single',
+                shrink: true
+              }
+            }}
+            options={suggestions}
+            components={components}
+            value={mapRoutings()}
+            onChange={handleChangeSingle}
+            onInputChange={handleInputChange}
+          /> :
+          <Select
           classes={classes}
           styles={selectStyles}
           inputId="react-select-single"
@@ -243,10 +279,10 @@ export const selectSingleRouting = (props: ISelectRoutingsProps) => {
           }}
           options={suggestions}
           components={components}
-          value={mapRoutings(routing)}
+          value={mapRoutings()}
           onChange={handleChangeSingle}
-          onInputChange={handleInputChange}
         />
+        }
       </NoSsr>
     </div>
   );
