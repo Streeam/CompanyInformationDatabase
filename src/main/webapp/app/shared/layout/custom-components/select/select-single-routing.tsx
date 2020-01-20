@@ -1,4 +1,5 @@
 import React, { useEffect, CSSProperties, HTMLAttributes, useState } from 'react';
+import { connect } from 'react-redux';
 // tslint:disable
 import CreatableSelect from 'react-select/creatable';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
@@ -17,8 +18,10 @@ import { ValueType } from 'react-select/src/types';
 import { Omit } from '@material-ui/types';
 // tslint:enable
 import { IRouting } from 'app/shared/model/routing.model';
+import { isArrayEmpty } from 'app/shared/util/general-utils';
+import { IRootState } from 'app/shared/reducers';
 
-interface ISelectRoutingsProps {
+interface ISelectRoutingsProps extends StateProps, DispatchProps {
   routings: string[];
   routing: string;
   setRouting: Function;
@@ -137,7 +140,7 @@ function Menu(props: MenuProps<IOptionType>) {
 }
 
 export const selectSingleRouting = (props: ISelectRoutingsProps) => {
-  const { routings, routing, setRouting, setNoRoutingSelected, noRoutingSelected } = props;
+  const { routings, routing, setRouting, setNoRoutingSelected, noRoutingSelected, allRoutingsEntities } = props;
   useEffect(() => {}, []);
   // tslint:disable
   const Control = (props: ControlProps<IOptionType>) => {
@@ -187,7 +190,11 @@ export const selectSingleRouting = (props: ISelectRoutingsProps) => {
     setNoRoutingSelected(false);
     setRouting(routings.filter(routingElement => routingElement === value.value)[0]);
   };
-
+  const getNextUniqueRoutingId = (allRoutings: IRouting[]): number => {
+    const listOfRoutingsIds: number[] = !isArrayEmpty(allRoutings) ? allRoutings.map(item => Number(item.uniqueIdentifier)) : [];
+    const id = !isArrayEmpty(allRoutings) ? Math.max(...listOfRoutingsIds) + 1 : 1;
+    return id;
+  };
   const mapRoutings = (routingString: string) => {
     return routingString
       ? {
@@ -207,7 +214,7 @@ export const selectSingleRouting = (props: ISelectRoutingsProps) => {
       }
     })
   };
-  let createSingle;
+  let createSingle: string;
   const handleInputChange = (inputValue: any, actionMeta: any) => {
     if (inputValue !== '') {
       createSingle = inputValue;
@@ -218,6 +225,7 @@ export const selectSingleRouting = (props: ISelectRoutingsProps) => {
       // setRouting({})
     }
   };
+  // console.log(getNextUniqueRoutingId([...allRoutingsEntities]));
   return (
     <div className={classes.root}>
       <NoSsr>
@@ -244,4 +252,16 @@ export const selectSingleRouting = (props: ISelectRoutingsProps) => {
   );
 };
 
-export default selectSingleRouting;
+const mapStateToProps = ({ routing }: IRootState) => ({
+  allRoutingsEntities: routing.entities
+});
+
+const mapDispatchToProps = {};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(selectSingleRouting);

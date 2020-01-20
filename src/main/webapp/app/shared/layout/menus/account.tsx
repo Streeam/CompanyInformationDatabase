@@ -6,7 +6,7 @@ import { NavLink as Link } from 'react-router-dom';
 
 import { NavDropdown } from './menu-components';
 
-export const AccountMenu = ({ isAuthenticated = false, isManager = false, account, company, currentEmployee }) => {
+export const AccountMenu = ({ isAuthenticated = false, isManager = false, isAdmin = false, account, company, currentEmployee }) => {
   const accountMenuItemsAuthenticated = (
     <>
       <MenuItem icon="wrench" to="/account/settings">
@@ -62,7 +62,7 @@ export const AccountMenu = ({ isAuthenticated = false, isManager = false, accoun
       name={account.firstName ? account.firstName : account.login ? account.login : 'Account'}
       id="account-menu"
     >
-      {isAuthenticated ? (isManager ? accountMenuItemsManager : accountMenuItemsAuthenticated) : basicAccountMenuItems}
+      {isAuthenticated ? (isManager || isAdmin ? accountMenuItemsManager : accountMenuItemsAuthenticated) : basicAccountMenuItems}
     </NavDropdown>
   );
 };

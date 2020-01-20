@@ -29,6 +29,7 @@ const initialState = {
   loading: false,
   isAuthenticated: false,
   isCurrentUserManager: false,
+  isCurrentUserAdmin: false,
   isUnemployed: false,
   loginSuccess: false,
   loginError: false, // Errors returned from server side
@@ -94,6 +95,7 @@ export default (state: AuthenticationState = initialState, action): Authenticati
         sessionHasBeenFetched: true,
         account: action.payload.data,
         isCurrentUserManager: hasAnyAuthority(authorities, [AUTHORITIES.MANAGER]),
+        isCurrentUserAdmin: hasAnyAuthority(authorities, [AUTHORITIES.ADMIN]),
         isUnemployed: hasOnlyUserRole(authorities)
       };
     }

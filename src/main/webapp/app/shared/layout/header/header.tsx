@@ -73,6 +73,7 @@ const Header = (props: IHeaderProps) => {
               currentEmployee={currentEmployee}
               isAuthenticated={isAuthenticated}
               isManager={isManager}
+              isAdmin={isAdmin}
               account={account}
               company={currentCompany}
             />

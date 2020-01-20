@@ -18,6 +18,7 @@ export const companyDetail = (props: ICompanyDetailsProsp) => {
   const {
     companyEntity,
     isCurrentUserManager,
+    isCurrentUserAdmin,
     companiesAreLoading,
     currentEmployeeIsLoading,
     acceptOrDeclineRequestUpdating,
@@ -80,7 +81,7 @@ export const companyDetail = (props: ICompanyDetailsProsp) => {
         <br />
         <h4>Company Details</h4>
         <div style={{ textAlign: 'right' }}>
-          {isCurrentUserManager ? (
+          {(isCurrentUserManager || isCurrentUserAdmin) && (
             <div>
               <div style={{ display: 'inline-block' }}>
                 <Button size="sm" tag={Link} to={`/entity/company/${companyEntity.id}/edit`} replace color="secondary" title="Edit Company">
@@ -110,8 +111,6 @@ export const companyDetail = (props: ICompanyDetailsProsp) => {
                 </Button>
               </div>
             </div>
-          ) : (
-            <div />
           )}
         </div>
         <br />
@@ -161,6 +160,7 @@ const mapStateToProps = ({ company, employee, authentication, notification }: IR
   curentEmployee: employee.currentEmployeeEntity,
   allEmployees: employee.companysEntities,
   isCurrentUserManager: authentication.isCurrentUserManager,
+  isCurrentUserAdmin: authentication.isCurrentUserAdmin,
   companiesAreLoading: company.loading,
   notificationsAreLoading: notification.loading,
   currentEmployeeIsLoading: employee.loading,

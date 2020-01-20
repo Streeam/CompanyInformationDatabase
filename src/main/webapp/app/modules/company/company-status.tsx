@@ -143,7 +143,7 @@ export const companyDetail = (props: ICompanyDetailProps) => {
         </Table>
       </div>
       <br />
-      <div style={{ maxWidth: '70px' }}>
+      <div style={{ maxWidth: '100px' }}>
         <Button size="sm" color="secondary" id="cancel-save" onClick={handleBack}>
           <FontAwesomeIcon icon="arrow-left" />
           &nbsp;
