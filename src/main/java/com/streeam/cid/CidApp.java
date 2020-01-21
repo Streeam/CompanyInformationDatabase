@@ -20,7 +20,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * TODO << IMPROVEMENTS >>
+ * TODO 1. Delete a nonconformace
+ *      << IMPROVEMENTS >>
  *     1.Create end point to find one image belonging to a non-conformance, a task and a progress track instead of filtering through all images
  */
 @SpringBootApplication

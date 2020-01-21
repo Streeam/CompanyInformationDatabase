@@ -17,6 +17,7 @@ import { INonConformanceDetails } from '../model/non-conformance-details.model';
 import { isEmpty, toTitleCase, isArrayEmpty } from './general-utils';
 import { CustomerNonconformaceType } from '../model/enumerations/customer-nonconformace-type.model';
 import { IRouting } from '../model/routing.model';
+import { IBom } from '../model/bom.model';
 
 /**
  * Removes fields with an 'id' field that equals ''.
@@ -74,7 +75,7 @@ export const statusStyle = (status: Status): JSX.Element => {
     case Status.COMPLETE:
       return <p style={{ color: 'white', backgroundColor: '#73ce73', margin: '0', padding: '4px' }}>{status}</p>;
     case Status.NEED_HELP:
-      return <p style={{ color: 'white', backgroundColor: '#ffcb00', margin: '0', padding: '4px' }}>{status}</p>;
+      return <p style={{ color: 'white', backgroundColor: '#ffcb00', margin: '0', padding: '4px' }}>NEED HELP</p>;
     case Status.STUCK:
       return <p style={{ color: 'white', backgroundColor: '#ef4040', margin: '0', padding: '4px' }}>{status}</p>;
     case Status.INCOMPLETE:
@@ -126,6 +127,11 @@ export const parseCustomerNCType = (ncType: CustomerNonconformaceType): string =
 export const getNextUniqueRoutingId = (routings: IRouting[]): number => {
   const listOfRoutingsIds: number[] = !isArrayEmpty(routings) ? routings.map(item => Number(item.uniqueIdentifier)) : [];
   const id = !isArrayEmpty(routings) ? Math.max(...listOfRoutingsIds) + 1 : 1;
+  return id;
+};
+export const getNextUniqueBomId = (boms: IBom[]): number => {
+  const listOfBomIds: number[] = !isArrayEmpty(boms) ? boms.map(item => Number(item.uniqueIdentifier)) : [];
+  const id = !isArrayEmpty(boms) ? Math.max(...listOfBomIds) + 1 : 1;
   return id;
 };
 export const downloadebleAttachment = (entity: ITask | IProgressTrack | INonConformanceDetails, images: IImage[]): IImage => {

@@ -19,6 +19,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link com.streeam.cid.domain.Bom}.
@@ -57,6 +58,12 @@ public class BomResource {
             throw new BadRequestAlertException("A new bom cannot already have an ID", ENTITY_NAME, "idexists");
         }
         BomDTO result = bomService.save(bomDTO);
+        ProductDTO productToSave = productService.findOneByPartNumber(bomDTO.getPartNumber()).orElseThrow(()->
+            new BadRequestAlertException("No product with this ID", ENTITY_NAME, "idexists"));
+        Set<BomDTO> boms = productToSave.getBoms();
+        boms.add(result);
+        productToSave.setBoms(boms);
+        productService.save(productToSave);
         return ResponseEntity.created(new URI("/api/boms/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -94,6 +101,12 @@ public class BomResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         BomDTO result = bomService.save(bomDTO);
+        ProductDTO productToSave = productService.findOneByPartNumber(bomDTO.getPartNumber()).orElseThrow(()->
+            new BadRequestAlertException("No product with this ID", ENTITY_NAME, "idexists"));
+        Set<BomDTO> boms = productToSave.getBoms();
+        boms.add(result);
+        productToSave.setBoms(boms);
+        productService.save(productToSave);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, bomDTO.getId().toString()))
             .body(result);
@@ -118,7 +131,7 @@ public class BomResource {
      */
     @GetMapping("/boms/product/{productId}")
     public ResponseEntity<List<BomDTO>> getParentsBoms(@PathVariable Long productId)  {
-        ProductDTO productDTO = productService.findOne(productId).orElseThrow(() -> new BadRequestAlertException("Invalid bom id", ENTITY_NAME, "idnull"));
+        ProductDTO productDTO = productService.findOne(productId).orElseThrow(() -> new BadRequestAlertException("Invalid product id", ENTITY_NAME, "idnull"));
         List<BomDTO> boms = bomService.findAllByPartNumber(productDTO.getPartNumber());
         return ResponseEntity.ok().body(boms);
     }

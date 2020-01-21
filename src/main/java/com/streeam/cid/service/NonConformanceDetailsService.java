@@ -2,9 +2,13 @@ package com.streeam.cid.service;
 
 import com.streeam.cid.domain.Employee;
 import com.streeam.cid.domain.NonConformanceDetails;
+import com.streeam.cid.domain.ProcessAuditChecklist;
 import com.streeam.cid.domain.enumeration.Status;
-import com.streeam.cid.repository.NonConformanceDetailsRepository;
+import com.streeam.cid.repository.*;
+import com.streeam.cid.service.dto.ClientNonConformanceDTO;
+import com.streeam.cid.service.dto.InternalNonConformanceDTO;
 import com.streeam.cid.service.dto.NonConformanceDetailsDTO;
+import com.streeam.cid.service.dto.TaskDTO;
 import com.streeam.cid.service.mapper.NonConformanceDetailsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +29,22 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class NonConformanceDetailsService {
-
+    @Autowired
+    private InternalNonConformanceService internalNonConformanceService;
+    @Autowired
+    private ClientNonConformanceService clientNonConformanceService;
+    @Autowired
+    private ProcessAuditChecklistRepository processAuditChecklistRepository;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private ActionToBeTakenRepository actionToBeTakenRepository;
+    @Autowired
+    private ShortTermActionRepository shortTermActionRepository;
+    @Autowired
+    private LongTermActionRepository longTermActionRepository;
+    @Autowired
+    private FishBoneRepository fishBoneRepository;
 
     private final Logger log = LoggerFactory.getLogger(NonConformanceDetailsService.class);
 
@@ -110,6 +127,27 @@ public class NonConformanceDetailsService {
     public void delete(Long id) {
         log.debug("Request to delete NonConformanceDetails : {}", id);
         nonConformanceDetailsRepository.deleteById(id);
+        List<InternalNonConformanceDTO> internalNonConformanceList = internalNonConformanceService.findAllByNonconformanceDetailsId(id);
+        if(!internalNonConformanceList.isEmpty()) {
+            internalNonConformanceService.deleteAll(internalNonConformanceList);
+        }
+        List<ClientNonConformanceDTO> clientNonConformanceDTOS = clientNonConformanceService.findAllByNonconformanceDetailsId(id);
+        if(!clientNonConformanceDTOS.isEmpty()) {
+            clientNonConformanceService.deleteAll(clientNonConformanceDTOS);
+        }
+        List<TaskDTO> taskDTOList = taskService.findAllByNonconformanceId(id);
+        taskDTOList.forEach(task -> taskService.delete(task.getId()));
+        actionToBeTakenRepository.findOneByNonconformanceId(id).ifPresent(rootCause -> {
+                fishBoneRepository.findOneByRootCauseId(rootCause.getId()).ifPresent(fishBone -> fishBoneRepository.delete(fishBone));
+                actionToBeTakenRepository.delete(rootCause);
+            }
+        );
+        longTermActionRepository.findOneByNonConformanceId(id).ifPresent(longTermAction -> longTermActionRepository.delete(longTermAction));
+        shortTermActionRepository.findOneByNonConformanceId(id).ifPresent(shortTermAction -> shortTermActionRepository.delete(shortTermAction));
+        List<ProcessAuditChecklist> processAuditChecklistList = processAuditChecklistRepository.findAllByNonConformanceId(id);
+        if(!processAuditChecklistList.isEmpty()) {
+            processAuditChecklistRepository.deleteAll(processAuditChecklistList);
+        }
     }
 
     public List<NonConformanceDetailsDTO> findAllByEmployee(Employee currentEmployee) {

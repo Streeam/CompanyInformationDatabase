@@ -20,6 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link com.streeam.cid.domain.Routing}.
@@ -60,6 +61,12 @@ public class RoutingResource {
             throw new BadRequestAlertException("A new routing cannot already have an ID", ENTITY_NAME, "idexists");
         }
         RoutingDTO result = routingService.save(routingDTO);
+        ProductDTO productToSave = productService.findOneByPartNumber(routingDTO.getPartNumber()).orElseThrow(()->
+            new BadRequestAlertException("No product with this ID", ENTITY_NAME, "idexists"));
+        Set<RoutingDTO> routings = productToSave.getRoutings();
+        routings.add(result);
+        productToSave.setRoutings(routings);
+        productService.save(productToSave);
         return ResponseEntity.created(new URI("/api/routings/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -96,6 +103,12 @@ public class RoutingResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         RoutingDTO result = routingService.save(routingDTO);
+        ProductDTO productToSave = productService.findOneByPartNumber(routingDTO.getPartNumber()).orElseThrow(()->
+            new BadRequestAlertException("No product with this ID", ENTITY_NAME, "idexists"));
+        Set<RoutingDTO> routings = productToSave.getRoutings();
+        routings.add(result);
+        productToSave.setRoutings(routings);
+        productService.save(productToSave);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, routingDTO.getId().toString()))
             .body(result);

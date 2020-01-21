@@ -156,7 +156,7 @@ export const nonConformanceAddittional = (props: INonconformanceAdditionalExpens
     extraRouting.overhead ? extraRouting.overhead : !isArrayEmpty(companies) ? companies[0].overheadRate : 0;
   return (
     <Fragment>
-      {nonConformanceProducts && nonConformanceProducts.length > 0
+      {nonConformanceProducts && nonConformanceIdType.type && nonConformanceProducts.length > 0
         ? nonConformanceProducts.map(product => (
             <Card key={product.partNumber}>
               <div>

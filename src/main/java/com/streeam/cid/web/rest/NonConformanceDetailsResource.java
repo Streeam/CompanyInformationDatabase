@@ -5,10 +5,7 @@ import com.streeam.cid.domain.enumeration.Status;
 import com.streeam.cid.repository.*;
 import com.streeam.cid.security.SecurityUtils;
 import com.streeam.cid.service.*;
-import com.streeam.cid.service.dto.ClientNonConformanceDTO;
-import com.streeam.cid.service.dto.InternalNonConformanceDTO;
 import com.streeam.cid.service.dto.NonConformanceDetailsDTO;
-import com.streeam.cid.service.dto.TaskDTO;
 import com.streeam.cid.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -46,8 +43,7 @@ public class NonConformanceDetailsResource {
     private UserService userService;
     @Autowired
     private EmployeeService employeeService;
-    @Autowired
-    private FishBoneRepository fishBoneRepository;
+
     @Autowired
     private ActionToBeTakenRepository actionToBeTakenRepository;
     @Autowired
@@ -55,14 +51,7 @@ public class NonConformanceDetailsResource {
     @Autowired
     private LongTermActionRepository longTermActionRepository;
     @Autowired
-    private InternalNonConformanceService internalNonConformanceService;
-    @Autowired
-    private ClientNonConformanceService clientNonConformanceService;
-    @Autowired
     private ProcessAuditChecklistRepository processAuditChecklistRepository;
-    @Autowired
-    private TaskService taskService;
-
     private final NonConformanceDetailsService nonConformanceDetailsService;
 
     public NonConformanceDetailsResource(NonConformanceDetailsService nonConformanceDetailsService) {
@@ -228,27 +217,6 @@ public class NonConformanceDetailsResource {
     public ResponseEntity<Void> deleteNonConformanceDetails(@PathVariable Long id) {
         log.debug("REST request to delete NonConformanceDetails : {}", id);
         nonConformanceDetailsService.delete(id);
-        List<InternalNonConformanceDTO> internalNonConformanceList = internalNonConformanceService.findAllByNonconformanceDetailsId(id);
-        if(!internalNonConformanceList.isEmpty()) {
-            internalNonConformanceService.deleteAll(internalNonConformanceList);
-        }
-        List<ClientNonConformanceDTO> clientNonConformanceDTOS = clientNonConformanceService.findAllByNonconformanceDetailsId(id);
-        if(!clientNonConformanceDTOS.isEmpty()) {
-            clientNonConformanceService.deleteAll(clientNonConformanceDTOS);
-        }
-        List<TaskDTO> taskDTOList = taskService.findAllByNonconformanceId(id);
-        taskDTOList.forEach(task -> taskService.delete(task.getId()));
-        actionToBeTakenRepository.findOneByNonconformanceId(id).ifPresent(rootCause -> {
-                fishBoneRepository.findOneByRootCauseId(rootCause.getId()).ifPresent(fishBone -> fishBoneRepository.delete(fishBone));
-                actionToBeTakenRepository.delete(rootCause);
-            }
-            );
-        longTermActionRepository.findOneByNonConformanceId(id).ifPresent(longTermAction -> longTermActionRepository.delete(longTermAction));
-        shortTermActionRepository.findOneByNonConformanceId(id).ifPresent(shortTermAction -> shortTermActionRepository.delete(shortTermAction));
-        List<ProcessAuditChecklist> processAuditChecklistList = processAuditChecklistRepository.findAllByNonConformanceId(id);
-        if(!processAuditChecklistList.isEmpty()) {
-            processAuditChecklistRepository.deleteAll(processAuditChecklistList);
-        }
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
 

@@ -15,11 +15,12 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 // tslint:enable
 import Transition from '../../../../shared/layout/custom-components/transition/transition';
-import { updateBomAndRefreshParent, createBomAndRefreshParent } from '../../../../entities/bom/bom.reducer';
+import { updateBomAndRefreshParent, createBomAndRefreshParent, getAllEntities as getAllBoms } from '../../../../entities/bom/bom.reducer';
 import { IProduct } from 'app/shared/model/product.model';
 import { IBom } from 'app/shared/model/bom.model';
 import { isEmpty, isArrayEmpty } from 'app/shared/util/general-utils';
 import { isNull } from 'util';
+import { getNextUniqueBomId } from 'app/shared/util/entity-utils';
 
 interface IBomProps extends StateProps, DispatchProps {
   handleClose;
@@ -30,8 +31,12 @@ interface IBomProps extends StateProps, DispatchProps {
 }
 
 export const bomUpdateForm = (props: IBomProps) => {
-  const { handleClose, bomDialogOpen, currentBom, allProducts, parentProduct, setCurrentBom } = props;
-  React.useEffect(() => {}, []);
+  const { handleClose, bomDialogOpen, currentBom, allProducts, parentProduct, setCurrentBom, allBoms } = props;
+  React.useEffect(() => {
+    if (isArrayEmpty(allBoms)) {
+      props.getAllBoms();
+    }
+  }, []);
   const classes = useStyles(props);
 
   const [productDescription, setProductDescription] = useState<{ partNumber: string; description: string }>(null);
@@ -65,6 +70,7 @@ export const bomUpdateForm = (props: IBomProps) => {
       setQuantityValidation(false);
       const entityBom: IBom = {
         ...currentBom,
+        uniqueIdentifier: getNextUniqueBomId([...allBoms]).toString(),
         partNumber: currentBom ? currentBom.partNumber : parentProduct.partNumber,
         childPartNumber: currentBom ? currentBom.childPartNumber : productDescription.partNumber,
         quantity: quantity ? quantity : currentBom ? currentBom.quantity : 1,
@@ -170,11 +176,12 @@ export const bomUpdateForm = (props: IBomProps) => {
   );
 };
 
-const mapStateToProps = ({ product }: IRootState) => ({
-  allProducts: product.entities
+const mapStateToProps = ({ product, bom }: IRootState) => ({
+  allProducts: product.entities,
+  allBoms: bom.entities
 });
 
-const mapDispatchToProps = { updateBomAndRefreshParent, createBomAndRefreshParent };
+const mapDispatchToProps = { updateBomAndRefreshParent, createBomAndRefreshParent, getAllBoms };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

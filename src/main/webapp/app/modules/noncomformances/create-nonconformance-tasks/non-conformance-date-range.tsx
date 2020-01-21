@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 // tslint:disable
-import DayPicker from 'react-day-picker';
+import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 // tslint:enable
 import { Button } from 'reactstrap';
@@ -26,7 +26,7 @@ export const DateRange = props => {
   };
 
   const isSelectingFirstDay = (fromDate, toDate, selectedDay) => {
-    const isBeforeFirstDay = fromDate && (new Date(selectedDay) > new Date(fromDate));
+    const isBeforeFirstDay = fromDate && DateUtils.isDayBefore(selectedDay, fromDate);
     const isRangeSelected = fromDate && toDate;
     return !fromDate || isBeforeFirstDay || isRangeSelected;
   };

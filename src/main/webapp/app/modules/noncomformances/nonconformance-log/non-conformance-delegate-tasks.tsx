@@ -49,6 +49,7 @@ import { isNull } from 'util';
 import { IInternalNonConformance } from 'app/shared/model/internal-non-conformance.model';
 import { IClientNonConformance } from 'app/shared/model/client-non-conformance.model';
 import { Nonconformance } from 'app/shared/model/enumerations/nonconformance.model';
+import { Status } from 'app/shared/model/enumerations/status.model';
 
 interface INonconformanceDelegateTasksProps extends StateProps, DispatchProps {
   nonConconformanceEntity: INonConformanceDetails;
@@ -197,7 +198,7 @@ export const nonConformanceDelegateTasks = (props: INonconformanceDelegateTasksP
                   <TableCell align="center">Priority</TableCell>
                   <TableCell align="center">Status</TableCell>
                   <TableCell align="center">Start Date</TableCell>
-                  <TableCell align="center">Deadline</TableCell>
+                  <TableCell align="center">Due Date</TableCell>
                   <TableCell align="center">Progress</TableCell>
                   {nonConconformanceEntity && <TableCell align="center">Attachment</TableCell>}
                   {nonConconformanceEntity && <TableCell align="right" />}

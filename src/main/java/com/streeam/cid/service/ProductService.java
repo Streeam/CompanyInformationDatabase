@@ -3,6 +3,7 @@ package com.streeam.cid.service;
 import com.streeam.cid.domain.Product;
 import com.streeam.cid.repository.ProductRepository;
 import com.streeam.cid.service.dto.BomDTO;
+import com.streeam.cid.service.dto.NonConformanceDetailsDTO;
 import com.streeam.cid.service.dto.ProductDTO;
 import com.streeam.cid.service.dto.RoutingDTO;
 import com.streeam.cid.service.mapper.ProductMapper;
@@ -34,7 +35,8 @@ public class ProductService {
 
     @Autowired
     private BomService bomService;
-
+    @Autowired
+    private NonConformanceDetailsService nonConformanceDetailsService;
     @Autowired
     private RoutingService routingService;
 
@@ -104,10 +106,12 @@ public class ProductService {
         ProductDTO productDTO = findOne(id).orElseThrow(()-> new BadRequestAlertException("Invalid id", "product", "idnull"));
         Set<BomDTO> boms = productDTO.getBoms();
         Set<RoutingDTO> routings = productDTO.getRoutings();
-        productRepository.deleteById(id);
+        List<NonConformanceDetailsDTO> nonConformanceDetailsDTOList = nonConformanceDetailsService.findAll().stream().
+        filter(nonConformanceDetailsDTO -> nonConformanceDetailsDTO.getProducts().contains(productDTO)).collect(Collectors.toList());
+        nonConformanceDetailsDTOList.forEach(nonConformanceDetailsDTO -> nonConformanceDetailsService.delete(nonConformanceDetailsDTO.getId()));
         boms.forEach(bom -> bomService.delete(bom.getId()));
         routings.forEach(routing -> routingService.delete(routing.getId()));
-
+        productRepository.deleteById(id);
     }
 
     public void saveInBatch(List<ProductDTO> list) {

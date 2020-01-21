@@ -14,7 +14,12 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 // tslint:enable
 import Transition from '../../../../shared/layout/custom-components/transition/transition';
-import { updateRoutingAndRefreshParent, createRoutingAndRefreshParent, getAllEntities as getAllRoutings } from '../../../../entities/routing/routing.reducer';
+import {
+  updateRoutingAndRefreshParent,
+  createRoutingAndRefreshParent,
+  getAllEntities as getAllRoutings
+} from '../../../../entities/routing/routing.reducer';
+import { getAllProductsFromDB, updateEntity as updateProduct } from '../../../../entities/product/product.reducer';
 import { IProduct } from 'app/shared/model/product.model';
 import { isEmpty, isArrayEmpty } from 'app/shared/util/general-utils';
 import { IRouting } from 'app/shared/model/routing.model';
@@ -80,11 +85,14 @@ export const bomUpdateForm = (props: IRoutingProps) => {
         resourceType: allocateResourceType(),
         unitRunTime: allocateRuntime()
       };
-      // console.log(entityRouting);
       if (currentRouting) {
-        // props.updateRoutingAndRefreshParent(entityRouting, parentProduct.id);
+        new Promise((resolve, reject) => resolve(props.updateRoutingAndRefreshParent(entityRouting, parentProduct.id))).then(() => {
+          props.getAllProductsFromDB();
+        });
       } else {
-        props.createRoutingAndRefreshParent(entityRouting, parentProduct.id);
+        new Promise((resolve, reject) => resolve(props.createRoutingAndRefreshParent(entityRouting, parentProduct.id))).then(() => {
+          props.getAllProductsFromDB();
+        });
       }
       handleExit();
     }
@@ -200,7 +208,13 @@ const mapStateToProps = ({ product, routing }: IRootState) => ({
   allRoutings: routing.entities
 });
 
-const mapDispatchToProps = { updateRoutingAndRefreshParent, createRoutingAndRefreshParent, getAllRoutings };
+const mapDispatchToProps = {
+  updateRoutingAndRefreshParent,
+  createRoutingAndRefreshParent,
+  getAllRoutings,
+  getAllProductsFromDB,
+  updateProduct
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
