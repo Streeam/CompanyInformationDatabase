@@ -94,11 +94,9 @@ const products = (props: IProductProps) => {
         newProduct.site = element[4];
         newProduct.productGroupCode = element[5];
         newProduct.onHandStock = Number(element[6]);
-        newProduct.standardUnitMaterialCost = Number(Number(element[8]).toFixed(2));
-        newProduct.latestUnitMaterialCost = Number(Number(element[9]).toFixed(2));
-        newProduct.minBarchSize = Number(element[10]);
-        newProduct.orderMultipler = Math.floor(Number(element[11]));
-        newProduct.obsolete = element[12] === '1';
+        newProduct.standardUnitMaterialCost = Number(Number(element[7]).toFixed(2));
+        newProduct.latestUnitMaterialCost = Number(Number(element[8]).toFixed(2));
+        newProduct.obsolete = element[9] === '1';
         newProduct.supplierPartNumber = null;
         newProduct.supplierPartDescription = null;
         newProduct.routings = [];
@@ -123,8 +121,6 @@ const products = (props: IProductProps) => {
               item1.onHandStock === item2.onHandStock &&
               item1.standardUnitMaterialCost === Number(item2.standardUnitMaterialCost.toFixed(2)) &&
               item1.latestUnitMaterialCost === Number(item2.latestUnitMaterialCost.toFixed(2)) &&
-              item1.minBarchSize === item2.minBarchSize &&
-              item1.orderMultipler === item2.orderMultipler &&
               item1.obsolete === item2.obsolete
             )
           ) {
@@ -136,9 +132,7 @@ const products = (props: IProductProps) => {
             console.log(item1.onHandStock + ' = ' + item2.onHandStock);
             console.log(item1.standardUnitMaterialCost + ' = ' + item2.standardUnitMaterialCost);
             console.log(item1.latestUnitMaterialCost + ' = ' + item2.latestUnitMaterialCost);
-            console.log(item1.minBarchSize + ' = ' + item2.minBarchSize);
-            console.log(item1.orderMultipler + ' = ' + item2.orderMultipler);
-            console.log(item1.obsolete + ' = ' + item2.obsolete); */
+            console.log(item1.obsolete + ' = ' + item2.obsolete);*/
             productsToUpdate.push({ ...item2, id: item1.id });
           }
         }
@@ -151,12 +145,12 @@ const products = (props: IProductProps) => {
         });
       });
     }
-    /*     console.log('Uploaded Products - ' + productsFromCSV.length);
+    /* console.log('Uploaded Products - ' + productsFromCSV.length);
     console.log('Database Products - ' + allProductsFromDB.length);
     console.log('Products to insert - ' + productsToInsert.length);
     console.log('Unique Products to insert - ' + uniqueProductsToInsert.length);
     console.log('Unique Non Null Products to insert - ' + nonNullProductToInsert.length);
-    console.log('Products to update - ' + productsToUpdate.length); */
+    console.log('Products to update - ' + productsToUpdate.length);*/
     if (!isArrayEmpty(nonNullProductToInsert)) {
       executeFunctionInChuncks(nonNullProductToInsert, props.createProducts, 200).then(() => {
         new Promise((resolve, reject) => resolve(props.getAllProductsFromDB())).then(() => {
@@ -177,8 +171,6 @@ const products = (props: IProductProps) => {
     { headerName: 'In Stock', field: 'stock', width: 100, resizable: true, sortable: true, filter: true },
     { headerName: 'Latest Unit Material Cost', field: 'latestUnitMaterialCost', resizable: true, sortable: true, filter: true },
     { headerName: 'Standard Unit Material Cost', field: 'standardUnitMaterialCost', resizable: true, sortable: true, filter: true },
-    { headerName: 'Min Batch Size', field: 'minBatchSize', resizable: true, sortable: true, filter: true },
-    { headerName: 'Order Multiply', field: 'orderMultiply', resizable: true, sortable: true, filter: true },
     { headerName: 'Obsolete', field: 'obsolete', resizable: true, sortable: true, filter: true }
   ];
   const extractProducts = (): any[] => {
@@ -193,8 +185,6 @@ const products = (props: IProductProps) => {
       stock: item.onHandStock,
       latestUnitMaterialCost: item.latestUnitMaterialCost,
       standardUnitMaterialCost: item.standardUnitMaterialCost,
-      minBatchSize: item.minBarchSize,
-      orderMultiply: item.orderMultipler,
       obsolete: item.obsolete
     }));
   };
@@ -236,12 +226,6 @@ const products = (props: IProductProps) => {
             </li>
             <li>
               <strong>Latest Cost</strong> : Decimal Number Greater Then Zero
-            </li>
-            <li>
-              <strong>Minimum Batch Size</strong> : Decimal Number Greater Then One
-            </li>
-            <li>
-              <strong>Order Multiply</strong> : Decimal Number Greater Then Zero
             </li>
             <li>
               <strong>Obsolete</strong> : Text {`(`}True or False{`)`}

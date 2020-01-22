@@ -179,7 +179,7 @@ export interface IRootState {
   readonly afterSaleExpenses: AfterSaleExpensesState;
   readonly fishBone: FishBoneState;
   readonly processAuditChecklist: ProcessAuditChecklistState;
-  // readonly loadingBar: any;
+  readonly loadingBar: any;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
 }
 
@@ -224,7 +224,7 @@ const rootReducer = combineReducers<IRootState>({
   site,
   department,
   extraRoutings,
-  // loadingBar,
+  loadingBar,
   extraBoms,
   afterSaleExpenses,
   fishBone,

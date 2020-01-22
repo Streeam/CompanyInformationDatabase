@@ -12,6 +12,18 @@ export const removeDuplicates = (array, key) => {
   });
   return result;
 };
+export const removeDuplicatesBasedOn2Entities = (array, key1, key2) => {
+  const lookup = {};
+  const result = [];
+  array.forEach(element => {
+    const combinedString = `${element[key1]} + ${element[key2]}`;
+    if (!lookup[combinedString]) {
+      lookup[combinedString] = true;
+      result.push(element);
+    }
+  });
+  return result;
+};
 
 export const isEmpty = (obj: {}) => isNull(obj) || isUndefined(obj) || Object.keys(obj).length === 0;
 

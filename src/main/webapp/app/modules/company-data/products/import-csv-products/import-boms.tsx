@@ -17,7 +17,13 @@ import {
 import { Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LoadingModal from '../../../../shared/layout/custom-components/loading-modal/loading-modal';
-import { removeDuplicates, isEmpty, executeFunctionInChuncks, isArrayEmpty } from '../../../../shared/util/general-utils';
+import {
+  removeDuplicates,
+  isEmpty,
+  executeFunctionInChuncks,
+  isArrayEmpty,
+  removeDuplicatesBasedOn2Entities
+} from '../../../../shared/util/general-utils';
 import { AgGridReact } from 'ag-grid-react';
 import './import.css';
 import { IProduct } from 'app/shared/model/product.model';
@@ -67,7 +73,9 @@ const importSubcomponents = (props: IBomsProps) => {
     });
 
     const bomsToInsert = [...allBoms, ...bomsFromCSV];
-    const uniqueBomsToInsert = removeDuplicates(bomsToInsert, 'uniqueIdentifier');
+    // const bomsWithoutReviews = bomsToInsert.filter(item => item.uniqueIdentifier !== '7271' && item.uniqueIdentifier !== '7247');
+    // const uniqueBomsToInsert = removeDuplicates(bomsWithoutReviews, 'uniqueIdentifier');
+    const uniqueBomsToInsert = removeDuplicatesBasedOn2Entities(bomsToInsert, 'uniqueIdentifier', 'partNumber');
     const nonNullBomsToInsert = uniqueBomsToInsert.filter(val => val.id === null);
     const bomsToUpdate: IBom[] = [];
 
@@ -94,12 +102,6 @@ const importSubcomponents = (props: IBomsProps) => {
         });
       });
     }
-    /*     console.log('Uploaded Boms - ' + bomsFromCSV.length);
-    console.log('Database Boms - ' + allBoms.length);
-    console.log('Boms to insert - ' + bomsToInsert.length);
-    console.log('Unique Boms to insert - ' + uniqueBomsToInsert.length);
-    console.log('Unique Non Null Boms to insert - ' + nonNullBomsToInsert.length);
-    console.log('Boms to update - ' + bomsToUpdate.length); */
     if (!isArrayEmpty(nonNullBomsToInsert)) {
       setLoading(true);
       executeFunctionInChuncks(nonNullBomsToInsert, props.createBoms, 200).then(() => {

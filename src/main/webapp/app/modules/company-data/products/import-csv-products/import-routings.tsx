@@ -13,7 +13,13 @@ import {
 import { Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LoadingModal from '../../../../shared/layout/custom-components/loading-modal/loading-modal';
-import { removeDuplicates, isEmpty, executeFunctionInChuncks, isArrayEmpty } from '../../../../shared/util/general-utils';
+import {
+  removeDuplicates,
+  isEmpty,
+  executeFunctionInChuncks,
+  isArrayEmpty,
+  removeDuplicatesBasedOn2Entities
+} from '../../../../shared/util/general-utils';
 import './import.css';
 import { AgGridReact } from 'ag-grid-react';
 import { IProduct } from 'app/shared/model/product.model';
@@ -64,7 +70,8 @@ const importRoutings = (props: IRoutingsProps) => {
     });
 
     const routingsToInsert = [...allRoutings, ...routingsFromCSV];
-    const uniqueRoutingsToInsert = removeDuplicates(routingsToInsert, 'uniqueIdentifier');
+    // const uniqueRoutingsToInsert = removeDuplicates(routingsToInsert, 'uniqueIdentifier');
+    const uniqueRoutingsToInsert = removeDuplicatesBasedOn2Entities(routingsToInsert, 'uniqueIdentifier', 'resourceName');
     const nonNullRoutingsToInsert = uniqueRoutingsToInsert.filter(val => val.id === null);
     const routingsToUpdate: IRouting[] = [];
 
