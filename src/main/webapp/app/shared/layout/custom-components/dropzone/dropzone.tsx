@@ -60,7 +60,7 @@ const MyDropzone = props => {
         {isDragActive ? (
           <p>Drop the attachement here ...</p>
         ) : (
-          <p>Drag 'n' drop some an attachment here, or click to select an attachment (maximum size 10MB)</p>
+          <p>Drag 'n' drop an attachment here, or click to select an attachment (maximum size 10MB)</p>
         )}
       </div>
       <h5>{files[0] ? files[files.length === 0 ? 0 : files.length - 1] : fileName}</h5>
