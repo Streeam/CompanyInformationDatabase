@@ -40,7 +40,7 @@ export const home = () => (
       </li>
       <li>
         <p>
-          Check out my{' '}
+          Check out my UPDATE{' '}
           <a href="content/documents/resume.pdf" target="_blank" rel="noopener noreferrer">
             CV.
           </a>{' '}

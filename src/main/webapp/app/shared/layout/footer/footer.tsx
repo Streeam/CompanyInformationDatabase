@@ -14,7 +14,7 @@ const Footer = (props: ICompanyProps) => {
   return (
     <div className="footer page-content">
       <Grid container spacing={2}>
-        {/*currentCompany && (
+        {currentCompany && (
           <Grid item xs={12} sm={6}>
             <p style={{ fontSize: '0.8em' }}>
               <strong>{currentCompany.name}</strong>
@@ -40,7 +40,7 @@ const Footer = (props: ICompanyProps) => {
               </a>
             </p>
           </Grid>
-        )*/}
+        )}
         <Grid item xs={12} sm={currentCompany ? 6 : 12}>
           <p style={{ fontSize: '0.8em' }}>
             <strong>Company Information Database</strong>

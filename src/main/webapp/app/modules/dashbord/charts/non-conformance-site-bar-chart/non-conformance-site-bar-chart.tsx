@@ -35,10 +35,10 @@ const responsiveSitePieChart = (props: ISitePieChartProps) => {
     });
     sites.forEach(site => {
       const siteCountIncomplete = sitesCompleted.filter(
-        siteCompleted => siteCompleted.site === site.site && siteCompleted.status === Status.COMPLETE
+        siteCompleted => siteCompleted.site === site.site && siteCompleted.status === Status.INCOMPLETE
       ).length;
       const siteCountComplete = sitesCompleted.filter(
-        siteCompleted => siteCompleted.site === site.site && siteCompleted.status === Status.INCOMPLETE
+        siteCompleted => siteCompleted.site === site.site && siteCompleted.status === Status.COMPLETE
       ).length;
       siteBarDate.push({
         site: site.site,
