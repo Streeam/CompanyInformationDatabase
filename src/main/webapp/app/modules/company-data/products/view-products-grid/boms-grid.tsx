@@ -44,6 +44,7 @@ export const bomsGrid = (props: IBomsProps) => {
     { headerName: 'Id', field: 'id', width: 80, resizable: true, sortable: true, filter: true, checkboxSelection: true },
     { headerName: 'Child Part Number', field: 'childPartNumber', width: 150, resizable: true, sortable: true, filter: true },
     { headerName: 'Description', field: 'childPartDescription', width: 500, resizable: true, sortable: true, filter: true },
+    { headerName: 'UOM', field: 'unitOfMeasure', width: 100, resizable: true, sortable: true, filter: true },
     { headerName: 'Quantity', field: 'quantity', width: 100, resizable: true, sortable: true, filter: true }
   ];
   const [gridApi, setGridApi] = useState(null);
@@ -56,10 +57,12 @@ export const bomsGrid = (props: IBomsProps) => {
       parentsBoms.map(item => {
         const product: IProduct | undefined = allProducts.filter(productEntity => item.childPartNumber === productEntity.partNumber)[0];
         const description: string = product ? product.partDescription : '';
+        const uom: string = product ? product.unitOfMeasure : '';
         return {
           id: item.id,
           childPartNumber: item.childPartNumber,
           childPartDescription: description,
+          unitOfMeasure: uom,
           quantity: item.quantity
         };
       });

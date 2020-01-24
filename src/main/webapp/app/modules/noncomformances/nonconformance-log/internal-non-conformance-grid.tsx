@@ -172,6 +172,7 @@ export const internalNonConformanceGrid = (props: INonconformanceProps) => {
     let total = 0;
     !isEmpty(nonConconformanceEntity) &&
       internalNonConformances
+        .filter(item => item.status !== Status.INCOMPLETE)
         .filter(value => value.nonconformanceDetailsId === nonConconformanceEntity.id)
         .filter(item1 => internalList.find(item2 => item1.id === item2.id) !== undefined)
         .forEach(internal => {

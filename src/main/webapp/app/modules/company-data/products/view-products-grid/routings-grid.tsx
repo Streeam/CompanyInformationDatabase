@@ -41,8 +41,8 @@ export const routingsGrid = (props: IRoutingsProps) => {
   const columnHeaders = [
     { headerName: 'Id', field: 'id', width: 60, resizable: true, sortable: true, filter: true, checkboxSelection: true },
     { headerName: 'Part Number', field: 'partNumber', width: 150, resizable: true, sortable: true, filter: true },
-    { headerName: 'Resource Name', field: 'resourceName', width: 150, resizable: true, sortable: true, filter: true },
-    { headerName: 'Resource Type', field: 'resourceType', width: 100, resizable: true, sortable: true, filter: true },
+    { headerName: 'Resource Name', field: 'resourceName', width: 250, resizable: true, sortable: true, filter: true },
+    { headerName: 'Resource Type', field: 'resourceType', width: 200, resizable: true, sortable: true, filter: true },
     { headerName: 'Unit Run Time', field: 'unitRunTime', width: 150, resizable: true, sortable: true, filter: true }
   ];
   const extractRoutings = (): any[] => {

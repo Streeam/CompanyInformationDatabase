@@ -13,11 +13,6 @@ export const home = () => (
         <FontAwesomeIcon icon="sign-in-alt" /> sign in
       </Link>
     </p>
-    {/*<p>
-             <Link to="/about" className="btn btn-secondary d-none d-sm-inline text-black">
-        <span>Learn more about Company Information Database</span>
-      </Link>
-    </p>
     <p>
       If you have any questions about the application please{' '}
       <a href="mailto: bogdanmihoci27@gmail.com" target="_blank" rel="noopener noreferrer">
@@ -29,7 +24,7 @@ export const home = () => (
       <li>
         <p>
           Find the code on{' '}
-          <a href="https://github.com/Streeam/Purchase_Request" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/Streeam/CompanyInformationDatabase" target="_blank" rel="noopener noreferrer">
             {' '}
             GitHub.
           </a>
@@ -54,12 +49,12 @@ export const home = () => (
       <li>
         <p>
           Report an{' '}
-          <a href="https://github.com/Streeam/Purchase_Request/issues" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/Streeam/CompanyInformationDatabase/issues" target="_blank" rel="noopener noreferrer">
             issue.
           </a>{' '}
         </p>
       </li>
-    </ul> */}
+    </ul>
     <div>
       Don't have an account yet?&nbsp;
       <Link to="/register" className="alert-link">

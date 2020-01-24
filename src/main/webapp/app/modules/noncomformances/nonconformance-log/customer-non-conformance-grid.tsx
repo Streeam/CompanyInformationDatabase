@@ -157,6 +157,7 @@ export const customerNonConformaceGrid = (props: ICustomerGridProps) => {
   const totalCustomerOccurrancesCost = (customerList: IClientNonConformance[]): number => {
     let total = 0;
     customerNonConformances
+      .filter(item => item.status !== Status.INCOMPLETE)
       .filter(value => value.nonconformanceDetailsId === nonConconformanceEntity.id)
       .filter(item1 => customerList.find(item2 => item1.id === item2.id) !== undefined)
       .forEach(customerNC => {
