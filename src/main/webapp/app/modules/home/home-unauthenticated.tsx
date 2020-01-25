@@ -38,7 +38,7 @@ export const home = () => (
           </a>{' '}
         </p>
       </li>
-{/*<li>
+      {/*<li>
         <p>
           Check out my UPDATE{' '}
           <a href="content/documents/resume.pdf" target="_blank" rel="noopener noreferrer">
@@ -58,23 +58,26 @@ export const home = () => (
     <div>
       Don't have an account yet?&nbsp;
       <Link to="/register" className="alert-link">
-        Register a new account OR
+        Register a new account
       </Link>
     </div>
+    <br />
+    OR
+    <br />
     <div>
       Sign in as an existing user:&nbsp;
       <ul>
-      <li>
-        <p>
-          username: <p>wade</p>
-        </p>
-      </li>
-      <li>
-        <p>
-          password: <p>Wade123!</p>
-        </p>
-      </li>
-    </ul>
+        <li>
+          <p>
+            username: <p>wade</p>
+          </p>
+        </li>
+        <li>
+          <p>
+            password: <p>Wade123!</p>
+          </p>
+        </li>
+      </ul>
     </div>
     <br />
     <br />
