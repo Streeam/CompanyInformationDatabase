@@ -38,14 +38,14 @@ export const home = () => (
           </a>{' '}
         </p>
       </li>
-      <li>
+{/*<li>
         <p>
           Check out my UPDATE{' '}
           <a href="content/documents/resume.pdf" target="_blank" rel="noopener noreferrer">
             CV.
           </a>{' '}
         </p>
-      </li>
+      </li> */}
       <li>
         <p>
           Report an{' '}
@@ -58,8 +58,23 @@ export const home = () => (
     <div>
       Don't have an account yet?&nbsp;
       <Link to="/register" className="alert-link">
-        Register a new account
+        Register a new account OR
       </Link>
+    </div>
+    <div>
+      Sign in as an existing user:&nbsp;
+      <ul>
+      <li>
+        <p>
+          username: <p>wade</p>
+        </p>
+      </li>
+      <li>
+        <p>
+          password: <p>Wade123!</p>
+        </p>
+      </li>
+    </ul>
     </div>
     <br />
     <br />
