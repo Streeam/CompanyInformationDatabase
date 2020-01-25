@@ -6,12 +6,10 @@ import com.streeam.cid.repository.UserRepository;
 import com.streeam.cid.security.SecurityUtils;
 import com.streeam.cid.service.MailService;
 import com.streeam.cid.service.UserService;
+import com.streeam.cid.service.dto.ContactDTO;
 import com.streeam.cid.service.dto.PasswordChangeDTO;
 import com.streeam.cid.service.dto.UserDTO;
-import com.streeam.cid.web.rest.errors.EmailAlreadyUsedException;
-import com.streeam.cid.web.rest.errors.EmailNotFoundException;
-import com.streeam.cid.web.rest.errors.InvalidPasswordException;
-import com.streeam.cid.web.rest.errors.LoginAlreadyUsedException;
+import com.streeam.cid.web.rest.errors.*;
 import com.streeam.cid.web.rest.vm.KeyAndPasswordVM;
 import com.streeam.cid.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang3.StringUtils;
@@ -68,6 +66,19 @@ public class AccountResource {
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
         mailService.sendActivationEmail(user);
+    }
+
+    /**
+     * {@code POST  /contact} : receive contact info form website .
+     *
+     * @param contactDTO the contactDTO View Model.
+     */
+    @PostMapping("/contact")
+    public void sendContactInfo(@RequestBody ContactDTO contactDTO) {
+        String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
+        User currentUser = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
+            new BadRequestAlertException("No user logged in", "", "No user logged in"));
+        mailService.sendContactInfo(contactDTO, currentUser);
     }
 
     /**

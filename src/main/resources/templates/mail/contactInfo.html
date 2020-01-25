@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title >Someone you!</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    </head>
+    <body>
+        <p th:text="First Name: ${firstName}"></p>
+        <p th:text="Last Name: ${lastName}"></p>
+        <p th:text="Email: ${email}"></p>
+        <p th:text="Phone Number: ${phone}"></p>
+        <p th:text="Message: ${message}"></p>
+    </body>
+</html>
