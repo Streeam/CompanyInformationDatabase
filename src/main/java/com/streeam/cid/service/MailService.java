@@ -113,12 +113,9 @@ public class MailService {
         sendEmail(sendTo, subject, content, false, true);
     }
     @Async
-    private void sendEmailOfContactInfoFromTemplate(String sendTo, User user, String templateName, ContactDTO contactDTO) {
-        String language = "en";
-        if(user.getLangKey() != null){
-            language = user.getLangKey();
-        }
-        Locale locale = Locale.forLanguageTag(language);
+    private void sendEmailOfContactInfoFromTemplate(String sendTo, String templateName, ContactDTO contactDTO) {
+
+        Locale locale = Locale.forLanguageTag("en");
         Context context = new Context(locale);
         context.setVariable(FIRST_NAME, contactDTO.getFirstName());
         context.setVariable(LAST_NAME, contactDTO.getLastName());
@@ -127,7 +124,9 @@ public class MailService {
         context.setVariable(MESSAGE, contactDTO.getMessage());
         String content = templateEngine.process(templateName, context);
         String subject = "New Contact Info";
-        sendEmail(sendTo, subject, content, false, true);
+        String body = "First Name: " + contactDTO.getFirstName() + ";  Last Name: " + contactDTO.getLastName() + "; Email: " + contactDTO.getEmail()
+            + "; Phone: " + contactDTO.getPhone() + "; Message: " + contactDTO.getMessage();
+        sendEmail(sendTo, subject, body, false, true);
     }
 
     @Async
@@ -172,8 +171,8 @@ public class MailService {
         sendEmailFromTemplate(toUser.getUser().getEmail() ,fromUser, "mail/taskEmail", "email.new.task");
     }
 
-    public void sendContactInfo(ContactDTO contactDTO, User currentUser) {
+    public void sendContactInfo(ContactDTO contactDTO) {
         log.debug("Contact information from '{}'", contactDTO.getFirstName());
-        sendEmailOfContactInfoFromTemplate("bogdanmihoci27@gmail.com" ,currentUser, "mail/contactInfo", contactDTO);
+        sendEmailOfContactInfoFromTemplate("bogdanmihoci27@gmail.com","mail/contactInfo", contactDTO);
     }
 }

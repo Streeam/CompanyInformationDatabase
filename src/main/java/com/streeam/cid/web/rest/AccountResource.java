@@ -75,10 +75,7 @@ public class AccountResource {
      */
     @PostMapping("/contact")
     public void sendContactInfo(@RequestBody ContactDTO contactDTO) {
-        String currentUserLogin = SecurityUtils.getCurrentUserLogin().get();
-        User currentUser = userService.getUserWithAuthoritiesByLogin(currentUserLogin).orElseThrow(() ->
-            new BadRequestAlertException("No user logged in", "", "No user logged in"));
-        mailService.sendContactInfo(contactDTO, currentUser);
+        mailService.sendContactInfo(contactDTO);
     }
 
     /**
