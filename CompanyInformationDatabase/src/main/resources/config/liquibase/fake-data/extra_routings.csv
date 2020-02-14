@@ -1,0 +1,11 @@
+id;overhead;resource_name;runtime;internal_non_conformance_id;nonconformance_type;nonconformance_action;customer_non_conformace_id
+1;37454;Directives application Home Loan Account;15601;44583;SUPPLIER;SCRAP;96990
+2;72199;Implementation Electronics Officer;61748;30424;SUPPLIER;REWORK;97375
+3;36636;Common;78517;61838;CUSTOMER;CONCESSION;17052
+4;45049;Automotive;94220;96563;INTERNAL;REJECT;68326
+5;12203;Buckinghamshire Games;90932;39106;CUSTOMER;REWORK;54671
+6;56770;Industrial;84228;77513;AUDIT;SCRAP;96117
+7;32533;scale interactive generating;35675;96525;SUPPLIER;SCRAP;7455
+8;1563;deliverables reinvent 24 hour;1407;81546;AUDIT;OTHER;85003
+9;62329;archive Fantastic Plastic Chicken;32518;66592;SUPPLIER;OTHER;76078
+10;72172;Robust Networked;4043;52273;INTERNAL;OTHER;13933

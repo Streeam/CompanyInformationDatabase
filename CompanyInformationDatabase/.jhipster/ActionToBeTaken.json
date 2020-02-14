@@ -1,0 +1,70 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "why1Occurrance",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "why2Occurrance",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "why3Occurrance",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "why4Occurrance",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "why5Occurrance",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "why1Detection",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "why2Detection",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "why3Detaction",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "why4Detection",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "why5Detection",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rootCause",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "problem",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nonconformanceId",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20191110105519",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "action_to_be_taken",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

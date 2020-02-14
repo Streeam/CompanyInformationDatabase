@@ -1,0 +1,78 @@
+{
+    "name": "SupplierNonConformance",
+    "fields": [
+        {
+            "fieldName": "action",
+            "fieldType": "NonconformanceAction",
+            "fieldValues": "SCRAP,REWORK,REJECT,CONCESSION,OTHER",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "labour",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "concesionDetails",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rejectionFee",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "nonConformanceType",
+            "fieldType": "SupplierNonconformaceType",
+            "fieldValues": "NON_CONFORMING_PRODUCT_SERVICE,LATE_DELIVERY",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "employee",
+            "otherEntityName": "employee",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "supplierNonConformance"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "supplier",
+            "otherEntityRelationshipName": "supplierNonConformance",
+            "relationshipName": "supplier",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipName": "nonConformanceDetails",
+            "otherEntityName": "nonConformanceDetails",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "supplierNonConformance"
+        }
+    ],
+    "changelogDate": "20191026131057",
+    "entityTableName": "supplier_non_conformance",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "searchEngine": false,
+    "databaseType": "sql"
+}

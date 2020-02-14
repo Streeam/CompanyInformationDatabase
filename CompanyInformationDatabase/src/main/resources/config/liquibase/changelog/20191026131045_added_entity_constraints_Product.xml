@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Product.
+    -->
+    <changeSet id="20191026131045-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="product_bom"
+                                 constraintName="fk_product_bom_product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+
+        <addForeignKeyConstraint baseColumnNames="bom_id"
+                                 baseTableName="product_bom"
+                                 constraintName="fk_product_bom_bom_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bom"/>
+        
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="product_routings"
+                                 constraintName="fk_product_routings_product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+
+        <addForeignKeyConstraint baseColumnNames="routings_id"
+                                 baseTableName="product_routings"
+                                 constraintName="fk_product_routings_routings_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="routing"/>
+        
+        <addForeignKeyConstraint baseColumnNames="sales_order_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product_sales_order_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sales_order"/>
+
+    </changeSet>
+</databaseChangeLog>

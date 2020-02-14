@@ -1,0 +1,37 @@
+.container {
+  position: relative;
+  max-width: 150px;
+}
+
+.image {
+  display: block;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 65%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  opacity: 0;
+  transition: 0.3s ease;
+  background-color: #ffffff;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.icon {
+  color: black;
+  font-size: 10px;
+  position: absolute;
+  top: 20%;
+  left: 43%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.p {
+}

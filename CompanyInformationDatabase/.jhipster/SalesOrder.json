@@ -1,0 +1,357 @@
+{
+    "name": "SalesOrder",
+    "fields": [
+        {
+            "fieldName": "salesOrderNumber",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "dateRaised",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "soSalesStatus",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "secondSalesReference",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "currencyCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "exchangeRate",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "discountPercent",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required",
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": 0,
+            "fieldValidateRulesMax": 100
+        },
+        {
+            "fieldName": "contactName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ourContact",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "invoiceAddress",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "invoiceCountryCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "salesOrderTitle",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "salesAnalysis1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "salesAnalysis2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "salesAnalysis3",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "salesAnalysis4",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "salesAnalysis5",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "salesAnalysis6",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "memo1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "memo2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "memo3",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "memo4",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "memo5",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "memo6",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stockAnalysis01",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stockAnalysis02",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stockAnalysis03",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stockAnalysis04",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stockAnalysis05",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stockAnalysis06",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stockAnalysis07",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stockAnalysis08",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stockAnalysis09",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stockAnalysis10",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deliveryCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "transactionCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "code",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "salesOrderStatusCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "despatchStatusID",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "division",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lineNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "despatchStatusCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "quantityOrdered",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "quantityOutstanding",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "quantityDespatched",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "despatchDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "custRequiredDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "unitPrice",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "unitPriceinBase",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "lineDiscountPercent",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "marginPercent",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "lineTotal",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "lineTotalinBase",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "taxCode",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "nominalCode",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "onHold",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "rCode",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "standardMargin",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "deliveryAddress",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "deliveryAddressDescription",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deliveryCountryCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "salesOrderStatus",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "customer",
+            "otherEntityName": "customer",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "purchaseRequestChild",
+            "otherEntityRelationshipName": "salesOrder",
+            "relationshipName": "purchaseRequestChild"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "product",
+            "otherEntityRelationshipName": "salesOrder",
+            "relationshipName": "products"
+        }
+    ],
+    "changelogDate": "20191026131107",
+    "entityTableName": "sales_order",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

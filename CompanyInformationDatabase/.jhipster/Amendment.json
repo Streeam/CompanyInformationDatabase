@@ -1,0 +1,98 @@
+{
+    "name": "Amendment",
+    "fields": [
+        {
+            "fieldName": "status",
+            "fieldType": "AmendmentStatus",
+            "fieldValues": "CHANGE_REQUEST_SUBMITED,ANALYSE_CHANGE_REQUEST,PLAN_CHANGE,IMPLEMENT_CHANGE,REVIEW_CLOSE_CHANGE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "deadline",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "priority",
+            "fieldType": "Priority",
+            "fieldValues": "LOW,MEDIUM,HIGH",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "proposedDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "currentCondition",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "proposeAmendment",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "reasonForChange",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "rejectionReason",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "progress",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": 0,
+            "fieldValidateRulesMax": 100
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "employee",
+            "otherEntityName": "employee",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "task",
+            "otherEntityRelationshipName": "amendment",
+            "relationshipName": "tasks"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "image",
+            "otherEntityRelationshipName": "amendment",
+            "relationshipName": "image"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "drawing",
+            "otherEntityRelationshipName": "amendment",
+            "relationshipName": "drawing"
+        }
+    ],
+    "changelogDate": "20191026131052",
+    "entityTableName": "amendment",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

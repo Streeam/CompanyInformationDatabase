@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+      <changeSet id="20191026131108-1-insert" author="Streeam" >
+          <insert tableName="roles">
+              <column name="id"  value="1"/>
+              <column name="raise_nonconformace" valueBoolean="true"/>
+              <column name="view_nonconformance" valueBoolean="true"/>
+              <column name="edit_nonconformance" valueBoolean="true"/>
+              <column name="view_nonconformance_tasks" valueBoolean="true"/>
+              <column name="edit_nonconformance_tasks" valueBoolean="true"/>
+              <column name="delete_nonconformance_tasks" valueBoolean="true"/>
+              <column name="delete_nonconformance" valueBoolean="true"/>
+              <column name="raise_change_request" valueBoolean="true"/>
+              <column name="view_cost_analyses" valueBoolean="true"/>
+              <column name="edit_cost_analyses" valueBoolean="true"/>
+              <column name="view_request_submited" valueBoolean="true"/>
+              <column name="edit_request_submited" valueBoolean="true"/>
+              <column name="approve_request_submited" valueBoolean="true"/>
+              <column name="view_pending_submited" valueBoolean="true"/>
+              <column name="edit_pending_submited" valueBoolean="true"/>
+              <column name="approve_pending_submited" valueBoolean="true"/>
+              <column name="view_rejected" valueBoolean="true"/>
+              <column name="edit_rejected" valueBoolean="true"/>
+              <column name="edit_purchase_request" valueBoolean="true"/>
+              <column name="delete_purchase_request" valueBoolean="true"/>
+              <column name="edit_product_stock" valueBoolean="true"/>
+              <column name="add_product" valueBoolean="true"/>
+              <column name="delete_product" valueBoolean="true"/>
+              <column name="edit_product" valueBoolean="true"/>
+              <column name="add_customer" valueBoolean="true"/>
+              <column name="delete_customer" valueBoolean="true"/>
+              <column name="edit_customer" valueBoolean="true"/>
+              <column name="add_supplier" valueBoolean="true"/>
+              <column name="delete_supplier" valueBoolean="true"/>
+              <column name="edit_supplier" valueBoolean="true"/>
+              <column name="raise_task" valueBoolean="true"/>
+              <column name="add_progress_track" valueBoolean="true"/>
+              <column name="delete_progress_track" valueBoolean="true"/>
+              <column name="edit_progress_track" valueBoolean="true"/>
+              <column name="view_progress_track" valueBoolean="true"/>
+              <column name="add_non_conformance_reason" valueBoolean="true"/>
+              <column name="add_root_causes" valueBoolean="true"/>
+          </insert>
+          <insert tableName="roles">
+              <column name="id"  value="2"/>
+              <column name="raise_nonconformace" valueBoolean="false"/>
+              <column name="view_nonconformance" valueBoolean="false"/>
+              <column name="edit_nonconformance" valueBoolean="false"/>
+              <column name="view_nonconformance_tasks" valueBoolean="false"/>
+              <column name="edit_nonconformance_tasks" valueBoolean="false"/>
+              <column name="delete_nonconformance_tasks" valueBoolean="false"/>
+              <column name="delete_nonconformance" valueBoolean="false"/>
+              <column name="raise_change_request" valueBoolean="false"/>
+              <column name="view_cost_analyses" valueBoolean="false"/>
+              <column name="edit_cost_analyses" valueBoolean="false"/>
+              <column name="view_request_submited" valueBoolean="false"/>
+              <column name="edit_request_submited" valueBoolean="false"/>
+              <column name="approve_request_submited" valueBoolean="false"/>
+              <column name="view_pending_submited" valueBoolean="false"/>
+              <column name="edit_pending_submited" valueBoolean="false"/>
+              <column name="approve_pending_submited" valueBoolean="false"/>
+              <column name="view_rejected" valueBoolean="false"/>
+              <column name="edit_rejected" valueBoolean="false"/>
+              <column name="edit_purchase_request" valueBoolean="false"/>
+              <column name="delete_purchase_request" valueBoolean="false"/>
+              <column name="edit_product_stock" valueBoolean="false"/>
+              <column name="add_product" valueBoolean="false"/>
+              <column name="delete_product" valueBoolean="false"/>
+              <column name="edit_product" valueBoolean="false"/>
+              <column name="add_customer" valueBoolean="false"/>
+              <column name="delete_customer" valueBoolean="false"/>
+              <column name="edit_customer" valueBoolean="false"/>
+              <column name="add_supplier" valueBoolean="false"/>
+              <column name="delete_supplier" valueBoolean="false"/>
+              <column name="edit_supplier" valueBoolean="false"/>
+              <column name="raise_task" valueBoolean="false"/>
+              <column name="add_progress_track" valueBoolean="false"/>
+              <column name="delete_progress_track" valueBoolean="false"/>
+              <column name="edit_progress_track" valueBoolean="false"/>
+              <column name="view_progress_track" valueBoolean="false"/>
+              <column name="add_non_conformance_reason" valueBoolean="false"/>
+              <column name="add_root_causes" valueBoolean="false"/>
+          </insert>
+          <insert tableName="roles">
+              <column name="id"  value="3"/>
+              <column name="raise_nonconformace" valueBoolean="true"/>
+              <column name="view_nonconformance" valueBoolean="true"/>
+              <column name="edit_nonconformance" valueBoolean="true"/>
+              <column name="view_nonconformance_tasks" valueBoolean="true"/>
+              <column name="edit_nonconformance_tasks" valueBoolean="true"/>
+              <column name="delete_nonconformance_tasks" valueBoolean="true"/>
+              <column name="delete_nonconformance" valueBoolean="true"/>
+              <column name="raise_change_request" valueBoolean="true"/>
+              <column name="view_cost_analyses" valueBoolean="true"/>
+              <column name="edit_cost_analyses" valueBoolean="true"/>
+              <column name="view_request_submited" valueBoolean="true"/>
+              <column name="edit_request_submited" valueBoolean="true"/>
+              <column name="approve_request_submited" valueBoolean="true"/>
+              <column name="view_pending_submited" valueBoolean="true"/>
+              <column name="edit_pending_submited" valueBoolean="true"/>
+              <column name="approve_pending_submited" valueBoolean="true"/>
+              <column name="view_rejected" valueBoolean="true"/>
+              <column name="edit_rejected" valueBoolean="true"/>
+              <column name="edit_purchase_request" valueBoolean="true"/>
+              <column name="delete_purchase_request" valueBoolean="true"/>
+              <column name="edit_product_stock" valueBoolean="true"/>
+              <column name="add_product" valueBoolean="true"/>
+              <column name="delete_product" valueBoolean="true"/>
+              <column name="edit_product" valueBoolean="true"/>
+              <column name="add_customer" valueBoolean="true"/>
+              <column name="delete_customer" valueBoolean="true"/>
+              <column name="edit_customer" valueBoolean="true"/>
+              <column name="add_supplier" valueBoolean="true"/>
+              <column name="delete_supplier" valueBoolean="true"/>
+              <column name="edit_supplier" valueBoolean="true"/>
+              <column name="raise_task" valueBoolean="true"/>
+              <column name="add_progress_track" valueBoolean="true"/>
+              <column name="delete_progress_track" valueBoolean="true"/>
+              <column name="edit_progress_track" valueBoolean="true"/>
+              <column name="view_progress_track" valueBoolean="true"/>
+              <column name="add_non_conformance_reason" valueBoolean="true"/>
+              <column name="add_root_causes" valueBoolean="true"/>
+          </insert>
+          <insert tableName="roles">
+              <column name="id"  value="4"/>
+              <column name="raise_nonconformace" valueBoolean="false"/>
+              <column name="view_nonconformance" valueBoolean="false"/>
+              <column name="edit_nonconformance" valueBoolean="false"/>
+              <column name="view_nonconformance_tasks" valueBoolean="false"/>
+              <column name="edit_nonconformance_tasks" valueBoolean="false"/>
+              <column name="delete_nonconformance_tasks" valueBoolean="false"/>
+              <column name="delete_nonconformance" valueBoolean="false"/>
+              <column name="raise_change_request" valueBoolean="false"/>
+              <column name="view_cost_analyses" valueBoolean="false"/>
+              <column name="edit_cost_analyses" valueBoolean="false"/>
+              <column name="view_request_submited" valueBoolean="false"/>
+              <column name="edit_request_submited" valueBoolean="false"/>
+              <column name="approve_request_submited" valueBoolean="false"/>
+              <column name="view_pending_submited" valueBoolean="false"/>
+              <column name="edit_pending_submited" valueBoolean="false"/>
+              <column name="approve_pending_submited" valueBoolean="false"/>
+              <column name="view_rejected" valueBoolean="false"/>
+              <column name="edit_rejected" valueBoolean="false"/>
+              <column name="edit_purchase_request" valueBoolean="false"/>
+              <column name="delete_purchase_request" valueBoolean="false"/>
+              <column name="edit_product_stock" valueBoolean="false"/>
+              <column name="add_product" valueBoolean="false"/>
+              <column name="delete_product" valueBoolean="false"/>
+              <column name="edit_product" valueBoolean="false"/>
+              <column name="add_customer" valueBoolean="false"/>
+              <column name="delete_customer" valueBoolean="false"/>
+              <column name="edit_customer" valueBoolean="false"/>
+              <column name="add_supplier" valueBoolean="false"/>
+              <column name="delete_supplier" valueBoolean="false"/>
+              <column name="edit_supplier" valueBoolean="false"/>
+              <column name="raise_task" valueBoolean="false"/>
+              <column name="add_progress_track" valueBoolean="false"/>
+              <column name="delete_progress_track" valueBoolean="false"/>
+              <column name="edit_progress_track" valueBoolean="false"/>
+              <column name="view_progress_track" valueBoolean="false"/>
+              <column name="add_non_conformance_reason" valueBoolean="false"/>
+              <column name="add_root_causes" valueBoolean="false"/>
+          </insert>
+      </changeSet>
+</databaseChangeLog>
+

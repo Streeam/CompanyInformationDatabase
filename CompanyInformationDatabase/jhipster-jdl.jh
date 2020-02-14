@@ -1,0 +1,396 @@
+
+
+entity Company {
+    name String required unique
+    email String required unique  minlength(5) maxlength(254)  pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/) 
+    phone String required
+    addressLine1 String required
+    addressLine2 String
+    city String required
+    country String required
+    postcode String
+    companyLogo ImageBlob
+
+}
+entity Customer {
+    customerCode String required unique
+    customerName String required
+    customerStatus String required
+    email String required pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    phone String required
+    addressLine1 String required
+    addressLine2 String
+    city String required
+    country String required
+    customerCurency String
+}
+entity Product {
+	partNumber String required unique
+	partDescription String required
+    releaseDate LocalDate required
+    productGroupCode String required
+    site String
+    departament String
+    methodType String required
+    methodStatus String required
+    prime Boolean required
+	unitOfMeasure String
+    supplierPartNumber String unique
+	supplierPartDescription String
+    curency String
+    leadTime Integer min(0)
+    minQuantity Double min(0)
+    latestUnitMaterialCost BigDecimal min(0)
+    costInSupplierCurrency BigDecimal min(0)
+    supplierPrice BigDecimal min(0)
+    costInBaseCurrency BigDecimal min(0)
+    scrapPercentage Double  min(0)
+    onHandStock Double  min(0)
+    standardComponentCost BigDecimal min(0)
+    standardSubContractCost BigDecimal min(0)
+    standardUnitMaterialCost BigDecimal min(0)
+    latestUnitMaterialCost BigDecimal min(0)
+    standardSetCost BigDecimal min(0)
+    standardRunCost BigDecimal min(0)
+    standardLandedCost1 BigDecimal min(0)
+    standardLandedCost2 BigDecimal min(0)
+    standardLandedCost3 BigDecimal min(0)
+    comment1 String
+    comment2 String
+    comment3 String
+    reviewDate1 LocalDate
+    reviewDate2 LocalDate
+    reviewDate3 LocalDate
+    standardTotalCost BigDecimal min(0)
+    minBarchSize Double  min(0)
+    obsolete Boolean required
+    orderMultipler Integer min(0)
+}
+entity Image {
+    urlPath String required
+}
+
+entity Drawing {
+	drawingNumber String required unique
+    drawingIssue String required
+    urlPath String required
+}
+entity Version {
+    versionNumber String required
+    versionStatus String required
+    issueNumber String 
+}
+
+entity Routing {
+    resourceName String required
+    resourceType String required
+    setUpTime Integer required
+    unitRunTime Integer required
+}
+
+entity Supplier {
+    supplierCode String required unique
+    supplierName String required
+    supplierStatus String required
+    email String required pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    phone String required
+    addressLine1 String required
+    addressLine2 String
+    city String required
+    country String required
+}
+entity Employee {
+    hired Boolean required
+    image ImageBlob
+    jobTitle String
+    hiredDate LocalDate 
+}
+entity Amendment {
+	status AmendmentStatus required
+    deadline LocalDate
+    priority Priority required
+    proposedDate LocalDate
+    currentCondition String
+    proposeAmendment String required
+    reasonForChange String required
+    rejectionReason String
+    progress Integer required min(0) max(100)
+}
+entity Prototype {
+	status Status required
+    deadline LocalDate
+    priority Priority required
+    proposedDate LocalDate
+    progress Integer required min(0) max(100)
+}
+entity NonConformanceDetails {
+    rejectionDate LocalDate required
+    currentDate LocalDate required
+    deadline LocalDate required
+    status Status required
+    progress Integer required min(0) max(100)
+    priority Priority required
+}
+entity NonConformanceType {
+	rejectionCode String required
+    rejectionTitle String required
+	rejectionReason TextBlob required
+    actionToBeTaken TextBlob required
+    shortTermAction TextBlob required
+    longTermAction TextBlob required
+}
+entity InternalNonConformance {
+	dapartament String unique
+    action NonconformanceAction required
+	labour Integer min(0)
+    labourRate Double required min(0)
+    materialCost Double required min(0)
+}
+entity SupplierNonConformance {
+    action NonconformanceAction required
+    labour Integer min(0)
+    concesionDetails String
+    rejectionFee Double required min(0)
+    nonConformanceType SupplierNonconformaceType required
+}
+entity AuditNonConformance {
+    auditNonConformanceFirstType AuditNonconformaceFirstType required
+    auditNonConformanceSecondType AuditNonconformaceSecondType required
+}
+entity ClientNonConformance {
+    warrantyDescription TextBlob
+    warrantyCost Double required min(0)
+    nonConformanceType CustomerNonconformaceType required
+}
+entity Task {
+	taskDescription String
+    startDate LocalDate required
+    endDate LocalDate
+    progress Integer required min(0) max(100)
+    status Status required
+    priority Priority required
+}
+entity ProgressTrack {
+	date LocalDate required
+    progressDescription TextBlob
+    complete Boolean
+}
+entity Notification {
+    comment String
+    sentDate LocalDate required
+    read Boolean required
+    format NotificationType required
+    referencedEmployee String
+}
+entity Roles {
+	raiseNonconformace Boolean required
+    viewNonconformance Boolean required
+    editNonconformance Boolean required
+    viewNonconformanceTasks Boolean required
+    editNonconformanceTasks Boolean required
+    deleteNonconformanceTasks Boolean required
+    deleteNonconformance Boolean required
+    raiseChangeRequest Boolean required
+    viewCostAnalyses Boolean required
+    editCostAnalyses Boolean required
+    viewRequestSubmited Boolean required
+    editRequestSubmited Boolean required
+    approveRequestSubmited Boolean required
+    viewPendingSubmited Boolean required
+    editPendingSubmited Boolean required
+    approvePendingSubmited Boolean required
+    viewRejected Boolean required
+    editRejected Boolean required
+    editPurchaseRequest Boolean required
+    deletePurchaseRequest Boolean required
+    editProductStock Boolean required
+    addProduct Boolean required
+    deleteProduct Boolean required
+    editProduct Boolean required
+    addCustomer Boolean required
+    deleteCustomer Boolean required
+    editCustomer Boolean required
+    addSupplier Boolean required
+    deleteSupplier Boolean required
+    editSupplier Boolean required
+}
+entity Bom {
+quantity Double required min(0)
+sequenceNumber Integer required min(0)
+}
+entity PurchaseRequestChild {
+    quantity Double required
+    orderedDate LocalDate required
+    dueDate LocalDate required
+    commited Boolean required
+    status PurchaseRequestStatus required
+    comment String maxlength(200)
+}
+entity PurchaseRequestParent {
+	pdfURLPath String required
+}
+entity SalesOrder {
+	salesOrderNumber String required
+    dateRaised LocalDate required
+    soSalesStatus String
+    secondSalesReference String
+    currencyCode String
+    exchangeRate String
+    discountPercent Double required min(0)  max(100)
+    contactName String
+    ourContact String
+    invoiceAddress String
+    invoiceCountryCode String
+    salesOrderTitle String
+    salesAnalysis1 String
+    salesAnalysis2 String
+    salesAnalysis3 String
+    salesAnalysis4 String
+    salesAnalysis5 String
+    salesAnalysis6 String
+    memo1 String
+    memo2 String
+    memo3 String
+    memo4 String
+    memo5 String
+    memo6 String
+    stockAnalysis01 String
+    stockAnalysis02 String
+    stockAnalysis03 String
+    stockAnalysis04 String
+    stockAnalysis05 String
+    stockAnalysis06 String
+    stockAnalysis07 String
+    stockAnalysis08 String
+    stockAnalysis09 String
+    stockAnalysis10 String
+    deliveryCode String
+    transactionCode String
+    code String
+    salesOrderStatusCode String
+    despatchStatusID String
+    division String
+    lineNumber String
+    despatchStatusCode String
+    quantityOrdered Double min(0)
+    quantityOutstanding Double min(0)
+    quantityDespatched Double min(0)
+    despatchDate LocalDate required
+    custRequiredDate LocalDate required
+    unitPrice Double min(0)
+    unitPriceinBase Double min(0)
+    lineDiscountPercent Double min(0)
+    marginPercent Double min(0)
+    lineTotal Double min(0)
+    lineTotalinBase Double min(0)
+    taxCode String required
+    nominalCode String required
+    onHold Boolean required
+    rCode String required
+    standardMargin Double min(0)
+    deliveryAddress String required
+    deliveryAddressDescription String
+    deliveryCountryCode String
+    salesOrderStatus String
+}
+enum AmendmentStatus {
+CHANGE_REQUEST_SUBMITED, ANALYSE_CHANGE_REQUEST,
+PLAN_CHANGE, IMPLEMENT_CHANGE, REVIEW_CLOSE_CHANGE
+}
+enum NotificationType {
+    INVITATION, NEW_EMPLOYEE, FIRED, ACCEPT_INVITE,
+    ACCEPT_REQUEST, REJECT_INVITE, REJECT_REQUEST,
+    REQUEST_TO_JOIN, LEFT_COMPANY, COMPANY_DELETED, OTHERS,
+    NEW_NON_COMFORMANCE, NON_COMFORMANCE_COMPLETED
+}
+enum AuditNonconformaceSecondType {
+	MINOR_NON_CONFORMACE, OPORTUNITY_FORIMPROVEMENT,
+    MAJOR_NON_CONFORMACE
+}
+enum AuditNonconformaceFirstType {
+	INTERNAL, EXTERNAL
+}
+enum CustomerNonconformaceType {
+	NON_CONFORMING_PRODUCT_SERVICE, LATE_DELIVERY,
+    CUSTOMER_COMPLAINT
+}
+enum PurchaseRequestStatus {
+DESPATCHED, PENDING, CANCELED
+}
+enum SupplierNonconformaceType {
+	NON_CONFORMING_PRODUCT_SERVICE, LATE_DELIVERY
+}
+enum NonconformanceAction {
+	SCRAP, REWORK, REJECT, CONCESSION, OTHER
+}
+enum Status {
+	PENDING, COMPLETE, STUCK, NEED_HELP
+}
+enum Priority {
+	LOW, MEDIUM, HIGH
+}
+
+// ADD EVERYTHING TO A COMPANY
+
+relationship OneToMany {
+    Company{employees} to Employee
+    Company{notification} to Notification
+    Company{products} to Product
+    Company{customers} to Customer
+    Company{supplier} to Supplier
+    Employee{notification} to Notification
+	Product{images} to Image
+    Product{drawings} to Drawing
+    Employee{amendments} to Amendment
+    Amendment{tasks} to Task
+    Amendment{image} to Image
+    Amendment{drawing} to Drawing
+    Task{progressTrack} to ProgressTrack
+    Employee{internalNonConformance} to InternalNonConformance
+    Employee{supplierNonConformance} to SupplierNonConformance
+    Employee{auditNonConformance} to AuditNonConformance
+    Employee{clientNonConformance} to ClientNonConformance
+    NonConformanceDetails{tasks} to Task
+    NonConformanceDetails{images} to Image
+    NonConformanceDetails{drawings} to Drawing
+    PurchaseRequestParent{purchaseRequestChild} to PurchaseRequestChild
+    Employee{purchaseRequestParent} to PurchaseRequestParent
+    Customer{saleOrders(id)} to SalesOrder
+    SalesOrder{purchaseRequestChild(id)} to PurchaseRequestChild
+    Product{nonconformances} to NonConformanceDetails
+    Routing{nonconformances} to NonConformanceDetails
+    Product{version} to Version
+    Routing{version} to Version
+    SalesOrder{products} to Product
+    Employee{task} to Task
+}
+relationship ManyToMany{
+	Supplier{products(id)} to Product{supplier}
+    Product{bom} to Bom{product}
+    Product{routings} to Routing{products}
+}
+
+relationship OneToOne {
+    Employee{user required} to User
+    Employee{role required} to Roles
+    Version{amendment} to Amendment
+    Version{prototype} to Prototype
+    InternalNonConformance{nonConformanceDetails required} to NonConformanceDetails
+	SupplierNonConformance{nonConformanceDetails required} to NonConformanceDetails
+	AuditNonConformance{nonConformanceDetails required} to NonConformanceDetails
+    ClientNonConformance{nonConformanceDetails required} to NonConformanceDetails
+	SupplierNonConformance{supplier} to Supplier
+    ClientNonConformance{customer} to Customer
+    PurchaseRequestChild{product required} to Product
+    NonConformanceDetails{nonConformanceType} to NonConformanceType
+}
+
+// Set pagination options
+paginate PurchaseRequestParent, Product, Employee, SalesOrder
+with pagination
+
+// Use Data Transfert Objects (DTO)
+ dto * with mapstruct
+
+service * with serviceClass
+

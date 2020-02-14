@@ -1,0 +1,66 @@
+import React from 'react';
+import { Switch } from 'react-router-dom';
+import Loadable from 'react-loadable';
+
+import Login from 'app/modules/login/login';
+import Register from 'app/modules/account/register/register';
+import Activate from 'app/modules/account/activate/activate';
+import PasswordResetInit from 'app/modules/account/password-reset/init/password-reset-init';
+import PasswordResetFinish from 'app/modules/account/password-reset/finish/password-reset-finish';
+import Logout from 'app/modules/login/logout';
+import Home from 'app/modules/home/home-unauthorize';
+import Entities from 'app/entities';
+import Company from 'app/modules/company';
+import Notifications from 'app/modules/notifications';
+import HomeRoute from 'app/shared/auth/private-home-route';
+import PrivateRoute from 'app/shared/auth/private-route';
+import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
+import PageNotFound from 'app/shared/error/page-not-found';
+import { AUTHORITIES } from 'app/config/constants';
+import CompanyData from 'app/modules/company-data';
+
+// tslint:disable:space-in-parens
+const Account = Loadable({
+  loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
+  loading: () => <div>loading ...</div>
+});
+
+const Admin = Loadable({
+  loader: () => import(/* webpackChunkName: "administration" */ 'app/modules/administration'),
+  loading: () => <div>loading ...</div>
+});
+
+const NonConformances = Loadable({
+  loader: () => import(/* webpackChunkName: "nonconformances" */ 'app/modules/noncomformances'),
+  loading: () => <div>loading ...</div>
+});
+const Purchase = Loadable({
+  loader: () => import(/* webpackChunkName: "purchase" */ 'app/modules/purchase'),
+  loading: () => <div>loading ...</div>
+});
+// tslint:enable
+
+const Routes = () => (
+  <div className="view-routes">
+    <Switch>
+      <ErrorBoundaryRoute path="/login" component={Login} />
+      <ErrorBoundaryRoute path="/logout" component={Logout} />
+      <ErrorBoundaryRoute path="/register" component={Register} />
+      <ErrorBoundaryRoute path="/activate/:key?" component={Activate} />
+      <ErrorBoundaryRoute path="/reset/request" component={PasswordResetInit} />
+      <ErrorBoundaryRoute path="/reset/finish/:key?" component={PasswordResetFinish} />
+      <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
+      <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
+      <PrivateRoute path="/entity" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
+      <HomeRoute path="/nonconformances" component={NonConformances} />
+      <HomeRoute path="/purchase" component={Purchase} />
+      <HomeRoute path="/company" component={Company} />
+      <HomeRoute path="/notifications" component={Notifications} />
+      <HomeRoute path="/company-data" component={CompanyData} />
+      <HomeRoute path="/" component={Home} />
+      <ErrorBoundaryRoute component={PageNotFound} />
+    </Switch>
+  </div>
+);
+
+export default Routes;

@@ -1,0 +1,97 @@
+{
+    "name": "NonConformanceDetails",
+    "fields": [
+        {
+            "fieldName": "deadline",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "PENDING,COMPLETE,STUCK,NEED_HELP",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "progress",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": 0,
+            "fieldValidateRulesMax": 100
+        },
+        {
+            "fieldName": "priority",
+            "fieldType": "Priority",
+            "fieldValues": "LOW,MEDIUM,HIGH",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "nonconformance",
+            "fieldType": "Nonconformance",
+            "fieldValues": "INTERNAL,SUPPLIER,AUDIT,CUSTOMER"
+        },
+        {
+            "fieldName": "currentDate",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "product",
+            "otherEntityName": "product",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "partNumber",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "nonConformanceDetails"
+        },
+        {
+            "relationshipName": "routing",
+            "otherEntityName": "routing",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "nonConformanceDetails"
+        },
+        {
+            "relationshipName": "employee",
+            "otherEntityName": "employee",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "nonConformanceDetails"
+        },
+        {
+            "relationshipName": "nonConformanceType",
+            "otherEntityName": "nonConformanceType",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "useJPADerivedIdentifier": false,
+            "otherEntityRelationshipName": "nonConformanceDetails"
+        }
+    ],
+    "changelogDate": "20191026131054",
+    "entityTableName": "non_conformance_details",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "searchEngine": false,
+    "databaseType": "sql"
+}

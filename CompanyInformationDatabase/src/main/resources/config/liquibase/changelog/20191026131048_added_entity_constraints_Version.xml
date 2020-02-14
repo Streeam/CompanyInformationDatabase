@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Version.
+    -->
+    <changeSet id="20191026131048-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="version"
+                                 constraintName="fk_version_product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+
+        <addForeignKeyConstraint baseColumnNames="amendment_id"
+                                 baseTableName="version"
+                                 constraintName="fk_version_amendment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="amendment"/>
+
+        <addForeignKeyConstraint baseColumnNames="prototype_id"
+                                 baseTableName="version"
+                                 constraintName="fk_version_prototype_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prototype"/>
+
+        <addForeignKeyConstraint baseColumnNames="routing_id"
+                                 baseTableName="version"
+                                 constraintName="fk_version_routing_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="routing"/>
+
+    </changeSet>
+</databaseChangeLog>

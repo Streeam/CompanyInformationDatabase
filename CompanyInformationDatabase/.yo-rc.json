@@ -1,0 +1,38 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.streeam.cid"
+    },
+    "jhipsterVersion": "6.2.0",
+    "applicationType": "monolith",
+    "baseName": "CID",
+    "packageName": "com.streeam.cid",
+    "packageFolder": "com/streeam/cid",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "OWY5NGZhOWE0YzNiOTBhZGE0ZmZlMTQwNGEwMTI2OGI1ODYyM2U2N2NlOTBkYjM0MzRkMjdjZjZkMzRmMWUwYWI1YWNhMDU2NmE0NjVhMmU2MTRiMDI4ZTk2NTVmNTEwYTIzNDc4N2YzZmU5NjFiOWMxZjkzYThkZWY5Yzk5OWE=",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "react",
+    "clientTheme": "materia",
+    "clientThemeVariant": "light",
+    "testFrameworks": ["gatling", "protractor"],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": []
+  }
+}
