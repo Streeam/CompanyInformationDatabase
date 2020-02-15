@@ -21,7 +21,13 @@ export class Company extends React.Component<ICompanyProps> {
     const { companyList, match } = this.props;
     return (
       <div>
-        <h2 id="company-heading">Companies</h2>
+        <h2 id="company-heading">
+          Companies
+          <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
+            <FontAwesomeIcon icon="plus" />
+            &nbsp; Create a new Company
+          </Link>
+        </h2>
         <div className="table-responsive">
           {companyList && companyList.length > 0 ? (
             <Table responsive aria-describedby="company-heading">
@@ -90,9 +96,9 @@ export class Company extends React.Component<ICompanyProps> {
                         <Button tag={Link} to={`${match.url}/${company.id}/edit`} color="primary" size="sm">
                           <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                         </Button>
-                        {/* <Button tag={Link} to={`${match.url}/${company.id}/delete`} color="danger" size="sm">
+                        <Button tag={Link} to={`${match.url}/${company.id}/delete`} color="danger" size="sm">
                           <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
-                        </Button> */}
+                        </Button>
                       </div>
                     </td>
                   </tr>

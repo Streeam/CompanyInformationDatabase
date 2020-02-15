@@ -157,19 +157,6 @@ describe('Authentication reducer tests', () => {
       axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
     });
 
-    it('dispatches GET_SESSION_PENDING and GET_SESSION_FULFILLED actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.GET_SESSION)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.GET_SESSION),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(getSession()).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
     it('dispatches LOGOUT actions', async () => {
       const expectedActions = [
         {
@@ -194,27 +181,6 @@ describe('Authentication reducer tests', () => {
       expect(store.getActions()).toEqual(expectedActions);
     });
 
-    it('dispatches LOGIN, GET_SESSION and SET_LOCALE success and request actions', async () => {
-      const loginResponse = { headers: { authorization: 'auth' } };
-      axios.post = sinon.stub().returns(Promise.resolve(loginResponse));
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.LOGIN)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.LOGIN),
-          payload: loginResponse
-        },
-        {
-          type: REQUEST(ACTION_TYPES.GET_SESSION)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.GET_SESSION),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(login('test', 'test')).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
   });
   describe('clearAuthToken', () => {
     let store;

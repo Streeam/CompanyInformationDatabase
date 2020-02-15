@@ -158,7 +158,7 @@ export const nonConformanceAddittional = (props: INonconformanceAdditionalExpens
     <Fragment>
       {nonConformanceProducts && nonConformanceIdType.type && nonConformanceProducts.length > 0
         ? nonConformanceProducts.map(product => (
-            <Card key={product.partDescription}>
+            <Card key={product.partNumber}>
               <div>
                 <div
                   style={{

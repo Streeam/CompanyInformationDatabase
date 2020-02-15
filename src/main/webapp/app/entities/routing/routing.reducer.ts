@@ -3,8 +3,10 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } 
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-
+import { updateEntities as updateProducts } from '../product/product.reducer';
 import { IRouting, defaultValue } from 'app/shared/model/routing.model';
+import { IProduct } from 'app/shared/model/product.model';
+import { isArrayEmpty } from 'app/shared/util/general-utils';
 
 export const ACTION_TYPES = {
   FETCH_ROUTING_LIST: 'routing/FETCH_ROUTING_LIST',
@@ -93,12 +95,18 @@ export default (state: RoutingState = initialState, action): RoutingState => {
         entity: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.DELETE_ROUTING):
-    case SUCCESS(ACTION_TYPES.ROUTING_BATCH):
       return {
         ...state,
         updating: false,
         updateSuccess: true,
         entity: {}
+      };
+    case SUCCESS(ACTION_TYPES.ROUTING_BATCH):
+      return {
+        ...state,
+        updating: false,
+        updateSuccess: true,
+        entities: action.payload.data
       };
     case ACTION_TYPES.RESET:
       return {
@@ -156,7 +164,7 @@ export const createRoutingAndRefreshParent = (entity: IRouting, parentId: number
   dispatch(getParentsRoutings(parentId));
   return result;
 };
-export const createEntities = listOfListRoutings => async dispatch => {
+export const createEntities = listOfListRoutings => async (dispatch, getState) => {
   const result = await dispatch({
     type: ACTION_TYPES.ROUTING_BATCH,
     payload: axios.post(apiUrl + `/batches`, listOfListRoutings)

@@ -155,6 +155,7 @@ public class EmployeeService {
      */
     public void delete(Long id) {
         log.debug("Request to delete Employee : {}", id);
+        findOne(id).ifPresent(employeeDTO -> notificationService.deleteAllByEmployee(employeeMapper.toEntity(employeeDTO)));
         employeeRepository.deleteById(id);
     }
 

@@ -246,10 +246,10 @@ describe('Entities reducer tests', () => {
           payload: resolvedObject
         },
         {
-          type: REQUEST(ACTION_TYPES.FETCH_NOTIFICATION_LIST)
+          type: REQUEST(ACTION_TYPES.FETCH_CURRENT_NOTIFICATION)
         },
         {
-          type: SUCCESS(ACTION_TYPES.FETCH_NOTIFICATION_LIST),
+          type: SUCCESS(ACTION_TYPES.FETCH_CURRENT_NOTIFICATION),
           payload: resolvedObject
         }
       ];

@@ -215,67 +215,6 @@ describe('Entities reducer tests', () => {
       ];
       await store.dispatch(getEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
-
-    it('dispatches ACTION_TYPES.CREATE_TASK actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.CREATE_TASK)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.CREATE_TASK),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_TASK_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_TASK_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(createEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.UPDATE_TASK actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.UPDATE_TASK)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.UPDATE_TASK),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_TASK_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_TASK_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.DELETE_TASK actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.DELETE_TASK)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.DELETE_TASK),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_TASK_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_TASK_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(deleteEntity(null, null, null)).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
     it('dispatches ACTION_TYPES.RESET actions', async () => {
       const expectedActions = [
         {

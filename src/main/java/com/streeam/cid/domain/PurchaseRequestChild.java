@@ -22,7 +22,8 @@ public class PurchaseRequestChild implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @NotNull
@@ -50,9 +51,9 @@ public class PurchaseRequestChild implements Serializable {
     @Column(name = "comment", length = 200)
     private String comment;
 
-    @OneToOne(optional = false)    @NotNull
-
-    @JoinColumn(unique = true)
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn
     private Product product;
 
     @ManyToOne

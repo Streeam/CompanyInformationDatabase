@@ -143,7 +143,7 @@ export const internalNonConformanceScrap = (props: INonconformanceInternalScrapP
                 >
                   <div style={{ display: 'inline-block' }}>
                     <h5>
-                      <strong>{product.partDescription}</strong>
+                      <strong>{product.partNumber}</strong>
                     </h5>
                   </div>
                 </div>

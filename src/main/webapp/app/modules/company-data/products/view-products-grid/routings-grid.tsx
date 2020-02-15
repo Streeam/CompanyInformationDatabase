@@ -32,7 +32,7 @@ interface IRoutingsProps extends StateProps, DispatchProps {
 }
 
 export const routingsGrid = (props: IRoutingsProps) => {
-  const { selectedProduct, parentsRoutings, currentRouting, setCurrentRouting, currentEmployee, allProducts, match } = props;
+  const { selectedProduct, parentsRoutings, currentRouting, setCurrentRouting, currentEmployee, allProducts, match, allRoutings } = props;
 
   useEffect(() => {}, []);
   const [gridApi, setGridApi] = useState(null);
@@ -41,8 +41,8 @@ export const routingsGrid = (props: IRoutingsProps) => {
   const columnHeaders = [
     { headerName: 'Id', field: 'id', width: 60, resizable: true, sortable: true, filter: true, checkboxSelection: true },
     { headerName: 'Part Number', field: 'partNumber', width: 150, resizable: true, sortable: true, filter: true },
-    { headerName: 'Resource Name', field: 'resourceName', width: 250, resizable: true, sortable: true, filter: true },
-    { headerName: 'Resource Type', field: 'resourceType', width: 200, resizable: true, sortable: true, filter: true },
+    { headerName: 'Resource Name', field: 'resourceName', width: 150, resizable: true, sortable: true, filter: true },
+    { headerName: 'Resource Type', field: 'resourceType', width: 100, resizable: true, sortable: true, filter: true },
     { headerName: 'Unit Run Time', field: 'unitRunTime', width: 150, resizable: true, sortable: true, filter: true }
   ];
   const extractRoutings = (): any[] => {
@@ -94,7 +94,7 @@ export const routingsGrid = (props: IRoutingsProps) => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <div style={{ textAlign: 'right' }}>
-            {addProductPermission(currentEmployee) && !isArrayEmpty(allProducts) && (
+            {addProductPermission(currentEmployee) && !isArrayEmpty(allProducts) && isArrayEmpty(allRoutings) && (
               <Link to={`${match.url}/products/import-routings`}>
                 <IconButton size="small" title={'Import routings from .csv file!'} aria-label="upload" className={classes.margin}>
                   <PublishOutlinedIcon />
@@ -172,6 +172,7 @@ export const routingsGrid = (props: IRoutingsProps) => {
 const mapStateToProps = ({ routing, employee, product }: IRootState) => ({
   parentsRoutings: routing.parentsEntities,
   currentEmployee: employee.currentEmployeeEntity,
+  allRoutings: routing.entities,
   allProducts: product.entities
 });
 

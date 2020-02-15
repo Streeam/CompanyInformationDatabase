@@ -243,13 +243,6 @@ describe('Entities reducer tests', () => {
         {
           type: SUCCESS(ACTION_TYPES.UPDATE_BOM),
           payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_BOM_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_BOM_LIST),
-          payload: resolvedObject
         }
       ];
       await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));

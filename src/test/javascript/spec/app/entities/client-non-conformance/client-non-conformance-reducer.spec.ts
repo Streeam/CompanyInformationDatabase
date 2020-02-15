@@ -224,26 +224,6 @@ describe('Entities reducer tests', () => {
       await store.dispatch(getEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
-    it('dispatches ACTION_TYPES.CREATE_CLIENTNONCONFORMANCE actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.CREATE_CLIENTNONCONFORMANCE)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.CREATE_CLIENTNONCONFORMANCE),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_CLIENTNONCONFORMANCE_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_CLIENTNONCONFORMANCE_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(createEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
     it('dispatches ACTION_TYPES.UPDATE_CLIENTNONCONFORMANCE actions', async () => {
       const expectedActions = [
         {
@@ -271,13 +251,6 @@ describe('Entities reducer tests', () => {
         },
         {
           type: SUCCESS(ACTION_TYPES.DELETE_CLIENTNONCONFORMANCE),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_CLIENTNONCONFORMANCE_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_CLIENTNONCONFORMANCE_LIST),
           payload: resolvedObject
         }
       ];

@@ -34,6 +34,10 @@ const NonConformances = Loadable({
   loader: () => import(/* webpackChunkName: "nonconformances" */ 'app/modules/noncomformances'),
   loading: () => <div>loading ...</div>
 });
+const Purchase = Loadable({
+  loader: () => import(/* webpackChunkName: "purchase" */ 'app/modules/purchase'),
+  loading: () => <div>loading ...</div>
+});
 // tslint:enable
 
 const Routes = () => (
@@ -49,6 +53,7 @@ const Routes = () => (
       <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
       <PrivateRoute path="/entity" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <HomeRoute path="/nonconformances" component={NonConformances} />
+      <HomeRoute path="/purchase" component={Purchase} />
       <HomeRoute path="/company" component={Company} />
       <HomeRoute path="/notifications" component={Notifications} />
       <HomeRoute path="/company-data" component={CompanyData} />

@@ -3,6 +3,10 @@ import moment from 'moment';
 import CSVReader from 'react-csv-reader';
 import { IRootState } from 'app/shared/reducers';
 import { connect } from 'react-redux';
+// tslint:disable
+import IconButton from '@material-ui/core/IconButton';
+import SyncIcon from '@material-ui/icons/Sync';
+// tslint:enable
 import { updateEntities as updateProducts, getAllProductsFromDB } from '../../../../entities/product/product.reducer';
 import {
   createEntities as createRoutings,
@@ -18,7 +22,8 @@ import {
   isEmpty,
   executeFunctionInChuncks,
   isArrayEmpty,
-  removeDuplicatesBasedOn2Entities
+  removeDuplicatesBasedOn2Entities,
+  removeDuplicatesBasedOnMultipleEntities
 } from '../../../../shared/util/general-utils';
 import './import.css';
 import { AgGridReact } from 'ag-grid-react';
@@ -37,7 +42,7 @@ const importRoutings = (props: IRoutingsProps) => {
     if (isArrayEmpty(allProductsFromDB)) {
       props.getAllProductsFromDB();
     }
-    return () => props.resetRouting();
+    // return () => props.resetRouting();
   }, []);
   const [loading, setLoading] = useState<boolean>(false);
   const routing: IRouting = {
@@ -71,11 +76,11 @@ const importRoutings = (props: IRoutingsProps) => {
 
     const routingsToInsert = [...allRoutings, ...routingsFromCSV];
     // const uniqueRoutingsToInsert = removeDuplicates(routingsToInsert, 'uniqueIdentifier');
-    const uniqueRoutingsToInsert = removeDuplicatesBasedOn2Entities(routingsToInsert, 'uniqueIdentifier', 'resourceName');
-    const nonNullRoutingsToInsert = uniqueRoutingsToInsert.filter(val => val.id === null);
+    // const uniqueRoutingsToInsert = removeDuplicatesBasedOnMultipleEntities(routingsToInsert, ['uniqueIdentifier', 'partNumber', 'resourceName', 'unitRunTime']);
+    const nonNullRoutingsToInsert = routingsToInsert.filter(val => val.id === null);
     const routingsToUpdate: IRouting[] = [];
 
-    allRoutings.forEach(item1 => {
+    /*allRoutings.forEach(item1 => {
       routingsFromCSV.forEach(item2 => {
         if (item1.uniqueIdentifier === item2.uniqueIdentifier) {
           if (
@@ -95,35 +100,32 @@ const importRoutings = (props: IRoutingsProps) => {
     if (!isArrayEmpty(routingsToUpdate)) {
       setLoading(true);
       routingsToUpdate.forEach(item => {
-        new Promise((resolve, reject) => resolve(props.updateRouting(item))).then(() => {
-          props.getAllRoutings();
-          setLoading(false);
-        });
+        props.updateRouting(item);
       });
-    }
+    }*/
     if (!isArrayEmpty(nonNullRoutingsToInsert)) {
       setLoading(true);
-      executeFunctionInChuncks(nonNullRoutingsToInsert, props.createRoutings, 200).then(() => {
-        new Promise((resolve, reject) => resolve(props.getAllRoutings())).then(() => {
-          updateProductRoutings([...allRoutings]);
-          setLoading(false);
-        });
-      });
+      executeFunctionInChuncks(nonNullRoutingsToInsert, props.createRoutings, 500);
     }
     setLoading(false);
   };
-  const updateProductRoutings = (routings: IRouting[]): void => {
-    const productsToUpdate: IProduct[] = [];
-    allProductsFromDB.forEach(product => {
-      routings.forEach(routingEntity => {
-        if (routingEntity.partNumber === product.partNumber) {
-          productsToUpdate.push({ ...product, routings: [...product.routings, routingEntity] });
-        }
+
+  const updateProductRoutings = (): void => {
+    if (!isArrayEmpty(allProductsFromDB) && !isArrayEmpty(allRoutings)) {
+      const productsToUpdate: IProduct[] = [];
+      allProductsFromDB.forEach(product => {
+        const routings: IRouting[] = [];
+        allRoutings.forEach(routingEmtity => {
+          if (routingEmtity.partNumber === product.partNumber) {
+            routings.push(routingEmtity);
+          }
+        });
+        !isArrayEmpty(routings) && productsToUpdate.push({ ...product, routings: [...routings] });
       });
-    });
-    executeFunctionInChuncks(productsToUpdate, props.updateProducts, 200).then(() => {
-      props.getAllProductsFromDB();
-    });
+      executeFunctionInChuncks(productsToUpdate, props.updateProducts, 200).then(() => {
+        props.getAllProductsFromDB();
+      });
+    }
   };
 
   const columnHeaders = [
@@ -176,6 +178,16 @@ const importRoutings = (props: IRoutingsProps) => {
             </li>
           </ol>
         </div>
+        <div style={{ textAlign: 'right' }}>
+      <IconButton
+                  size="small"
+                  title={'Update the products'}
+                  onClick={updateProductRoutings}
+                  aria-label="edit"
+                >
+                  <SyncIcon />
+                </IconButton>
+                  </div>
         <div
           className="ag-theme-balham"
           style={{

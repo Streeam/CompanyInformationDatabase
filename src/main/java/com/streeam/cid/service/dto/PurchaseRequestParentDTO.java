@@ -1,7 +1,10 @@
 package com.streeam.cid.service.dto;
-import javax.validation.constraints.*;
+
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import javax.validation.constraints.NotNull;
 
 /**
  * A DTO for the {@link com.streeam.cid.domain.PurchaseRequestParent} entity.
@@ -13,6 +16,7 @@ public class PurchaseRequestParentDTO implements Serializable {
     @NotNull
     private String pdfURLPath;
 
+    private Set<PurchaseRequestChildDTO> purchaseRequestChildren = new HashSet<>();
 
     private Long employeeId;
 
@@ -22,6 +26,13 @@ public class PurchaseRequestParentDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setPurchaseRequestChildren(Set<PurchaseRequestChildDTO> children) {
+        this.purchaseRequestChildren = children;
+    }
+    public Set<PurchaseRequestChildDTO> getPurchaseRequestChildren() {
+        return this.purchaseRequestChildren;
     }
 
     public String getPdfURLPath() {

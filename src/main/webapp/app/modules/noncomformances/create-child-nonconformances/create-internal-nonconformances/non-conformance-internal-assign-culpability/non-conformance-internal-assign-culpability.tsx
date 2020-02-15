@@ -42,7 +42,7 @@ export const internalNonConformanceCulpability = (props: INonconformanceInternal
     <Fragment>
       <Card style={{ backgroundColor: 'white' }} className={classes.cardStyle}>
         <div className={classes.root}>
-          <h5>Assign Culpables</h5>
+          <h5>Assign Operators</h5>
           <SelectMultipleEmployees
             saveEmployees={saveEmployees}
             selectedEmployees={assignCulpableEmployees()}

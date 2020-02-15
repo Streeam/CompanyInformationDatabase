@@ -84,18 +84,6 @@ describe('Entities reducer tests', () => {
       );
     });
 
-    it('should reset the state', () => {
-      expect(
-        reducer(
-          { ...initialState, loading: true },
-          {
-            type: ACTION_TYPES.RESET
-          }
-        )
-      ).toEqual({
-        ...initialState
-      });
-    });
   });
 
   describe('Failures', () => {
@@ -121,50 +109,8 @@ describe('Entities reducer tests', () => {
   });
 
   describe('Successes', () => {
-    it('should fetch all entities', () => {
-      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.FETCH_COMPANY_LIST),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        loading: false,
-        entities: payload.data
-      });
-    });
 
-    it('should fetch a single entity', () => {
-      const payload = { data: { 1: 'fake1' } };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.FETCH_COMPANY),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        loading: false,
-        entity: payload.data
-      });
-    });
-
-    it('should create/update entity', () => {
-      const payload = { data: 'fake payload' };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.CREATE_COMPANY),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        updating: false,
-        updateSuccess: true,
-        entity: payload.data
-      });
-    });
-
-    it('should delete entity', () => {
+     it('should delete entity', () => {
       const payload = 'fake payload';
       const toTest = reducer(undefined, {
         type: SUCCESS(ACTION_TYPES.DELETE_COMPANY),
@@ -201,39 +147,6 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.FETCH_COMPANY actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_COMPANY)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_COMPANY),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(getEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.CREATE_COMPANY actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.CREATE_COMPANY)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.CREATE_COMPANY),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_COMPANY_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_COMPANY_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(createEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.UPDATE_COMPANY actions', async () => {
@@ -284,25 +197,6 @@ describe('Entities reducer tests', () => {
       ];
       await store.dispatch(reset());
       expect(store.getActions()).toEqual(expectedActions);
-    });
-  });
-
-  describe('blobFields', () => {
-    it('should properly set a blob in state.', () => {
-      const payload = { name: 'fancyBlobName', data: 'fake data', contentType: 'fake dataType' };
-      expect(
-        reducer(undefined, {
-          type: ACTION_TYPES.SET_BLOB,
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        entity: {
-          ...initialState.entity,
-          fancyBlobName: payload.data,
-          fancyBlobNameContentType: payload.contentType
-        }
-      });
     });
   });
 });

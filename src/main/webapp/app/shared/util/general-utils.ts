@@ -24,6 +24,19 @@ export const removeDuplicatesBasedOn2Entities = (array, key1, key2) => {
   });
   return result;
 };
+export const removeDuplicatesBasedOnMultipleEntities = (array, arrayOfKeys: string[]) => {
+  const lookup = {};
+  const result = [];
+  array.forEach(element => {
+    let combinedString = '';
+    arrayOfKeys.forEach(key => combinedString = combinedString.concat(element[key]));
+    if (!lookup[combinedString]) {
+      lookup[combinedString] = true;
+      result.push(element);
+    }
+  });
+  return result;
+};
 
 export const isEmpty = (obj: {}) => isNull(obj) || isUndefined(obj) || Object.keys(obj).length === 0;
 

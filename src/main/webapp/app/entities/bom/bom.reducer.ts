@@ -5,6 +5,8 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { IBom, defaultValue } from 'app/shared/model/bom.model';
 import { IProduct } from 'app/shared/model/product.model';
+import { isEmpty, isArrayEmpty } from 'app/shared/util/general-utils';
+import { updateEntities as updateProducts } from '../product/product.reducer';
 
 export const ACTION_TYPES = {
   FETCH_BOM_LIST: 'bom/FETCH_BOM_LIST',
@@ -83,12 +85,18 @@ export default (state: BomState = initialState, action): BomState => {
         entity: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.DELETE_BOM):
-    case SUCCESS(ACTION_TYPES.BOMS_BATCH):
       return {
         ...state,
         updating: false,
         updateSuccess: true,
         entity: {}
+      };
+    case SUCCESS(ACTION_TYPES.BOMS_BATCH):
+      return {
+        ...state,
+        updating: false,
+        updateSuccess: true,
+        entities: action.payload.data
       };
     case ACTION_TYPES.RESET:
       return {
@@ -148,7 +156,7 @@ export const createBomAndRefreshParent = (entity: IBom, parentId: number) => asy
   dispatch(getParentsBoms(parentId));
   return result;
 };
-export const createEntities = listOfListBoms => async dispatch => {
+export const createEntities = listOfListBoms => async (dispatch, getState) => {
   const result = await dispatch({
     type: ACTION_TYPES.BOMS_BATCH,
     payload: axios.post(apiUrl + `/batches`, listOfListBoms)
@@ -161,7 +169,6 @@ export const updateEntity: ICrudPutAction<IBom> = entity => async dispatch => {
     type: ACTION_TYPES.UPDATE_BOM,
     payload: axios.put(apiUrl, cleanEntity(entity))
   });
-  // dispatch(getEntities());
   return result;
 };
 export const updateBomAndRefreshParent = (entity: IBom, parentId: number) => async dispatch => {
@@ -187,7 +194,7 @@ export const deleteBomAndRefreshParent = (id: number, parent: IProduct, selectPr
     type: ACTION_TYPES.DELETE_BOM,
     payload: axios.delete(requestUrl)
   });
-  dispatch(getParentsBoms(parent.id));
+  !isEmpty(parent) && dispatch(getParentsBoms(parent.id));
   // dispatch(refreshProductsAndReselectCurrentProduct(parent, selectProductAfterUpdate));
   return result;
 };

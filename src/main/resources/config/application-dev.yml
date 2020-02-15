@@ -60,14 +60,19 @@ spring:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev
   mail:
-    host: smtp.sendgrid.net
+    host: smtp.gmail.com
     port: 587
-    username: app150706644@heroku.com
-    password: hhvibuzv1658
+    username: my.own.mockup.email@gmail.com
+    password: UnbreakablePassword
     protocol: smtp
-    properties:
-      tls: false
+    tls: true
+    properties.mail.smtp:
       auth: true
+      connectiontimeout: 5000
+      timeout: 5000
+      writetimeout: 5000
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:

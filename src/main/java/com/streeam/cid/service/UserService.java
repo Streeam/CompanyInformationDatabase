@@ -240,6 +240,9 @@ public class UserService {
     }
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
+            employeeService.findOneByUser(user).ifPresent(employee -> {
+                employeeService.delete(employee.getId());
+            });
             userRepository.delete(user);
             this.clearUserCaches(user);
             log.debug("Deleted User: {}", user);

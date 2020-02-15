@@ -126,6 +126,7 @@ export const productsGrid = (props: IProductsProps) => {
   const handleDialogProductClose = () => {
     setProductDialogOpen(false);
   };
+
   return productUpdating ? (
     <LoadingModal />
   ) : (

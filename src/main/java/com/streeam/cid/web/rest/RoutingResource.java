@@ -81,10 +81,10 @@ public class RoutingResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/routings/batches")
-    public ResponseEntity<Void> createInBatchesRoutings(@RequestBody List<RoutingDTO> routingList) throws URISyntaxException {
+    public ResponseEntity<List<RoutingDTO> > createInBatchesRoutings(@RequestBody List<RoutingDTO> routingList) throws URISyntaxException {
         log.warn("Size - ",routingList.size());
-        routingService.saveInBatch(routingList);
-        return ResponseEntity.ok().build();
+        List<RoutingDTO> routingDTOList = routingService.saveInBatch(routingList);
+        return ResponseEntity.ok().body(routingDTOList);
     }
 
     /**

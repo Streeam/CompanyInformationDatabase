@@ -91,8 +91,26 @@ public class RoutingService {
         routingRepository.deleteById(id);
     }
 
-    public void saveInBatch(List<RoutingDTO> list) {
-        routingRepository.saveAll(routingMapper.toEntity(list));
+    public List<RoutingDTO> saveInBatch(List<RoutingDTO> list) {
+        /*List<ProductDTO> productDTOList = productService.findAll();
+        List<Routing> routingList = routingRepository.saveAll(routingMapper.toEntity(list));
+        List<RoutingDTO> routingDTOList = routingList.stream().map(routingMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+
+        productDTOList.stream().forEach(productDTO -> {
+            Set<RoutingDTO> routingDTOSet = routingList.stream().filter(routing -> routing.getPartNumber() == productDTO.getPartNumber())
+                .map(routingMapper::toDto).collect(Collectors.toSet());
+            Set<RoutingDTO> routingsToUpdate = productDTO.getRoutings();
+            if (!routingDTOSet.isEmpty()) {
+                if (routingDTOSet.addAll(routingsToUpdate)) {
+                    productDTO.setRoutings(routingDTOSet);
+                    productService.save(productDTO);
+                }
+            }
+
+        });*/
+        return routingRepository.saveAll(routingMapper.toEntity(list)).stream().map(routingMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
     @Transactional(readOnly = true)
     public List<RoutingDTO> findAllByPartNumber(String partNumber) {

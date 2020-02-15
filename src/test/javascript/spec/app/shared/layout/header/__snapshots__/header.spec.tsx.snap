@@ -1,0 +1,180 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Renders a Header component in dev profile with LoadingBar, Navbar, Nav and dev ribbon. 1`] = `
+<div
+  id="app-header"
+>
+  <div
+    className="ribbon dev"
+  >
+    <a
+      href=""
+    >
+      Development
+    </a>
+  </div>
+  <Connect(LoadingBar)
+    className="loading-bar"
+  />
+  <Navbar
+    className="bg-light"
+    expand="sm"
+    fixed="top"
+    light={true}
+    tag="nav"
+  >
+    <NavbarToggler
+      aria-label="Menu"
+      onClick={[Function]}
+      tag="button"
+      type="button"
+    />
+    <Component
+      currentCompany={null}
+    />
+    <Collapse
+      appear={false}
+      enter={true}
+      exit={true}
+      in={false}
+      isOpen={false}
+      mountOnEnter={false}
+      navbar={true}
+      onEnter={[Function]}
+      onEntered={[Function]}
+      onEntering={[Function]}
+      onExit={[Function]}
+      onExited={[Function]}
+      onExiting={[Function]}
+      tag="div"
+      timeout={350}
+      unmountOnExit={false}
+    >
+      <Nav
+        className="ml-auto"
+        id="header-tabs"
+        navbar={true}
+        tag="ul"
+        vertical={false}
+      >
+        <Component />
+        <Component
+          account={Object {}}
+          currentCompany={null}
+          currentEmployee={null}
+          incompleteNonConformanceStep={null}
+          isAdmin={true}
+          isAuthenticated={true}
+          isInProduction={false}
+          isManager={true}
+          isOnlyUser={true}
+          isSwaggerEnabled={true}
+          notifications={null}
+          ribbonEnv="dev"
+          sites={null}
+        />
+        <Component
+          showDatabase={true}
+          showSwagger={true}
+        />
+        <Component
+          account={Object {}}
+          company={null}
+          currentEmployee={null}
+          isAdmin={true}
+          isAuthenticated={true}
+          isManager={true}
+        />
+        <Component
+          currentNotifications={null}
+        />
+      </Nav>
+    </Collapse>
+  </Navbar>
+</div>
+`;
+
+exports[`Header Renders a Header component in prod profile with LoadingBar, Navbar, Nav. 1`] = `
+<div
+  id="app-header"
+>
+  <Connect(LoadingBar)
+    className="loading-bar"
+  />
+  <Navbar
+    className="bg-light"
+    expand="sm"
+    fixed="top"
+    light={true}
+    tag="nav"
+  >
+    <NavbarToggler
+      aria-label="Menu"
+      onClick={[Function]}
+      tag="button"
+      type="button"
+    />
+    <Component
+      currentCompany={null}
+    />
+    <Collapse
+      appear={false}
+      enter={true}
+      exit={true}
+      in={false}
+      isOpen={false}
+      mountOnEnter={false}
+      navbar={true}
+      onEnter={[Function]}
+      onEntered={[Function]}
+      onEntering={[Function]}
+      onExit={[Function]}
+      onExited={[Function]}
+      onExiting={[Function]}
+      tag="div"
+      timeout={350}
+      unmountOnExit={false}
+    >
+      <Nav
+        className="ml-auto"
+        id="header-tabs"
+        navbar={true}
+        tag="ul"
+        vertical={false}
+      >
+        <Component />
+        <Component
+          account={Object {}}
+          currentCompany={null}
+          currentEmployee={null}
+          incompleteNonConformanceStep={null}
+          isAdmin={true}
+          isAuthenticated={true}
+          isInProduction={true}
+          isManager={true}
+          isOnlyUser={true}
+          isSwaggerEnabled={false}
+          notifications={null}
+          ribbonEnv="prod"
+          sites={null}
+        />
+        <Component
+          showDatabase={false}
+          showSwagger={false}
+        />
+        <Component
+          account={Object {}}
+          company={null}
+          currentEmployee={null}
+          isAdmin={true}
+          isAuthenticated={true}
+          isManager={true}
+        />
+        <Component
+          currentNotifications={null}
+        />
+      </Nav>
+    </Collapse>
+  </Navbar>
+</div>
+`;

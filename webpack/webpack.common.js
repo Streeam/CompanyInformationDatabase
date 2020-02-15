@@ -56,7 +56,7 @@ module.exports = options => ({
         test: /\.tsx?$/,
         use: getTsLoaderRule(options.env),
         include: [utils.root('./src/main/webapp/app')],
-        exclude: [utils.root('node_modules'), utils.root('./src/test')]
+        exclude: [utils.root('node_modules')]
       },
       {
         test: /\.(jpe?g|png|gif|svg|woff2?|ttf|eot)$/i,

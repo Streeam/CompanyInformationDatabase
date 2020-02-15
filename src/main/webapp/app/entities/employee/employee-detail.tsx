@@ -18,7 +18,9 @@ export const EmployeeDetail = (props: IEmployeeDetailProps) => {
   const { employee, isLoading } = props;
 
   useEffect(() => {
+    if (employee.user === undefined) {
       props.getEntity(props.match.params.id);
+    }
   }, []);
 
   return employee.user !== undefined ? (

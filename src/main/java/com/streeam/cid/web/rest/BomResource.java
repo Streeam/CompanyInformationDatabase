@@ -78,10 +78,10 @@ public class BomResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/boms/batches")
-    public ResponseEntity<Void> createInBatchesBoms(@RequestBody List<BomDTO> bomList) throws URISyntaxException {
+    public ResponseEntity<List<BomDTO>> createInBatchesBoms(@RequestBody List<BomDTO> bomList) throws URISyntaxException {
         log.warn("Size - ",bomList.size());
-        bomService.saveInBatch(bomList);
-        return ResponseEntity.ok().build();
+        List<BomDTO> bomDTOList = bomService.saveInBatch(bomList);
+        return ResponseEntity.ok().body(bomDTOList);
     }
 
     /**

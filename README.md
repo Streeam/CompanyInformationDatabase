@@ -1,163 +1,44 @@
-# CID
+# Quality Management System (QMS)
+A software solution that helps companies to easily manage aspects of your organization’s quality program. The application is a user-friendly, web-based software applications that manages, tracks and reports all the company's non-conformances in real-time. The application streamlines the complaint process, from client rejection through investigation, root cause analyses all the way to resolution.
 
-This application was generated using JHipster 6.2.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.2.0](https://www.jhipster.tech/documentation-archive/v6.2.0).
+# Logs
+Custom system designed for logging in all details of internal, supplier and customer non-conformances, implementing corrective actions allowing efficient case monitoring and providing a data analyses tool.
 
-## Development
+# Root Cause Analysis
+Report, track and react to defects and quality nonconformances within your operations. Launch investigations and find the root cause of the nonconformace using a variety of methodologies, including the process audit checklist, fishbone (Ishikawa) diagram and 5 WHY.
 
-Before you can build this project, you must install and configure the following dependencies on your machine:
+# Costs
+Keep track of all costs involved with each non-conformace, either internal or external.
 
-1. [Node.js][]: We use Node to run a development web server and build the project.
-   Depending on your system, you can install Node either from source or as a pre-packaged bundle.
+# Development
+## Front End:
+Javascript (ES6)
 
-After installing Node, you should be able to run the following command to install development tools.
-You will only need to run this command when dependencies change in [package.json](package.json).
+HTML, CSS
 
-    npm install
+ReactJS (react hooks, redux)
 
-We use npm scripts and [Webpack][] as our build system.
+Typescript
 
-Run the following commands in two separate terminals to create a blissful development experience where your browser
-auto-refreshes when files change on your hard drive.
+Node (npm)
 
-    ./gradlew
-    npm start
+Testing:
 
-Npm is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
-specifying a newer version in [package.json](package.json). You can also run `npm update` and `npm install` to manage dependencies.
-Add the `help` flag on any command to see how you can use it. For example, `npm help update`.
+UI unit tests (Jest)
 
-The `npm run` command will list all of the scripts available to run for this project.
+UI intergration tests (Protractor)
 
-### PWA Support
+## Back End:
+Java
 
-JHipster ships with PWA (Progressive Web App) support, and it's disabled by default. One of the main components of a PWA is a service worker.
+Spring Boot (REST API Framework)
 
-The service worker initialization code is commented out by default. To enable it, uncomment the following code in `src/main/webapp/index.html`:
+Spring Security (authentication and authorization - JWT)
 
-```html
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./service-worker.js').then(function() {
-      console.log('Service Worker Registered');
-    });
-  }
-</script>
-```
+### Testing:
 
-Note: [Workbox](https://developers.google.com/web/tools/workbox/) powers JHipster's service worker. It dynamically generates the `service-worker.js` file.
+Unit tests (JUnit 5)
 
-### Managing dependencies
+Integration tests (Spring Test Context Framework)
 
-For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
-
-    npm install --save --save-exact leaflet
-
-To benefit from TypeScript type definitions from [DefinitelyTyped][] repository in development, you would run following command:
-
-    npm install --save-dev --save-exact @types/leaflet
-
-Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
-Note: There are still a few other things remaining to do for Leaflet that we won't detail here.
-
-For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
-
-## Building for production
-
-### Packaging as jar
-
-To build the final jar and optimize the CID application for production, run:
-
-    ./gradlew -Pprod clean bootJar
-
-This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
-To ensure everything worked, run:
-
-    java -jar build/libs/*.jar
-
-Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
-
-Refer to [Using JHipster in production][] for more details.
-
-### Packaging as war
-
-To package your application as a war in order to deploy it to an application server, run:
-
-    ./gradlew -Pprod -Pwar clean bootWar
-
-## Testing
-
-To launch your application's tests, run:
-
-    ./gradlew test integrationTest
-
-### Client tests
-
-Unit tests are run by [Jest][] and written with [Jasmine][]. They're located in [src/test/javascript/](src/test/javascript/) and can be run with:
-
-    npm test
-
-For more information, refer to the [Running tests page][].
-
-### Code quality
-
-Sonar is used to analyse code quality. You can start a local Sonar server (accessible on http://localhost:9001) with:
-
-```
-docker-compose -f src/main/docker/sonar.yml up -d
-```
-
-You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the gradle plugin.
-
-Then, run a Sonar analysis:
-
-```
-./gradlew -Pprod clean check sonarqube
-```
-
-For more information, refer to the [Code quality page][].
-
-## Using Docker to simplify development (optional)
-
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
-
-For example, to start a mysql database in a docker container, run:
-
-    docker-compose -f src/main/docker/mysql.yml up -d
-
-To stop it and remove the container, run:
-
-    docker-compose -f src/main/docker/mysql.yml down
-
-You can also fully dockerize your application and all the services that it depends on.
-To achieve this, first build a docker image of your app by running:
-
-    ./gradlew bootJar -Pprod jibDockerBuild
-
-Then run:
-
-    docker-compose -f src/main/docker/app.yml up -d
-
-For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
-
-## Continuous Integration (optional)
-
-To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
-
-[jhipster homepage and latest documentation]: https://www.jhipster.tech
-[jhipster 6.2.0 archive]: https://www.jhipster.tech/documentation-archive/v6.2.0
-[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v6.2.0/development/
-[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v6.2.0/docker-compose
-[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v6.2.0/production/
-[running tests page]: https://www.jhipster.tech/documentation-archive/v6.2.0/running-tests/
-[code quality page]: https://www.jhipster.tech/documentation-archive/v6.2.0/code-quality/
-[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v6.2.0/setting-up-ci/
-[node.js]: https://nodejs.org/
-[yarn]: https://yarnpkg.org/
-[webpack]: https://webpack.github.io/
-[angular cli]: https://cli.angular.io/
-[browsersync]: http://www.browsersync.io/
-[jest]: https://facebook.github.io/jest/
-[jasmine]: http://jasmine.github.io/2.0/introduction.html
-[protractor]: https://angular.github.io/protractor/
-[leaflet]: http://leafletjs.com/
-[definitelytyped]: http://definitelytyped.org/
+Database (Hibernate/Spring data JPA + MySQL)

@@ -3,10 +3,11 @@ package com.streeam.cid.service;
 import com.streeam.cid.domain.PurchaseRequestParent;
 import com.streeam.cid.repository.PurchaseRequestParentRepository;
 import com.streeam.cid.service.dto.PurchaseRequestParentDTO;
+import com.streeam.cid.service.mapper.PurchaseRequestChildMapper;
 import com.streeam.cid.service.mapper.PurchaseRequestParentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public class PurchaseRequestParentService {
     private final Logger log = LoggerFactory.getLogger(PurchaseRequestParentService.class);
 
     private final PurchaseRequestParentRepository purchaseRequestParentRepository;
+    @Autowired
+    private PurchaseRequestChildService purchaseRequestChildService;
+    @Autowired
+    private PurchaseRequestChildMapper purchaseRequestChildMapper;
 
     private final PurchaseRequestParentMapper purchaseRequestParentMapper;
 
@@ -41,9 +46,27 @@ public class PurchaseRequestParentService {
     public PurchaseRequestParentDTO save(PurchaseRequestParentDTO purchaseRequestParentDTO) {
         log.debug("Request to save PurchaseRequestParent : {}", purchaseRequestParentDTO);
         PurchaseRequestParent purchaseRequestParent = purchaseRequestParentMapper.toEntity(purchaseRequestParentDTO);
-        purchaseRequestParent = purchaseRequestParentRepository.save(purchaseRequestParent);
-        return purchaseRequestParentMapper.toDto(purchaseRequestParent);
+
+        PurchaseRequestParent finalPurchaseRequestParent = purchaseRequestParentRepository.save(purchaseRequestParent);
+        purchaseRequestParentDTO.getPurchaseRequestChildren().stream().forEach(purchaseRequestChildDTO -> {
+            purchaseRequestChildDTO.setPurchaseRequestParentId(finalPurchaseRequestParent.getId());
+            purchaseRequestChildDTO.setProductId(purchaseRequestChildDTO.getProductId());
+            purchaseRequestChildService.save(purchaseRequestChildDTO);
+        });
+        return purchaseRequestParentMapper.toDto(finalPurchaseRequestParent);
     }
+
+//    public void emailConvertToPdf(PurchaseRequestParentDTO purchaseRequestParentDTO) throws FileNotFoundException, DocumentException {
+//        Document document = new Document();
+//        PdfWriter.getInstance(document, new FileOutputStream("iTextHelloWorld.pdf"));
+//
+//        document.open();
+//        Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+//        Chunk chunk = new Chunk("Hello World", font);
+//
+//        document.add(chunk);
+//        document.close();
+//    }
 
     /**
      * Get all the purchaseRequestParents.
@@ -54,6 +77,9 @@ public class PurchaseRequestParentService {
     @Transactional(readOnly = true)
     public Page<PurchaseRequestParentDTO> findAll(Pageable pageable) {
         log.debug("Request to get all PurchaseRequestParents");
+        int[] mata = new int[10];
+
+
         return purchaseRequestParentRepository.findAll(pageable)
             .map(purchaseRequestParentMapper::toDto);
     }

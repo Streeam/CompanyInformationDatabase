@@ -53,7 +53,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="customer_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_client_non_conformance_customer_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
@@ -73,7 +73,7 @@
         </createTable>
 
         <addPrimaryKey columnNames="client_non_conformance_id, culpable_employees_id" tableName="client_non_conformance_culpable_employees"/>
-
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 

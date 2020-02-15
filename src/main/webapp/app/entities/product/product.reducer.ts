@@ -234,8 +234,8 @@ export const deleteEntity: ICrudDeleteAction<IProduct> = id => async dispatch =>
     payload: axios.delete(requestUrl)
   });
   dispatch(getAllProductsFromDB());
-  dispatch(bomReset());
-  dispatch(RoutingReset());
+  // dispatch(bomReset());
+  // dispatch(RoutingReset());
   return result;
 };
 

@@ -1,8 +1,10 @@
 package com.streeam.cid.config;
 
-import com.streeam.cid.security.AuthoritiesConstants;
-import com.streeam.cid.security.jwt.JWTConfigurer;
-import com.streeam.cid.security.jwt.TokenProvider;
+import com.streeam.cid.security.*;
+import com.streeam.cid.security.jwt.*;
+
+import org.springframework.beans.factory.BeanInitializationException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -79,7 +81,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/register").permitAll()
-            .antMatchers("/api/contact").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()

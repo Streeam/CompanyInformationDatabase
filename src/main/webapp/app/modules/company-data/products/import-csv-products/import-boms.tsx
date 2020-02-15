@@ -2,6 +2,10 @@ import React, { useState, useEffect, Fragment } from 'react';
 import CSVReader from 'react-csv-reader';
 import { IRootState } from 'app/shared/reducers';
 import { connect } from 'react-redux';
+// tslint:disable
+import IconButton from '@material-ui/core/IconButton';
+import SyncIcon from '@material-ui/icons/Sync';
+// tslint:enable
 import {
   createEntities as createProducts,
   updateEntities as updateProducts,
@@ -40,7 +44,7 @@ const importSubcomponents = (props: IBomsProps) => {
     if (isArrayEmpty(allProductsFromDB)) {
       props.getAllProductsFromDB();
     }
-    return () => props.resetBom();
+    // return () => props.resetBom();
   }, []);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -75,11 +79,11 @@ const importSubcomponents = (props: IBomsProps) => {
     const bomsToInsert = [...allBoms, ...bomsFromCSV];
     // const bomsWithoutReviews = bomsToInsert.filter(item => item.uniqueIdentifier !== '7271' && item.uniqueIdentifier !== '7247');
     // const uniqueBomsToInsert = removeDuplicates(bomsWithoutReviews, 'uniqueIdentifier');
-    const uniqueBomsToInsert = removeDuplicatesBasedOn2Entities(bomsToInsert, 'uniqueIdentifier', 'partNumber');
-    const nonNullBomsToInsert = uniqueBomsToInsert.filter(val => val.id === null);
+    // const uniqueBomsToInsert = removeDuplicatesBasedOn2Entities(bomsToInsert, 'uniqueIdentifier', 'partNumber');
+    const nonNullBomsToInsert = bomsToInsert.filter(val => val.id === null);
     const bomsToUpdate: IBom[] = [];
 
-    allBoms.forEach(item1 => {
+    /* allBoms.forEach(item1 => {
       bomsFromCSV.forEach(item2 => {
         if (item1.uniqueIdentifier === item2.uniqueIdentifier) {
           if (
@@ -96,35 +100,33 @@ const importSubcomponents = (props: IBomsProps) => {
     if (!isArrayEmpty(bomsToUpdate)) {
       setLoading(true);
       bomsToUpdate.forEach(item => {
-        new Promise((resolve, reject) => resolve(props.updateBom(item))).then(() => {
-          props.getAllBoms();
-          setLoading(false);
-        });
+        props.updateBom(item);
       });
-    }
+    } */
     if (!isArrayEmpty(nonNullBomsToInsert)) {
       setLoading(true);
-      executeFunctionInChuncks(nonNullBomsToInsert, props.createBoms, 200).then(() => {
-        new Promise((resolve, reject) => resolve(props.getAllBoms())).then(() => {
-          updateProductBoms([...allBoms]);
-          setLoading(false);
-        });
+      executeFunctionInChuncks(nonNullBomsToInsert, props.createBoms, 500).then(() => {
+        props.getAllBoms();
       });
     }
     setLoading(false);
   };
-  const updateProductBoms = (boms: IBom[]): void => {
-    const productsToUpdate: IProduct[] = [];
-    allProductsFromDB.forEach(product => {
-      boms.forEach(bomEmtity => {
-        if (bomEmtity.partNumber === product.partNumber) {
-          productsToUpdate.push({ ...product, boms: [...product.boms, bomEmtity] });
-        }
+  const updateProductBoms = (): void => {
+    if (!isArrayEmpty(allProductsFromDB) && !isArrayEmpty(allBoms)) {
+      const productsToUpdate: IProduct[] = [];
+      allProductsFromDB.forEach(product => {
+        const boms: IBom[] = [];
+        allBoms.forEach(bomEmtity => {
+          if (bomEmtity.partNumber === product.partNumber) {
+            boms.push(bomEmtity);
+          }
+        });
+        !isArrayEmpty(boms) && productsToUpdate.push({ ...product, boms: [...boms] });
       });
-    });
-    executeFunctionInChuncks(productsToUpdate, props.updateProducts, 200).then(() => {
-      props.getAllProductsFromDB();
-    });
+      executeFunctionInChuncks(productsToUpdate, props.updateProducts, 200).then(() => {
+        props.getAllProductsFromDB();
+      });
+    }
   };
   const columnHeaders = [
     { headerName: 'Id', field: 'uniqueId', sort: 'desc', width: 100, resizable: true, sortable: true, filter: true },
@@ -173,6 +175,16 @@ const importSubcomponents = (props: IBomsProps) => {
           </ol>
         </div>
       </Fragment>
+      <div style={{ textAlign: 'right' }}>
+      <IconButton
+                  size="small"
+                  title={'Update the products'}
+                  onClick={updateProductBoms}
+                  aria-label="edit"
+                >
+                  <SyncIcon />
+                </IconButton>
+                  </div>
       <div
         className="ag-theme-balham"
         style={{

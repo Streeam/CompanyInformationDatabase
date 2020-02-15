@@ -3,7 +3,6 @@ package com.streeam.cid.service;
 import com.streeam.cid.domain.Employee;
 import com.streeam.cid.domain.User;
 import com.streeam.cid.repository.UserRepository;
-import com.streeam.cid.service.dto.ContactDTO;
 import io.github.jhipster.config.JHipsterProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,12 +38,6 @@ public class MailService {
     private static final String USER = "user";
 
     private static final String BASE_URL = "baseUrl";
-
-    private static final String FIRST_NAME = "firstName";
-    private static final String LAST_NAME = "lastName";
-    private static final String EMAIL = "email";
-    private static final String PHONE = "phone";
-    private static final String MESSAGE = "message";
 
     private final JHipsterProperties jHipsterProperties;
 
@@ -98,6 +91,7 @@ public class MailService {
         sendEmail(user.getEmail(), subject, content, false, true);
     }
 
+
     @Async
     private void sendEmailFromTemplate(String sendTo, User user, String templateName, String titleKey) {
         String language = "en";
@@ -111,22 +105,6 @@ public class MailService {
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmail(sendTo, subject, content, false, true);
-    }
-    @Async
-    private void sendEmailOfContactInfoFromTemplate(String sendTo, String templateName, ContactDTO contactDTO) {
-
-        Locale locale = Locale.forLanguageTag("en");
-        Context context = new Context(locale);
-        context.setVariable(FIRST_NAME, contactDTO.getFirstName());
-        context.setVariable(LAST_NAME, contactDTO.getLastName());
-        context.setVariable(EMAIL, contactDTO.getEmail());
-        context.setVariable(PHONE, contactDTO.getPhone());
-        context.setVariable(MESSAGE, contactDTO.getMessage());
-        String content = templateEngine.process(templateName, context);
-        String subject = "New Contact Info";
-        String body = "First Name: " + contactDTO.getFirstName() + ";  Last Name: " + contactDTO.getLastName() + "; Email: " + contactDTO.getEmail()
-            + "; Phone: " + contactDTO.getPhone() + "; Message: " + contactDTO.getMessage();
-        sendEmail(sendTo, subject, body, false, true);
     }
 
     @Async
@@ -169,10 +147,5 @@ public class MailService {
     public void sendTaskEmail(Employee toUser, User fromUser) {
         log.debug("Sending a notification email to " + toUser.getUser().getEmail() + " to inform him that he was assigned a new task.");
         sendEmailFromTemplate(toUser.getUser().getEmail() ,fromUser, "mail/taskEmail", "email.new.task");
-    }
-
-    public void sendContactInfo(ContactDTO contactDTO) {
-        log.debug("Contact information from '{}'", contactDTO.getFirstName());
-        sendEmailOfContactInfoFromTemplate("bogdanmihoci27@gmail.com","mail/contactInfo", contactDTO);
     }
 }

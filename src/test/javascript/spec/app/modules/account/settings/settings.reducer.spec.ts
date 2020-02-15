@@ -7,6 +7,7 @@ import sinon from 'sinon';
 
 import account, { ACTION_TYPES, saveAccountSettings, reset } from 'app/modules/account/settings/settings.reducer';
 import { ACTION_TYPES as authActionTypes } from 'app/shared/reducers/authentication';
+import { ACTION_TYPES as employeeActions } from 'app/entities/employee/employee.reducer';
 
 describe('Settings reducer tests', () => {
   describe('Common tests', () => {
@@ -82,7 +83,7 @@ describe('Settings reducer tests', () => {
       const meta = {
         successMessage: 'Profile Saved!'
       };
-
+//
       const expectedActions = [
         {
           type: REQUEST(ACTION_TYPES.UPDATE_ACCOUNT),
@@ -98,6 +99,13 @@ describe('Settings reducer tests', () => {
         },
         {
           type: SUCCESS(authActionTypes.GET_SESSION),
+          payload: resolvedObject
+        },
+        {
+          type: REQUEST(employeeActions.FETCH_CURRENT_EMPLOYEE)
+        },
+        {
+          type: SUCCESS(employeeActions.FETCH_CURRENT_EMPLOYEE),
           payload: resolvedObject
         }
       ];

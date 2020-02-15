@@ -15,8 +15,8 @@ export const customerNonConformanceWarranty = (props: INonconformanceCustomersWa
   const { updateCustomerNonConformance, customerNC } = props;
 
   useEffect(() => {}, []);
-  const [warranty, setWarranty] = useState<boolean>(false);
-  const allocateNonconformanceWarranty = (): boolean => (warranty ? warranty : customerNC.underWarranty ? customerNC.underWarranty : false);
+  const [warranty, setWarranty] = useState<boolean>(null);
+  const allocateNonconformanceWarranty = (): boolean => (warranty !== null ? warranty : customerNC.underWarranty ? customerNC.underWarranty : false);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setWarranty(event.target.checked);
     updateCustomerNonConformance({ underWarranty: event.target.checked });

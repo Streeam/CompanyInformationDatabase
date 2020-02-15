@@ -220,26 +220,6 @@ describe('Entities reducer tests', () => {
       await store.dispatch(getEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
-    it('dispatches ACTION_TYPES.UPDATE_PROGRESSTRACK actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.UPDATE_PROGRESSTRACK)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.UPDATE_PROGRESSTRACK),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_PROGRESSTRACK_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_PROGRESSTRACK_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
     it('dispatches ACTION_TYPES.RESET actions', async () => {
       const expectedActions = [
         {

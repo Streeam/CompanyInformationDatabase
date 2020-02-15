@@ -38,13 +38,12 @@ interface IBOMsToSave {
 }
 
 export const bomsGrid = (props: IBomsProps) => {
-  const { selectedProduct, allProducts, parentsBoms, selectProductAfterUpdate, currentBom, setCurrentBom, currentEmployee, match } = props;
+  const { selectedProduct, allProducts, parentsBoms, selectProductAfterUpdate, currentBom, setCurrentBom, currentEmployee, match, allBoms } = props;
   useEffect(() => {}, []);
   const columnHeaders = [
     { headerName: 'Id', field: 'id', width: 80, resizable: true, sortable: true, filter: true, checkboxSelection: true },
     { headerName: 'Child Part Number', field: 'childPartNumber', width: 150, resizable: true, sortable: true, filter: true },
     { headerName: 'Description', field: 'childPartDescription', width: 500, resizable: true, sortable: true, filter: true },
-    { headerName: 'UOM', field: 'unitOfMeasure', width: 100, resizable: true, sortable: true, filter: true },
     { headerName: 'Quantity', field: 'quantity', width: 100, resizable: true, sortable: true, filter: true }
   ];
   const [gridApi, setGridApi] = useState(null);
@@ -57,12 +56,10 @@ export const bomsGrid = (props: IBomsProps) => {
       parentsBoms.map(item => {
         const product: IProduct | undefined = allProducts.filter(productEntity => item.childPartNumber === productEntity.partNumber)[0];
         const description: string = product ? product.partDescription : '';
-        const uom: string = product ? product.unitOfMeasure : '';
         return {
           id: item.id,
           childPartNumber: item.childPartNumber,
           childPartDescription: description,
-          unitOfMeasure: uom,
           quantity: item.quantity
         };
       });
@@ -109,7 +106,7 @@ export const bomsGrid = (props: IBomsProps) => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <div style={{ textAlign: 'right' }}>
-            {addProductPermission(currentEmployee) && !isArrayEmpty(allProducts) && (
+            {addProductPermission(currentEmployee) && !isArrayEmpty(allProducts) && isArrayEmpty(allBoms) && (
               <Link to={`${match.url}/products/import-boms`}>
                 <IconButton size="small" title={'Import subcomponents from .csv file!'} aria-label="upload" className={classes.margin}>
                   <PublishOutlinedIcon />
@@ -186,6 +183,7 @@ export const bomsGrid = (props: IBomsProps) => {
 const mapStateToProps = ({ product, bom, employee }: IRootState) => ({
   allProducts: product.entities,
   parentsBoms: bom.entities,
+  allBoms: bom.entities,
   currentEmployee: employee.currentEmployeeEntity
 });
 

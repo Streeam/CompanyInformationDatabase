@@ -221,66 +221,6 @@ describe('Entities reducer tests', () => {
       await store.dispatch(getEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
-    it('dispatches ACTION_TYPES.CREATE_AFTERSALEEXPENSES actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.CREATE_AFTERSALEEXPENSES)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.CREATE_AFTERSALEEXPENSES),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_AFTERSALEEXPENSES_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_AFTERSALEEXPENSES_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(createEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.UPDATE_AFTERSALEEXPENSES actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.UPDATE_AFTERSALEEXPENSES)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.UPDATE_AFTERSALEEXPENSES),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_AFTERSALEEXPENSES_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_AFTERSALEEXPENSES_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.DELETE_AFTERSALEEXPENSES actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.DELETE_AFTERSALEEXPENSES)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.DELETE_AFTERSALEEXPENSES),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_AFTERSALEEXPENSES_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_AFTERSALEEXPENSES_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(deleteEntity(null)).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
     it('dispatches ACTION_TYPES.RESET actions', async () => {
       const expectedActions = [
         {

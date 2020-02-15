@@ -7,7 +7,7 @@ import { Navbar, Nav, NavbarToggler, NavbarBrand, Collapse } from 'reactstrap';
 import LoadingBar from 'react-redux-loading-bar';
 
 import { Home, Brand, Notifications } from './header-components';
-import { AdminMenu, EntitiesMenu, AccountMenu, NonConformances } from '../menus';
+import { AdminMenu, EntitiesMenu, AccountMenu, NonConformances, Purchase } from '../menus';
 import { INonConformanceDetails } from 'app/shared/model/non-conformance-details.model';
 import { ICompany } from 'app/shared/model/company.model';
 import { INotification } from 'app/shared/model/notification.model';
@@ -67,6 +67,7 @@ const Header = (props: IHeaderProps) => {
           <Nav id="header-tabs" className="ml-auto" navbar>
             <Home />
             {isAuthenticated && isAdmin && <EntitiesMenu {...props} />}
+            {isAuthenticated && currentCompany && <Purchase />}
             {isAuthenticated && currentCompany && <NonConformances />}
             {isAuthenticated && isAdmin && <AdminMenu showSwagger={isSwaggerEnabled} showDatabase={!isInProduction} />}
             <AccountMenu

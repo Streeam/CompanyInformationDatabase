@@ -2,6 +2,7 @@ package com.streeam.cid.service;
 
 import com.streeam.cid.domain.Bom;
 import com.streeam.cid.repository.BomRepository;
+import com.streeam.cid.repository.ProductRepository;
 import com.streeam.cid.service.dto.BomDTO;
 import com.streeam.cid.service.dto.ProductDTO;
 import com.streeam.cid.service.mapper.BomMapper;
@@ -31,6 +32,8 @@ public class BomService {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductRepository productRepository;
 
     private final BomMapper bomMapper;
 
@@ -52,8 +55,24 @@ public class BomService {
         return bomMapper.toDto(bom);
     }
 
-    public void saveInBatch(List<BomDTO> list) {
-        bomRepository.saveAll(bomMapper.toEntity(list));
+    public List<BomDTO> saveInBatch(List<BomDTO> list) {
+        List<Bom> bomList = bomRepository.saveAll(bomMapper.toEntity(list));
+        List<BomDTO> bomDTOList = bomList.stream().map(bomMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+        /* List<Product> productList = productRepository.findAll();
+        productList.stream().forEach(product -> {
+            Set<Bom> bomSet = bomList.stream().filter(bom -> bom.getPartNumber() == product.getPartNumber())
+                .collect(Collectors.toSet());
+            Set<Bom> bomToUpdate = product.getBoms();
+            if (!bomSet.isEmpty()) {
+                if (bomSet.addAll(bomToUpdate)) {
+                    product.setBoms(bomSet);
+                    productRepository.save(product);
+                }
+            }
+
+        });*/
+        return  bomDTOList;
     }
 
     /**

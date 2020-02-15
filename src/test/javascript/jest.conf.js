@@ -20,7 +20,7 @@ module.exports = {
   ],
   testResultsProcessor: 'jest-sonar-reporter',
   testPathIgnorePatterns: [
-    '<rootDir>/node_modules/', '<rootDir>/src/test/javascript'
+    '<rootDir>/node_modules/'/*, '<rootDir>/src/test/javascript'*/
   ],
   setupFiles: [
     '<rootDir>/src/test/javascript/spec/enzyme-setup.ts',
