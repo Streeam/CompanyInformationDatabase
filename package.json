@@ -39,7 +39,7 @@
     "fishbone-chart": "^1.0.23",
     "js-file-download": "^0.4.8",
     "loaders.css": "0.1.2",
-    "lodash": "4.17.13",
+    "lodash": "4.17.19",
     "material-table": "^1.54.1",
     "moment": "^2.24.0",
     "nivo": "^0.31.0",
